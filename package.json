@@ -11,7 +11,7 @@
   ],
   "scripts": {
     "start": "vuepress dev emmenu",
-    "build:site": "export GH=1 && vuepress build emmenu",
+    "build:site": "cross-env GH=1 && vuepress build emmenu",
     "build": "cross-env BABEL_ENV=production && node build/build.water.js && gulp --gulpfile build/gulpfile.js",
     "eslint": "eslint --ext .js,.vue site emmenu --fix",
     "stylelint": "stylelint site/**/*.scss emmenu/**/*.scss",
@@ -19,7 +19,8 @@
     "lint-staged": "lint-staged",
     "test": "jest --config jest.conf.js --no-cache --verbose",
     "codecov": "codecov ./coverage/clover.xml",
-    "prepublishOnly": "npm run build"
+    "prepublishOnly": "npm run build",
+    "deploy-gh": "yarn build:site && bash scripts/deploy-gh.sh"
   },
   "devDependencies": {
     "babel-helpers": "^6.24.1",

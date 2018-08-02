@@ -55,8 +55,6 @@
   import CONSTANT from './common/constant';
   import ajax from '../tools/ajax';
   import newRoot from '../tools/newRoot';
-  import WMask from './component/mask/index';
-  import WModal from './component/modal/index';
   import WMessage from './component/message/index';
 
   if (!vue.prototype.$WMessage) {
@@ -172,10 +170,6 @@
       hOwnProperty(item, attr) {
         return Object.prototype.hasOwnProperty.call(item, attr);
       },
-    },
-    components: {
-      WMask,
-      WModal,
     },
   };
 </script>
