@@ -17,7 +17,7 @@ function resolve (dir) {
 
 module.exports = {
   cache: true,
-  entry: `./${utils.outname()}/menu.js`,
+  entry: `./${utils.outname()}/${utils.outname()}.js`,
   mode: 'development',
   output: {
     path: path.resolve(__dirname, '../dist'),

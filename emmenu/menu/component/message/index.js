@@ -1,6 +1,6 @@
 import Message from './src/message';
 
-const prefixKey = 'v_message_key_';
+const prefixKey = 'w_menu_message_key_';
 
 let messageInstance;
 let delayTimeNumber = 5000;
