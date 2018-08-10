@@ -1,15 +1,15 @@
 # em 左侧菜单
-> Vue.js 的 语义化的矢量图形。
+> em 公共级左导航业务组件
 
 ## 案例演示
 
 <div>
-  <w-menu :getMenuAction="menuAction" :processEnv="processValue" :ajaxHeaders="ajaxHeadersData" @getAllData="getAllData" @curMenuStatus="getCurMenu"></w-menu>
+  <w-menu mode="ajax" :getMenuAction="menuAction" :processEnv="processValue" :ajaxHeaders="ajaxHeadersData" @getAllData="getAllData" @curMenuStatus="getCurMenu"></w-menu>
 </div>
 
 ``` vue
 <div>
-   <w-menu :getMenuAction="menuAction" :processEnv="processValue" :ajaxHeaders="ajaxHeadersData" @getAllData="getAllData" @curMenuStatus="getCurMenu"></w-menu>
+   <w-menu mode="ajax" :getMenuAction="menuAction" :processEnv="processValue" :ajaxHeaders="ajaxHeadersData" @getAllData="getAllData" @curMenuStatus="getCurMenu"></w-menu>
 </div>
 ```
 
@@ -55,6 +55,8 @@ export default {
 |getMenuAction|获取菜单接口|String|是|-|
 |processEnv|环境变量|String|是|development|
 |ajaxHeaders|获取菜单接口header信息|Object|否|{}|
+|handleMenu|mode 为 handle 的时候，要处理的数据|Object|否|-|
+|mode|handle: 只处理 handleMenu 参数传过来的数据， ajax 调用 v2 权限接口并处理数据 |String|否|handle|
 
 ## 方法
 

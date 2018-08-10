@@ -84,6 +84,11 @@
       };
     },
     props: {
+      mode: {
+        type: String,
+        default: 'handle', // 菜单模式， handle 只是处理一下 业务里面返回的数据 , ajax 请求权限 v2 接口并处理数据
+      },
+      handleMenu: String,
       prefix: String,
       getMenuAction: String,
       processEnv: {
@@ -100,7 +105,11 @@
     mounted() {
       window.processEnv = this.processEnv;
       this.headers = Object.assign({}, this.ajaxHeaders);
-      this.getMenu();
+      if (this.mode === 'handle') {
+        this.handleData();
+      } else {
+        this.getMenu();
+      }
     },
     watch: {
       curMenuObject: {
@@ -111,35 +120,43 @@
       },
     },
     methods: {
+      handleData() {
+        if (this.handleMenu) {
+          this.AllDataToParent = newRoot(this.handleMenu, this.iconObj);
+          this.$emit('getAllData', this.AllDataToParent);
+        }
+      },
       getMenu() {
-        ajax({
-          headers: this.headers,
-          type: 'GET',
-          action: this.getMenuAction,
-          onSuccess: (res) => {
-            if (res.code === CONSTANT.SUCCESS) {
-              this.AllDataToParent = newRoot(res.data, this.iconObj);
-              this.header = newRoot(res.data, this.iconObj).header;
-              this.datas = newRoot(res.data, this.iconObj).menuList;
-              this.$emit('getAllData', this.AllDataToParent);
-              if (getStorage(CONSTANT.CURMENUOBJECT)) {
-                this.curMenuObject = getStorage(CONSTANT.CURMENUOBJECT);
+        if (this.getMenuAction) {
+          ajax({
+            headers: this.headers,
+            type: 'GET',
+            action: this.getMenuAction,
+            onSuccess: (res) => {
+              if (res.code === CONSTANT.SUCCESS) {
+                this.AllDataToParent = newRoot(res.data, this.iconObj);
+                this.header = this.AllDataToParent.header;
+                this.datas = this.AllDataToParent.menuList;
+                this.$emit('getAllData', this.AllDataToParent);
+                if (getStorage(CONSTANT.CURMENUOBJECT)) {
+                  this.curMenuObject = getStorage(CONSTANT.CURMENUOBJECT);
+                } else {
+                  this.curMenuObject = this.header.name;
+                  setStorage(CONSTANT.CURMENUOBJECT, this.curMenuObject);
+                }
               } else {
-                this.curMenuObject = this.header.name;
-                setStorage(CONSTANT.CURMENUOBJECT, this.curMenuObject);
+                menuMessage.error({
+                  content: res.message,
+                });
               }
-            } else {
+            },
+            onError: (err, response) => {
               menuMessage.error({
-                content: res.message,
+                content: response.message,
               });
-            }
-          },
-          onError: (err, response) => {
-            menuMessage.error({
-              content: response.message,
-            });
-          },
-        });
+            },
+          });
+        }
       },
       goToPath(item) {
         if (hOwnProperty(item, 'path')) {
