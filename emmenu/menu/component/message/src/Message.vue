@@ -1,7 +1,7 @@
 <template>
-  <transition-group tag="div" class="w-message-box" name="fade">
-    <div class="w-message-main" :class="[`w-message-${notice.type}`]" v-for="(notice, noticeIndex) in notices" :key="noticeIndex" :style="notice.style">
-      <p class="w-message-text">{{ notice.content }}</p>
+  <transition-group tag="div" class="w-menu-message-box" name="fade">
+    <div class="w-menu-message-main" :class="[`w-menu-message-${notice.type}`]" v-for="(notice, noticeIndex) in notices" :key="noticeIndex" :style="notice.style">
+      <p class="w-menu-message-text">{{ notice.content }}</p>
     </div>
   </transition-group>
 </template>
@@ -14,7 +14,7 @@ function getUuid() {
 }
 
 export default {
-  name: 'emfe-message',
+  name: 'w-menu-message',
   data() {
     return {
       notices: [],

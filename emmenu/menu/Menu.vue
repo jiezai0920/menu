@@ -1,5 +1,5 @@
 <template>
-  <div class="w-menu" ref="menu">
+  <div class="w-menu" :class="{[`${prefix}-menu`]: !!prefix}" ref="menu">
     <h3 class="w-menu-header" :class="{'w-menu-header-on': curMenuObject === header.name}">
       <router-link v-if="header.router" :to="header.router" class="w-menu-header-link"
                    exact-active-class="w-menu-header-on">
@@ -50,22 +50,13 @@
   </div>
 </template>
 <script>
-  import vue from 'vue';
-  import 'em-cookie';
+  import hOwnProperty from 'em-underline/hOwnProperty';
   import CONSTANT from './common/constant';
   import ajax from '../tools/ajax';
   import newRoot from '../tools/newRoot';
-  import WMessage from './component/message/index';
+  import { setStorage, getStorage } from '../tools/localstorage';
+  import menuMessage from './component/message/index';
 
-  if (!vue.prototype.$WMessage) {
-    Object.defineProperties(vue.prototype, {
-      $WMessage: {
-        get() {
-          return WMessage;
-        },
-      },
-    });
-  }
   export default {
     name: 'WMenu',
     data() {
@@ -93,10 +84,7 @@
       };
     },
     props: {
-      className: {
-        type: String,
-        default: '',
-      },
+      prefix: String,
       getMenuAction: String,
       processEnv: {
         type: String,
@@ -134,42 +122,42 @@
               this.header = newRoot(res.data, this.iconObj).header;
               this.datas = newRoot(res.data, this.iconObj).menuList;
               this.$emit('getAllData', this.AllDataToParent);
-              if (window.$cookie.get(CONSTANT.CURMENUOBJECT)) {
-                this.curMenuObject = window.$cookie.get(CONSTANT.CURMENUOBJECT);
+              if (getStorage(CONSTANT.CURMENUOBJECT)) {
+                this.curMenuObject = getStorage(CONSTANT.CURMENUOBJECT);
               } else {
                 this.curMenuObject = this.header.name;
-                window.$cookie.set(CONSTANT.CURMENUOBJECT, this.curMenuObject);
+                setStorage(CONSTANT.CURMENUOBJECT, this.curMenuObject);
               }
             } else {
-              this.$WMessage.error({
+              menuMessage.error({
                 content: res.message,
               });
             }
           },
           onError: (err, response) => {
-            this.$WMessage.error({
+            menuMessage.error({
               content: response.message,
             });
           },
         });
       },
       goToPath(item) {
-        if (this.hOwnProperty(item, 'path')) {
-          window.location.href = item.path;
+        if (hOwnProperty(item, 'path')) {
           this.curMenuObject = item.name;
-          window.$cookie.set(CONSTANT.CURMENUOBJECT, this.curMenuObject);
+          setStorage(CONSTANT.CURMENUOBJECT, this.curMenuObject);
+          window.location.href = item.path;
         }
       },
       goToUrl(item) {
-        if (this.hOwnProperty(item, 'url')) {
-          window.open(item.url);
+        if (hOwnProperty(item, 'url')) {
           this.curMenuObject = item.name;
-          window.$cookie.set(CONSTANT.CURMENUOBJECT, this.curMenuObject);
+          setStorage(CONSTANT.CURMENUOBJECT, this.curMenuObject);
+          window.open(item.url);
         }
       },
-      hOwnProperty(item, attr) {
-        return Object.prototype.hasOwnProperty.call(item, attr);
-      },
+    },
+    components: {
+      menuMessage,
     },
   };
 </script>

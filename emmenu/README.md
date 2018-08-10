@@ -11,7 +11,7 @@ footer: MIT Licensed | Copyright © 2018-present 李梦龙
 ### 安裝
 
 ``` bash
-yarn add @emmenu
+yarn add emmenu
 ```
 
 ::: warning 注意
