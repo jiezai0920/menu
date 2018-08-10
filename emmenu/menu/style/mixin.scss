@@ -1,0 +1,48 @@
+@mixin clearfix($legacy-support-for-ie: false) {
+  @if $legacy-support-for-ie {
+    *zoom: 1;
+  }
+
+  &::before,
+  &::after {
+    content: "";
+    display: table;
+  }
+
+  &::after {
+    clear: both;
+    overflow: hidden;
+  }
+}
+
+@mixin box-shadow($direction: x) {
+  @if $direction == x {
+    box-shadow: 4px 0 8px $shadow-color;
+  }
+
+  @else {
+    box-shadow: 0 4px 8px $shadow-color;
+  }
+}
+
+@mixin border($direction: all, $color: $border-color, $size: 1px, $type: solid, $important: false) {
+  @if $direction == all {
+    @if $important {
+      border: $size $type $color !important;
+    }
+
+    @else {
+      border: $size $type $color;
+    }
+  }
+
+  @else {
+    @if $important {
+      border-#{$direction}: $size $type $color !important;
+    }
+
+    @else {
+      border-#{$direction}: $size $type $color;
+    }
+  }
+}
