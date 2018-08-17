@@ -1,4 +1,5 @@
-import 'em-cookie';
+import guid from 'em-underline/guid';
+import { setStorage, getStorage } from './localstorage';
 
 function getError(action, option, xhr) {
   const msg = `fail to post ${action} ${xhr.status}'`;
@@ -50,14 +51,11 @@ export default function upload(option) {
   } else {
     xhr.open('get', action, true);
   }
-  /* eslint-disable no-bitwise */
-  const guidS4 = () => (((1 + Math.random()) * 0x10000) | 0).toString(16).substring(1);
-  const getGuid = () => (guidS4() + guidS4() + guidS4() +
-    guidS4() + guidS4() + guidS4() + guidS4() + guidS4());
-  const guid = window.$cookie.get('X-Session-Id') || getGuid();
-  window.$cookie.set('X-Session-Id', guid);
 
-  xhr.setRequestHeader('X-Session-Id', guid);
+  const getGuid = getStorage('X-Session-Id') || guid();
+  setStorage('X-Session-Id', getGuid);
+
+  xhr.setRequestHeader('X-Session-Id', getGuid);
   const headers = option.headers || {};
 
   Object.keys(headers).forEach((item) => {
