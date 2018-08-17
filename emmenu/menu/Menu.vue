@@ -122,8 +122,7 @@
     methods: {
       handleData() {
         if (this.handleMenu) {
-          this.AllDataToParent = newRoot(this.handleMenu, this.iconObj);
-          this.$emit('getAllData', this.AllDataToParent);
+          this.afterrHandle(this.handleMenu);
         }
       },
       getMenu() {
@@ -134,16 +133,7 @@
             action: this.getMenuAction,
             onSuccess: (res) => {
               if (res.code === CONSTANT.SUCCESS) {
-                this.AllDataToParent = newRoot(res.data, this.iconObj);
-                this.header = this.AllDataToParent.header;
-                this.datas = this.AllDataToParent.menuList;
-                this.$emit('getAllData', this.AllDataToParent);
-                if (getStorage(CONSTANT.CURMENUOBJECT)) {
-                  this.curMenuObject = getStorage(CONSTANT.CURMENUOBJECT);
-                } else {
-                  this.curMenuObject = this.header.name;
-                  setStorage(CONSTANT.CURMENUOBJECT, this.curMenuObject);
-                }
+                this.afterrHandle(res.data);
               } else {
                 menuMessage.error({
                   content: res.message,
@@ -156,6 +146,18 @@
               });
             },
           });
+        }
+      },
+      afterrHandle(data) {
+        this.AllDataToParent = newRoot(data, this.iconObj);
+        this.header = this.AllDataToParent.header;
+        this.datas = this.AllDataToParent.menuList;
+        this.$emit('getAllData', this.AllDataToParent);
+        if (getStorage(CONSTANT.CURMENUOBJECT)) {
+          this.curMenuObject = getStorage(CONSTANT.CURMENUOBJECT);
+        } else {
+          this.curMenuObject = this.header.name;
+          setStorage(CONSTANT.CURMENUOBJECT, this.curMenuObject);
         }
       },
       goToPath(item) {
