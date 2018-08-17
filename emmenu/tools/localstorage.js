@@ -1,12 +1,12 @@
 export function setStorage(key, value) {
-  if (!window.localStorage) {
+  if (typeof window !== 'undefined' && window.Vue && !window.localStorage) {
     return;
   }
   localStorage.setItem(key, value);
 }
 
 export function getStorage(key) {
-  if (!window.localStorage) {
+  if (typeof window !== 'undefined' && window.Vue && !window.localStorage) {
     return false;
   }
   return localStorage.getItem(key);

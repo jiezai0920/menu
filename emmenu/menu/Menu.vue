@@ -103,7 +103,9 @@
       },
     },
     mounted() {
-      window.processEnv = this.processEnv;
+      if (typeof window !== 'undefined' && window.Vue) {
+        window.processEnv = this.processEnv;
+      }
       this.headers = Object.assign({}, this.ajaxHeaders);
       if (this.mode === 'handle') {
         this.handleData();
@@ -164,14 +166,18 @@
         if (hOwnProperty(item, 'path')) {
           this.curMenuObject = item.name;
           setStorage(CONSTANT.CURMENUOBJECT, this.curMenuObject);
-          window.location.href = item.path;
+          if (typeof window !== 'undefined' && window.Vue) {
+            window.location.href = item.path;
+          }
         }
       },
       goToUrl(item) {
         if (hOwnProperty(item, 'url')) {
           this.curMenuObject = item.name;
           setStorage(CONSTANT.CURMENUOBJECT, this.curMenuObject);
-          window.open(item.url);
+          if (typeof window !== 'undefined' && window.Vue) {
+            window.open(item.url);
+          }
         }
       },
     },

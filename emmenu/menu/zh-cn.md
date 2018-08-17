@@ -4,7 +4,7 @@
 ## 案例演示
 
 <div>
-  <w-menu mode="ajax" :getMenuAction="menuAction" :processEnv="processValue" :ajaxHeaders="ajaxHeadersData" @getAllData="getAllData" @curMenuStatus="getCurMenu"></w-menu>
+  <w-menu class="demo-menu" mode="ajax" :getMenuAction="menuAction" :processEnv="processValue" :ajaxHeaders="ajaxHeadersData" @getAllData="getAllData" @curMenuStatus="getCurMenu"></w-menu>
 </div>
 
 ``` vue
@@ -14,7 +14,6 @@
 ```
 
 ``` js
-import 'em-cookie';
 import WMenu from './index';
 
 export default {
@@ -23,7 +22,7 @@ export default {
      menuAction: 'https://www.easy-mock.com/mock/59705d70a1d30433d838a12a/evente/power',
      processValue: 'development',
      ajaxHeadersData: {
-       'Authorization' :window.$cookie.get('Authorization'),
+       'Authorization': 'Authorization',
      }
     }
   },
@@ -59,7 +58,6 @@ export default {
 |curMenuStatus|获取当前选中的菜单名称|-|
 
 <script>
-import 'em-cookie';
 import WMenu from './index';
 
 export default {
@@ -68,7 +66,7 @@ export default {
       menuAction: 'https://www.easy-mock.com/mock/59705d70a1d30433d838a12a/evente/power',
       processValue: 'development',
        ajaxHeadersData: {
-         'Authorization' :window.$cookie.get('Authorization'),
+         'Authorization' : 'Authorization',
        }
     }
   },
@@ -88,4 +86,8 @@ export default {
 
 <style lang="scss">
 @import './style/menu.scss';
+
+.demo-menu {
+  position: static;
+}
 </style>
