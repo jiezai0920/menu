@@ -7,7 +7,6 @@ var utils = require('./utils');
 
 var baseWebpackConfig = require('./webpack.water.base.conf');
 
-console.log('utils.outname()',utils.outname())
 var webpackConfig = merge(baseWebpackConfig, {
   devtool: '#source-map',
   output: {
