@@ -88,7 +88,7 @@
         type: String,
         default: 'handle', // 菜单模式， handle 只是处理一下 业务里面返回的数据 , ajax 请求权限 v2 接口并处理数据
       },
-      handleMenu: String,
+      handleMenu: Array,
       prefix: String,
       getMenuAction: String,
       processEnv: {
