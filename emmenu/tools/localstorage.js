@@ -3,11 +3,11 @@ export function setStorage(key, value) {
     return;
   }
   localStorage.setItem(key, value);
-};
+}
 
 export function getStorage(key) {
   if (!window.localStorage) {
-    return;
+    return false;
   }
   return localStorage.getItem(key);
-};
+}
