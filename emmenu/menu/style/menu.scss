@@ -20,6 +20,8 @@ $title-color: #333;
   font-size: 14px;
   background: #373737;
   width: 96px;
+  position: fixed;
+  min-height: 100%;
 
   &-icon::before {
     color: #fff;
