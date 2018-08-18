@@ -45,6 +45,7 @@ export default (listArr, iconObj) => {
       name: item.name,
       icon: iconObj[item.module_name],
     };
+    obj[`${item.module_name}source`] = item;
     // 如果是在事先准备好的路径中
     if (hOwnProperty(pathDefult, item.module_name)) {
       // 如果有权限，如果没权限
@@ -52,7 +53,6 @@ export default (listArr, iconObj) => {
     } else {
       baseList.source = item;
     }
-    console.log(baseList, item);
     obj.menuList.push(baseList);
     obj[item.module_name] = item.children;
     // 如果有子级权限

@@ -106,7 +106,7 @@
         curMenuObject: '',
         curBarObject: '',
         user: '',
-        AllDataToParent: {},
+        menusData: {},
         header: {},
         headers: {},
         datas: [],
@@ -175,10 +175,37 @@
         }
       },
       afterrHandle(data) {
-        this.AllDataToParent = newRoot(data, this.iconObj);
-        this.header = this.AllDataToParent.header;
-        this.datas = this.AllDataToParent.menuList;
-        this.$emit('getAllData', this.AllDataToParent);
+        this.menusData = newRoot(data, this.iconObj);
+        this.header = this.menusData.header;
+        this.datas = this.menusData.menuList;
+        console.log(this.menusData, 'this.menusData');
+        const { dataauth } = this.menusData;
+        const shopAuth = this.menusData.marketingauth[ALIASES.SHOP].is_auth;
+        this.marketBar = [{
+          name: '促销',
+          path: `${development.ACCOUNT}salespromotion`,
+        }, {
+          name: '店铺',
+          path: shopAuth ? development.SHOP : this.pathNoAuth,
+        }, {
+          name: '分销',
+          path: development.DISTRI,
+        }, {
+          name: '其他',
+          path: `${development.ACCOUNT}theother`,
+        }];
+        console.log(dataauth, 'dataauth');
+        this.dataBar = [{
+          name: '手机号分析',
+          path: dataauth[ALIASES.DATA_MOBILE_ANALYZE] ? `${development.DATA}mobileanalyze` : this.pathNoAuth,
+        }, {
+          name: '身份证分析',
+          path: dataauth[ALIASES.DATA_IDENTITY_ANALYZE] ? `${development.DATA}identityanalyze` : this.pathNoAuth,
+        }, {
+          name: '数据大屏',
+          path: dataauth ? `${development.DATA}profile` : this.pathNoAuth,
+        }];
+        this.$emit('getAllData', this.menusData);
 
         if (getStorage(CUR_MENU_OBJECT)) {
           this.curMenuObject = getStorage(CUR_MENU_OBJECT);
@@ -196,10 +223,25 @@
         const {
           href,
         } = window.location;
+        // 检测主要除了 bar 之外的一级菜单
         let inSite = this.datas.filter(dataKey => href.indexOf(dataKey.path) > -1);
+        // 检测头部
         inSite = href.indexOf(this.header.path) > -1 ? [this.header] : [];
 
         this.curMenuObject = inSite.length > 0 ? inSite[0].name : '';
+        // 如果一级 不带有 bar 菜单中并未匹配到
+        // 匹配营销
+        if (!this.curMenuObject) {
+          inSite = this.marketBar.filter(dataKey => href.indexOf(dataKey.path) > -1);
+          this.curMenuObject = inSite.length > 0 ? '营销' : '';
+          this.curBarObject = inSite.length > 0 ? inSite[0].name : '';
+        }
+        // 匹配数据
+        if (!this.curMenuObject) {
+          inSite = this.dataBar.filter(dataKey => href.indexOf(dataKey.path) > -1);
+          this.curMenuObject = inSite.length > 0 ? '数据' : '';
+          this.curBarObject = inSite.length > 0 ? inSite[0].name : '';
+        }
       },
       goToPath(item) {
         if (hOwnProperty(item, 'path')) {
@@ -241,36 +283,11 @@
         this.barData = newItem.source;
       },
       showMarket(item) {
-        const shopAuth = this.AllDataToParent.marketingauth[ALIASES.SHOP].is_auth;
-        item.source.child = [{
-          name: '促销',
-          path: `${development.ACCOUNT}salespromotion`,
-        }, {
-          name: '店铺',
-          path: shopAuth ? development.SHOP : this.pathNoAuth,
-        }, {
-          name: '分销',
-          path: development.DISTRI,
-        }, {
-          name: '其他',
-          path: `${development.ACCOUNT}theother`,
-        }];
+        item.source.child = this.marketBar.slice();
         return item;
       },
       showData(item) {
-        const {
-          dataauth,
-        } = this.AllDataToParent;
-        item.source.child = [{
-          name: '手机号分析',
-          path: dataauth[ALIASES.DATA_MOBILE_ANALYZE] ? `${development.DATA}mobileanalyze` : this.pathNoAuth,
-        }, {
-          name: '身份证分析',
-          path: dataauth[ALIASES.DATA_IDENTITY_ANALYZE] ? `${development.DATA}identityanalyze` : this.pathNoAuth,
-        }, {
-          name: '数据大屏',
-          path: dataauth ? development.DATA : this.pathNoAuth,
-        }];
+        item.source.child = this.dataBar.slice();
         return item;
       },
       hideTime() {
