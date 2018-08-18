@@ -56,6 +56,7 @@ export default {
 |---|------|-----|
 |getAllData|获取菜单时触发|-|
 |curMenuStatus|获取当前选中的菜单名称|-|
+|curBarStatus|获取当前选中子级的菜单名称|-|
 
 <script>
 import WMenu from './index';
@@ -88,6 +89,6 @@ export default {
 @import './style/menu.scss';
 
 .demo-menu {
-  position: static;
+  position: relative;
 }
 </style>

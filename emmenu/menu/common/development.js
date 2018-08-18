@@ -14,13 +14,15 @@ let matchlink = '""';
 let goods = '""';
 let coupon = '""';
 let freight = '""';
+let shop = '';
+let distri = '';
 
-if (typeof window !== 'undefined' && window.Vue) {
+if (typeof window !== 'undefined') {
   switch (window.processEnv) {
     case 'testing':
       account = constant.ACCOUNT_TESTING;
       form = constant.FORM_TESTING;
-      member = constant.MENBER_TESTING;
+      member = constant.MEMBER_TESTING;
       marketing = constant.MARKETING_TESTING;
       data = constant.DATA_TESTING;
       order = constant.ORDER_TESTING;
@@ -32,11 +34,13 @@ if (typeof window !== 'undefined' && window.Vue) {
       goods = constant.GOODS_TESTING;
       coupon = constant.COUPON_TESTING;
       freight = constant.FREIGHT_TESTING;
+      shop = constant.SHOP_TESTING;
+      distri = constant.DISTRI_TESTING;
       break;
     case 'labing':
       account = constant.ACCOUNT_LABING;
       form = constant.FORM_LABING;
-      member = constant.MENBER_LABING;
+      member = constant.MEMBER_LABING;
       marketing = constant.MARKETING_LABING;
       data = constant.DATA_LABING;
       order = constant.ORDER_LABING;
@@ -48,11 +52,13 @@ if (typeof window !== 'undefined' && window.Vue) {
       goods = constant.GOODS_LABING;
       coupon = constant.COUPON_LABING;
       freight = constant.FREIGHT_LABING;
+      shop = constant.SHOP_LABING;
+      distri = constant.DISTRI_LABING;
       break;
     case 'production':
       account = constant.ACCOUNT_PRODUCTION;
       form = constant.FORM_PRODUCTION;
-      member = constant.MENBER_PRODUCTION;
+      member = constant.MEMBER_PRODUCTION;
       marketing = constant.MARKETING_PRODUCTION;
       data = constant.DATA_PRODUCTION;
       order = constant.ORDER_PRODUCTION;
@@ -64,11 +70,13 @@ if (typeof window !== 'undefined' && window.Vue) {
       goods = constant.GOODS_PRODUCTION;
       coupon = constant.COUPON_PRODUCTION;
       freight = constant.FREIGHT_PRODUCTION;
+      shop = constant.SHOP_PRODUCTION;
+      distri = constant.DISTRI_PRODUCTION;
       break;
     default:
       account = constant.ACCOUNT_DEVELOPMENT;
       form = constant.FORM_DEVELOPMENT;
-      member = constant.MENBER_DEVELOPMENT;
+      member = constant.MEMBER_DEVELOPMENT;
       marketing = constant.MARKETING_DEVELOPMENT;
       data = constant.DATA_DEVELOPMENT;
       order = constant.ORDER_DEVELOPMENT;
@@ -80,6 +88,8 @@ if (typeof window !== 'undefined' && window.Vue) {
       goods = constant.GOODS_DEVELOPMENT;
       coupon = constant.COUPON_DEVELOPMENT;
       freight = constant.FREIGHT_DEVELOPMENT;
+      shop = constant.SHOP_DEVELOPMENT;
+      distri = constant.DISTRI_DEVELOPMENT;
   }
 }
 
@@ -87,7 +97,7 @@ module.exports = {
   NODE_ENV: JSON.parse(constant.NODE_ENV_DEVELOPMENT),
   ACCOUNT: JSON.parse(account),
   FORM: JSON.parse(form),
-  MENBER: JSON.parse(member),
+  MEMBER: JSON.parse(member),
   MARKETING: JSON.parse(marketing),
   DATA: JSON.parse(data),
   ORDER: JSON.parse(order),
@@ -99,4 +109,6 @@ module.exports = {
   GOODS: JSON.parse(goods),
   COUPON: JSON.parse(coupon),
   FREIGHT: JSON.parse(freight),
+  SHOP: JSON.parse(shop),
+  DISTRI: JSON.parse(distri),
 };

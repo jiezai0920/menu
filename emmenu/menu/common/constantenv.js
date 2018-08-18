@@ -7,10 +7,10 @@ module.exports = {
   ACCOUNT_TESTING: '"http://home.inner.evente.cn:8000/account/"',
   ACCOUNT_LABING: '"http://home.lab.evente.cn/account/"',
   ACCOUNT_PRODUCTION: '"https://home.evente.cn/account/"',
-  MENBER_DEVELOPMENT: '"http://localhost:8181/"',
-  MENBER_TESTING: '"http://home.inner.evente.cn:8000/member/"',
-  MENBER_LABING: '"http://home.lab.evente.cn/member/"',
-  MENBER_PRODUCTION: '"https://home.evente.cn/member/"',
+  MEMBER_DEVELOPMENT: '"http://localhost:8181/"',
+  MEMBER_TESTING: '"http://home.inner.evente.cn:8000/member/"',
+  MEMBER_LABING: '"http://home.lab.evente.cn/member/"',
+  MEMBER_PRODUCTION: '"https://home.evente.cn/member/"',
   FORM_DEVELOPMENT: '"http://localhost:8182/"',
   FORM_TESTING: '"http://home.inner.evente.cn:8000/form/"',
   FORM_LABING: '"http://home.lab.evente.cn/form/"',
@@ -32,7 +32,17 @@ module.exports = {
   FINANCE_TESTING: '"http://home.inner.evente.cn:8000/finance/"',
   FINANCE_LABING: '"http://home.lab.evente.cn/finance/"',
   FINANCE_PRODUCTION: '"https://home.evente.cn/finance/"',
+  // 分销
+  DISTRI_DEVELOPMENT: '"http://distribution.inner.evente.cn:30390/"',
+  DISTRI_TESTING: '"http://distribution.inner.evente.cn:30390/"',
+  DISTRI_LABING: '"http://distribution.lab.evente.cn/"',
+  DISTRI_PRODUCTION: '"https://distribution.evente.cn/"',
 
+  // 店铺 B端 3.0
+  SHOP_DEVELOPMENT: '"http://localhost:8483/"',
+  SHOP_TESTING: '"http://home.inner.evente.cn:8000/shop/"',
+  SHOP_LABING: '"http://home.lab.evente.cn/shop/"',
+  SHOP_PRODUCTION: '"https://home.evente.cn/shop/"',
 
   // 轻活动
   ACTIVITY_DEVELOPMENT: '"http://localhost:8382/"',
