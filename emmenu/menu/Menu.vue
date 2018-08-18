@@ -179,6 +179,7 @@
         this.header = this.AllDataToParent.header;
         this.datas = this.AllDataToParent.menuList;
         this.$emit('getAllData', this.AllDataToParent);
+
         if (getStorage(CUR_MENU_OBJECT)) {
           this.curMenuObject = getStorage(CUR_MENU_OBJECT);
         } else {
@@ -188,6 +189,17 @@
         if (getStorage(CUR_BAR_OBJECT)) {
           this.curBarObject = getStorage(CUR_BAR_OBJECT);
         }
+        this.matchUrl();
+      },
+      // 如果直接按浏览器返回按钮，状态会失效
+      matchUrl() {
+        const {
+          href,
+        } = window.location;
+        let inSite = this.datas.filter(dataKey => href.indexOf(dataKey.path) > -1);
+        inSite = href.indexOf(this.header.path) > -1 ? [this.header] : [];
+
+        this.curMenuObject = inSite.length > 0 ? inSite[0].name : '';
       },
       goToPath(item) {
         if (hOwnProperty(item, 'path')) {
@@ -249,16 +261,15 @@
         const {
           dataauth,
         } = this.AllDataToParent;
-        const shopAuth = this.AllDataToParent.dataauth;
         item.source.child = [{
           name: '手机号分析',
-          path: shopAuth[ALIASES.DATA_MOBILE_ANALYZE] ? `${development.DATA}mobileanalyze` : this.pathNoAuth,
+          path: dataauth[ALIASES.DATA_MOBILE_ANALYZE] ? `${development.DATA}mobileanalyze` : this.pathNoAuth,
         }, {
           name: '身份证分析',
-          path: shopAuth[ALIASES.DATA_IDENTITY_ANALYZE] ? `${development.DATA}identityanalyze` : this.pathNoAuth,
+          path: dataauth[ALIASES.DATA_IDENTITY_ANALYZE] ? `${development.DATA}identityanalyze` : this.pathNoAuth,
         }, {
           name: '数据大屏',
-          path: shopAuth ? development.DATA : this.pathNoAuth,
+          path: dataauth ? development.DATA : this.pathNoAuth,
         }];
         return item;
       },

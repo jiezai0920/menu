@@ -21,12 +21,14 @@ $title-color: #333;
   position: fixed;
   top: 0;
   bottom: 0;
+  z-index: 2;
 
   &-main {
     padding-top: 56px;
     position: relative;
     z-index: 2;
     background: #373737;
+    height: 100%;
   }
 
   &-icon::before {
@@ -163,7 +165,7 @@ $title-color: #333;
   &-bar {
     height: 100%;
     position: absolute;
-    top: 0;
+    top: 56px;
     bottom: 0;
     z-index: 1;
     background: $nothing-color;

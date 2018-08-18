@@ -24,11 +24,15 @@ export default (listArr, iconObj) => {
     menuList: [],
     control: [],
   };
+  const newRoot = listArr.slice();
   // 获取账户管理权限
-  obj.control = listArr.splice(listArr.findIndex(item => item.module_name === MODULE_NAME.ACCOUNT), 1);
+  obj.control = newRoot.splice(
+    newRoot.findIndex(item => item.module_name === MODULE_NAME.ACCOUNT),
+    1,
+  );
 
   // 获取大首页的权限
-  listArr.splice(listArr.findIndex(item => item.module_name === MODULE_NAME.HOME), 1);
+  newRoot.splice(newRoot.findIndex(item => item.module_name === MODULE_NAME.HOME), 1);
   obj.header = Object.assign(obj.header, {
     name: '控制台',
     path: `${development.ACCOUNT}console`,
@@ -36,7 +40,7 @@ export default (listArr, iconObj) => {
   });
 
   // 处理 报名 | 票务 | 商品 | 表单 | 订单 | 财务 | 数据中心 | 营销
-  listArr.forEach((item) => {
+  newRoot.forEach((item) => {
     const baseList = {
       name: item.name,
       icon: iconObj[item.module_name],
@@ -48,6 +52,7 @@ export default (listArr, iconObj) => {
     } else {
       baseList.source = item;
     }
+    console.log(baseList, item);
     obj.menuList.push(baseList);
     obj[item.module_name] = item.children;
     // 如果有子级权限
@@ -56,9 +61,9 @@ export default (listArr, iconObj) => {
       const newRootAliases = item.children.reduce((keys, child) => {
         keys[child.aliases] = child;
         if (hOwnProperty(child, 'children')) {
-          const newSonAliases = child.children.reduce((keys, son) => {
-            keys[son.aliases] = son;
-            return keys;
+          const newSonAliases = child.children.reduce((sonKeys, son) => {
+            sonKeys[son.aliases] = son;
+            return sonKeys;
           }, {});
           obj[`${item.module_name}auth`] = Object.assign(obj[`${item.module_name}auth`], newSonAliases);
         }

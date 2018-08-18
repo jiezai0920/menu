@@ -14,8 +14,8 @@ let matchlink = '""';
 let goods = '""';
 let coupon = '""';
 let freight = '""';
-var shop = '';
-var distri = '';
+let shop = '';
+let distri = '';
 
 if (typeof window !== 'undefined') {
   switch (window.processEnv) {
