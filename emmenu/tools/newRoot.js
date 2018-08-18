@@ -1,131 +1,70 @@
+import hOwnProperty from 'em-underline/hOwnProperty';
 import development from '../menu/common/development';
+import CONSTANT from '../menu/common/constant';
+
+const {
+  MODULE_NAME,
+} = CONSTANT;
+
+const pathDefult = {};
+// 默认每个项目跳转地址
+pathDefult[MODULE_NAME.EVENT] = `${development.ACTIVITY}activity`;
+pathDefult[MODULE_NAME.MEET] = `${development.ACTIVITY}activity`;
+pathDefult[MODULE_NAME.GOODS] = `${development.GOODS}Goods/list`;
+pathDefult[MODULE_NAME.FORM] = development.FORM;
+pathDefult[MODULE_NAME.ORDER] = development.ORDER;
+pathDefult[MODULE_NAME.MEMBER] = `${development.MEMBER}list`;
+pathDefult[MODULE_NAME.FINANCE] = development.FINANCE;
+
+const pathNoAuth = `${development.MEMBER}error`;
 
 export default (listArr, iconObj) => {
   const obj = {
     header: {},
-    menuList: [[], [], []],
-    bar: [],
-    root: {},
-    market: [],
-    id: {},
+    menuList: [],
     control: [],
-    lightActive: [],
   };
-  listArr.forEach((item, index) => {
-    if (item.module_name === 'account') {
-      obj.control = listArr.splice(index, 1);
-    }
+  // 获取账户管理权限
+  obj.control = listArr.splice(listArr.findIndex(item => item.module_name === MODULE_NAME.ACCOUNT), 1);
+
+  // 获取大首页的权限
+  listArr.splice(listArr.findIndex(item => item.module_name === MODULE_NAME.HOME), 1);
+  obj.header = Object.assign(obj.header, {
+    name: '控制台',
+    path: `${development.ACCOUNT}console`,
+    icon: iconObj[MODULE_NAME.HOME],
   });
+
+  // 处理 报名 | 票务 | 商品 | 表单 | 订单 | 财务 | 数据中心 | 营销
   listArr.forEach((item) => {
-    if (item.module_name === 'home') {
-      obj.header = Object.assign(obj.header, {
-        name: '控制台',
-        path: `${development.ACCOUNT}console`,
-        icon: iconObj[item.module_name],
-      });
+    const baseList = {
+      name: item.name,
+      icon: iconObj[item.module_name],
+    };
+    // 如果是在事先准备好的路径中
+    if (hOwnProperty(pathDefult, item.module_name)) {
+      // 如果有权限，如果没权限
+      baseList.path = item.is_auth ? pathDefult[item.module_name] : pathNoAuth;
+    } else {
+      baseList.source = item;
     }
-
-    if (item.module_name === 'event') {
-      obj.lightActive = item.children;
-      if (item.is_auth === 0) {
-        obj.menuList[0].push({
-          name: item.name,
-          icon: iconObj[item.module_name],
-          path: `${development.MENBER}error`,
-        });
-      } else {
-        obj.menuList[0].push({
-          name: item.name,
-          icon: iconObj[item.module_name],
-          path: `${development.ACTIVITY}activity`,
-        });
-      }
-    } else if (item.module_name === 'goods') {
-      if (item.is_auth === 0) {
-        obj.menuList[0].push({
-          name: item.name,
-          icon: iconObj[item.module_name],
-          path: `${development.MENBER}error`,
-        });
-      } else {
-        obj.menuList[0].push({
-          name: item.name,
-          icon: iconObj[item.module_name],
-          url: `${development.GOODS}${item.route}`,
-        });
-      }
-    } else if (item.module_name === 'form') {
-      if (item.is_auth === 0) {
-        obj.menuList[0].push({
-          name: item.name,
-          icon: iconObj[item.module_name],
-          path: `${development.MENBER}error`,
-        });
-      } else {
-        obj.menuList[0].push({
-          name: item.name,
-          icon: iconObj[item.module_name],
-          path: development.FORM,
-        });
-      }
-    }
-
-    if (item.module_name === 'order') {
-      if (item.is_auth === 0) {
-        obj.menuList[1].push({
-          name: item.name,
-          icon: iconObj[item.module_name],
-          path: `${development.MENBER}error`,
-        });
-      } else {
-        obj.menuList[1].push({
-          name: item.name,
-          icon: iconObj[item.module_name],
-          path: development.ORDER,
-        });
-      }
-    } else if (item.module_name === 'finance') {
-      if (item.is_auth === 0) {
-        obj.menuList[1].push({
-          name: item.name,
-          icon: iconObj[item.module_name],
-          path: `${development.MENBER}error`,
-        });
-      } else {
-        obj.menuList[1].push({
-          name: item.name,
-          icon: iconObj[item.module_name],
-          path: development.FINANCE,
-        });
-      }
-    }
-
-    if (item.module_name === 'marketing') {
-      obj.root[item.aliases] = item.is_auth;
-      obj.menuList[2].push({
-        name: item.name,
-        icon: iconObj[item.module_name],
-        path: `${development.ACCOUNT}markettool`,
-      });
-      obj.market = item.children;
-      item.children.forEach((child) => {
-        obj.root[child.aliases] = child.is_auth;
-        obj.id[child.aliases] = child.id;
-        if (child.children && child.children.length) {
-          child.children.forEach((childItem) => {
-            obj.id[childItem.aliases] = childItem.id;
-          });
+    obj.menuList.push(baseList);
+    obj[item.module_name] = item.children;
+    // 如果有子级权限
+    if (hOwnProperty(item, 'children') && item.children.length > 0) {
+      obj[`${item.module_name}auth`] = {};
+      const newRootAliases = item.children.reduce((keys, child) => {
+        keys[child.aliases] = child;
+        if (hOwnProperty(child, 'children')) {
+          const newSonAliases = child.children.reduce((keys, son) => {
+            keys[son.aliases] = son;
+            return keys;
+          }, {});
+          obj[`${item.module_name}auth`] = Object.assign(obj[`${item.module_name}auth`], newSonAliases);
         }
-      });
-    } else if (item.module_name === 'added') {
-      obj.menuList[2].push({
-        name: item.name,
-        icon: iconObj[item.module_name],
-        path: `${development.ACCOUNT}added`,
-      });
-      item.children.forEach((child) => {
-        obj.root[child.aliases] = child.is_auth;
-      });
+        return keys;
+      }, {});
+      obj[`${item.module_name}auth`] = Object.assign(obj[`${item.module_name}auth`], newRootAliases);
     }
   });
   return obj;

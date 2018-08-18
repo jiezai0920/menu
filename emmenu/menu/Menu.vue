@@ -1,52 +1,73 @@
 <template>
-  <div class="w-menu" :class="{[`${prefix}-menu`]: !!prefix}" ref="menu">
-    <h3 class="w-menu-header" :class="{'w-menu-header-on': curMenuObject === header.name}">
-      <router-link v-if="header.router" :to="header.router" class="w-menu-header-link"
-                   exact-active-class="w-menu-header-on">
-        <img class="w-menu-list-li-img" v-bind:src="require('./img/'+header.icon+'_selected@2x.png')"
-             v-if="header.icon && curMenuObject === header.name">
-        <img class="w-menu-list-li-img" v-bind:src="require('./img/'+header.icon+'_normal@2x.png')"
-             v-if="header.icon && curMenuObject !== header.name">
-        <span class="w-menu-header-text">{{header.name}}</span>
-      </router-link>
-      <div v-else class="w-menu-header-link" @click="goToPath(header)">
-        <img class="w-menu-list-li-img" v-bind:src="require('./img/'+header.icon+'_selected@2x.png')"
-             v-if="header.icon && curMenuObject === header.name">
-        <img class="w-menu-list-li-img" v-bind:src="require('./img/'+header.icon+'_normal@2x.png')"
-             v-if="header.icon && curMenuObject !== header.name">
-        <span class="w-menu-header-text">{{header.name}}</span>
-      </div>
-    </h3>
-    <ul class="w-menu-list" v-for="(menu, menuIndex) in datas" :key="menuIndex">
-      <template v-for="(item, itemIndex) in menu">
-        <router-link v-if="item.router" class="w-menu-list-li" :to="item.router" tag="li"
-                     exact-active-class="w-menu-list-li-on">
-          <img class="w-menu-list-li-img" v-bind:src="require('./img/'+item.icon+'_selected@2x.png')"
-               v-if="item.icon && curMenuObject === item.name">
-          <img class="w-menu-list-li-img" v-bind:src="require('./img/'+item.icon+'_normal@2x.png')"
-               v-if="item.icon && curMenuObject !== item.name">
-          <span class="w-menu-text">{{item.name}}</span>
+  <div class="w-menu" :class="{[`${prefix}-menu`]: !!prefix}" ref="menu"
+  @mouseleave="hideTime()">
+    <div class="w-menu-main">
+      <h3 class="w-menu-header" :class="{'w-menu-header-on': curMenuObject === header.name}">
+        <router-link v-if="header.router" :to="header.router" class="w-menu-header-link"
+                     exact-active-class="w-menu-header-on">
+          <img class="w-menu-list-li-img" v-bind:src="require('./img/'+header.icon+'_selected.png')"
+               v-if="header.icon && curMenuObject === header.name">
+          <img class="w-menu-list-li-img" v-bind:src="require('./img/'+header.icon+'_normal.png')"
+               v-if="header.icon && curMenuObject !== header.name">
+          <span class="w-menu-header-text">{{header.name}}</span>
         </router-link>
-        <li v-else-if="item.path" class="w-menu-list-li"
-            :class="{'w-menu-list-li-on': curMenuObject === item.name}"
-            @click="goToPath(item)">
-          <img class="w-menu-list-li-img" v-bind:src="require('./img/'+item.icon+'_selected@2x.png')"
-               v-if="item.icon && curMenuObject === item.name">
-          <img class="w-menu-list-li-img" v-bind:src="require('./img/'+item.icon+'_normal@2x.png')"
-               v-if="item.icon && curMenuObject !== item.name">
-          <span class="w-menu-text">{{item.name}}</span>
-        </li>
-        <li v-else-if="item.url" class="w-menu-list-li"
-            :class="{'w-menu-list-li-on': curMenuObject === item.name}"
-            @click="goToUrl(item)">
-          <img class="w-menu-list-li-img" v-bind:src="require('./img/'+item.icon+'_selected@2x.png')"
-               v-if="item.icon && curMenuObject === item.name">
-          <img class="w-menu-list-li-img" v-bind:src="require('./img/'+item.icon+'_normal@2x.png')"
-               v-if="item.icon && curMenuObject !== item.name">
-          <span class="w-menu-text">{{item.name}}</span>
-        </li>
-      </template>
-    </ul>
+        <div v-else class="w-menu-header-link" @click="goToPath(header)">
+          <img class="w-menu-list-li-img" v-bind:src="require('./img/'+header.icon+'_selected.png')"
+               v-if="header.icon && curMenuObject === header.name">
+          <img class="w-menu-list-li-img" v-bind:src="require('./img/'+header.icon+'_normal.png')"
+               v-if="header.icon && curMenuObject !== header.name">
+          <span class="w-menu-header-text">{{header.name}}</span>
+        </div>
+      </h3>
+      <ul class="w-menu-list">
+        <template v-for="(item, itemIndex) in datas">
+          <router-link v-if="item.router" class="w-menu-list-li" :to="item.router" tag="li"
+                       exact-active-class="w-menu-list-li-on"
+                       @mouseenter="hideTime()">
+            <img class="w-menu-list-li-img" v-bind:src="require('./img/'+item.icon+'_selected.png')"
+                 v-if="item.icon && curMenuObject === item.name">
+            <img class="w-menu-list-li-img" v-bind:src="require('./img/'+item.icon+'_normal.png')"
+                 v-if="item.icon && curMenuObject !== item.name">
+            <span class="w-menu-text">{{item.name}}</span>
+          </router-link>
+          <li v-else-if="item.path" class="w-menu-list-li"
+              :class="{'w-menu-list-li-on': curMenuObject === item.name}"
+              @click="goToPath(item)"
+              @mouseenter="hideTime()">
+            <img class="w-menu-list-li-img" v-bind:src="require('./img/'+item.icon+'_selected.png')"
+                 v-if="item.icon && curMenuObject === item.name">
+            <img class="w-menu-list-li-img" v-bind:src="require('./img/'+item.icon+'_normal.png')"
+                 v-if="item.icon && curMenuObject !== item.name">
+            <span class="w-menu-text">{{item.name}}</span>
+          </li>
+          <li v-else-if="item.source" class="w-menu-list-li"
+              :class="{'w-menu-list-li-on': curMenuObject === item.name}"
+              @mouseenter="showTime(item)">
+            <img class="w-menu-list-li-img" v-bind:src="require('./img/'+item.icon+'_selected.png')"
+                 v-if="item.icon && curMenuObject === item.name">
+            <img class="w-menu-list-li-img" v-bind:src="require('./img/'+item.icon+'_normal.png')"
+                 v-if="item.icon && curMenuObject !== item.name">
+            <span class="w-menu-text">{{item.name}}</span>
+          </li>
+          <li v-else-if="item.url" class="w-menu-list-li"
+              :class="{'w-menu-list-li-on': curMenuObject === item.name}"
+              @click="goToUrl(item)"
+              @mouseenter="hideTime()">
+            <img class="w-menu-list-li-img" v-bind:src="require('./img/'+item.icon+'_selected.png')"
+                 v-if="item.icon && curMenuObject === item.name">
+            <img class="w-menu-list-li-img" v-bind:src="require('./img/'+item.icon+'_normal.png')"
+                 v-if="item.icon && curMenuObject !== item.name">
+            <span class="w-menu-text">{{item.name}}</span>
+          </li>
+        </template>
+      </ul>
+    </div>
+    <div class="w-menu-bar" :class="{['w-menu-bar-on']: barStatus}">
+      <h4 class="w-menu-bar-title" v-show="barData.name">{{barData.name}}</h4>
+      <ul class="w-menu-bar-list" v-show="barData.children">
+        <li class="w-menu-bar-item" :class="{on: curBarObject === child.name}" v-for="child in barData.child" @click="goToBarPath(child, barData)">{{child.name}}</li>
+      </ul>
+    </div>
   </div>
 </template>
 <script>
@@ -56,31 +77,42 @@
   import newRoot from '../tools/newRoot';
   import { setStorage, getStorage } from '../tools/localstorage';
   import menuMessage from './component/message/index';
+  import development from '../menu/common/development';
+
+  const {
+    ALIASES,
+    MODULE_NAME,
+    CUR_MENU_OBJECT,
+    CUR_BAR_OBJECT,
+    SUCCESS,
+  } = CONSTANT;
 
   export default {
     name: 'WMenu',
     data() {
       return {
         iconObj: {
-          home: 'wodediannao',
-          event: 'yanchu',
-          goods: 'wodeshangpin',
-          form: 'wenjuantiaocha1',
-          order: 'dingdanzhongxin1',
-          finance: 'caiwuzhongxin',
-          marketing: 'yingxiaogongju',
-          added: 'zengzhigongju',
+          home: 'kzt',
+          event: 'pw',
+          meetup: 'bm',
+          goods: 'sp',
+          form: 'bd',
+          order: 'dd',
+          data: 'sj',
+          finance: 'cw',
+          marketing: 'yx',
+          member: 'hy',
         },
         curMenuObject: '',
+        curBarObject: '',
         user: '',
         AllDataToParent: {},
         header: {},
         headers: {},
-        datas: [
-          [],
-          [],
-          [],
-        ],
+        datas: [],
+        barStatus: false,
+        barData: [],
+        pathNoAuth: `${development.MEMBER}error`,
       };
     },
     props: {
@@ -103,7 +135,7 @@
       },
     },
     mounted() {
-      if (typeof window !== 'undefined' && window.Vue) {
+      if (typeof window !== 'undefined') {
         window.processEnv = this.processEnv;
       }
       this.headers = Object.assign({}, this.ajaxHeaders);
@@ -112,14 +144,6 @@
       } else {
         this.getMenu();
       }
-    },
-    watch: {
-      curMenuObject: {
-        handler() {
-          this.$emit('curMenuStatus', this.curMenuObject);
-        },
-        deep: true,
-      },
     },
     methods: {
       handleData() {
@@ -134,7 +158,7 @@
             type: 'GET',
             action: this.getMenuAction,
             onSuccess: (res) => {
-              if (res.code === CONSTANT.SUCCESS) {
+              if (res.code === SUCCESS) {
                 this.afterrHandle(res.data);
               } else {
                 menuMessage.error({
@@ -155,18 +179,21 @@
         this.header = this.AllDataToParent.header;
         this.datas = this.AllDataToParent.menuList;
         this.$emit('getAllData', this.AllDataToParent);
-        if (getStorage(CONSTANT.CURMENUOBJECT)) {
-          this.curMenuObject = getStorage(CONSTANT.CURMENUOBJECT);
+        if (getStorage(CUR_MENU_OBJECT)) {
+          this.curMenuObject = getStorage(CUR_MENU_OBJECT);
         } else {
           this.curMenuObject = this.header.name;
-          setStorage(CONSTANT.CURMENUOBJECT, this.curMenuObject);
+          setStorage(CUR_MENU_OBJECT, this.curMenuObject);
+        }
+        if (getStorage(CUR_BAR_OBJECT)) {
+          this.curBarObject = getStorage(CUR_BAR_OBJECT);
         }
       },
       goToPath(item) {
         if (hOwnProperty(item, 'path')) {
           this.curMenuObject = item.name;
-          setStorage(CONSTANT.CURMENUOBJECT, this.curMenuObject);
-          if (typeof window !== 'undefined' && window.Vue) {
+          setStorage(CUR_MENU_OBJECT, this.curMenuObject);
+          if (typeof window !== 'undefined') {
             window.location.href = item.path;
           }
         }
@@ -174,15 +201,83 @@
       goToUrl(item) {
         if (hOwnProperty(item, 'url')) {
           this.curMenuObject = item.name;
-          setStorage(CONSTANT.CURMENUOBJECT, this.curMenuObject);
-          if (typeof window !== 'undefined' && window.Vue) {
+          setStorage(CUR_MENU_OBJECT, this.curMenuObject);
+          if (typeof window !== 'undefined') {
             window.open(item.url);
           }
         }
       },
+      goToBarPath(item, allData) {
+        if (hOwnProperty(item, 'path')) {
+          this.curMenuObject = allData.name;
+          this.curBarObject = item.name;
+          setStorage(CUR_MENU_OBJECT, this.curMenuObject);
+          setStorage(CUR_BAR_OBJECT, this.curBarObject);
+          if (typeof window !== 'undefined') {
+            window.location.href = item.path;
+          }
+        }
+      },
+      showTime(item) {
+        this.barStatus = true;
+        let newItem = null;
+        if (item.source.module_name === MODULE_NAME.MARKET) {
+          newItem = this.showMarket(item);
+        } else {
+          newItem = this.showData(item);
+        }
+        this.barData = newItem.source;
+      },
+      showMarket(item) {
+        const shopAuth = this.AllDataToParent.marketingauth[ALIASES.SHOP].is_auth;
+        item.source.child = [{
+          name: '促销',
+          path: `${development.ACCOUNT}salespromotion`,
+        }, {
+          name: '店铺',
+          path: shopAuth ? development.SHOP : this.pathNoAuth,
+        }, {
+          name: '分销',
+          path: development.DISTRI,
+        }, {
+          name: '其他',
+          path: `${development.ACCOUNT}theother`,
+        }];
+        return item;
+      },
+      showData(item) {
+        const {
+          dataauth,
+        } = this.AllDataToParent;
+        const shopAuth = this.AllDataToParent.dataauth;
+        item.source.child = [{
+          name: '手机号分析',
+          path: shopAuth[ALIASES.DATA_MOBILE_ANALYZE] ? `${development.DATA}mobileanalyze` : this.pathNoAuth,
+        }, {
+          name: '身份证分析',
+          path: shopAuth[ALIASES.DATA_IDENTITY_ANALYZE] ? `${development.DATA}identityanalyze` : this.pathNoAuth,
+        }, {
+          name: '数据大屏',
+          path: shopAuth ? development.DATA : this.pathNoAuth,
+        }];
+        return item;
+      },
+      hideTime() {
+        this.barStatus = false;
+        this.barData = [];
+      },
     },
     components: {
       menuMessage,
+    },
+    watch: {
+      curMenuObject: {
+        handler() {
+          this.$emit('curMenuStatus', this.curMenuObject);
+          this.$emit('curBarStatus', this.curBarObject);
+        },
+        deep: true,
+      },
     },
   };
 </script>

@@ -14,7 +14,7 @@ const install = (Vue) => {
 };
 
 
-if (typeof window !== 'undefined' && window.Vue) {
+if (typeof window !== 'undefined') {
   install(window.Vue);
 }
 
