@@ -39,6 +39,20 @@ export default (listArr, iconObj) => {
     icon: iconObj[MODULE_NAME.HOME],
   });
 
+  const handleReduce = (item, kids) => {
+    if (hOwnProperty(kids, 'children') && kids.children.length > 0) {
+      if (!hOwnProperty(obj, `${item.module_name}auth`)) {
+        obj[`${item.module_name}auth`] = {};
+      }
+      const newKidAliases = kids.children.reduce((kidKeys, kid) => {
+        kidKeys[kid.aliases] = kid;
+        handleReduce(item, kid);
+        return kidKeys;
+      }, {});
+      obj[`${item.module_name}auth`] = Object.assign(obj[`${item.module_name}auth`], newKidAliases);
+    }
+  };
+
   // 处理 报名 | 票务 | 商品 | 表单 | 订单 | 财务 | 数据中心 | 营销
   newRoot.forEach((item) => {
     const baseList = {
@@ -55,29 +69,8 @@ export default (listArr, iconObj) => {
     }
     obj.menuList.push(baseList);
     obj[item.module_name] = item.children;
-    // 如果有子级权限
-    if (hOwnProperty(item, 'children') && item.children.length > 0) {
-      obj[`${item.module_name}auth`] = {};
-      const newRootAliases = item.children.reduce((keys, child) => {
-        keys[child.aliases] = child;
-        if (hOwnProperty(child, 'children')) {
-          const newSonAliases = child.children.reduce((sonKeys, son) => {
-            sonKeys[son.aliases] = son;
-            if (hOwnProperty(son, 'children')) {
-              const newKidAliases = son.children.reduce((kidKeys, kid) => {
-                kidKeys[kid.aliases] = kid;
-                return kidKeys;
-              }, {});
-              obj[`${item.module_name}auth`] = Object.assign(obj[`${item.module_name}auth`], newKidAliases);
-            }
-            return sonKeys;
-          }, {});
-          obj[`${item.module_name}auth`] = Object.assign(obj[`${item.module_name}auth`], newSonAliases);
-        }
-        return keys;
-      }, {});
-      obj[`${item.module_name}auth`] = Object.assign(obj[`${item.module_name}auth`], newRootAliases);
-    }
+    // 如果有子级权限， 直接列岛 XXXauth 字段中，其中 XXX 代表某一权限
+    handleReduce(item, item);
   });
   return obj;
 };
