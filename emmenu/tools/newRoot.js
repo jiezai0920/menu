@@ -8,8 +8,8 @@ const {
 
 const pathDefult = {};
 // 默认每个项目跳转地址
-pathDefult[MODULE_NAME.EVENT] = `${development.ACTIVITY}activity`;
-pathDefult[MODULE_NAME.MEET] = `${development.ACTIVITY}activity`;
+pathDefult[MODULE_NAME.EVENT] = `${development.ACTIVITY}activity?nav=match`;
+pathDefult[MODULE_NAME.MEET] = `${development.ACTIVITY}activity?nav=light`;
 pathDefult[MODULE_NAME.GOODS] = `${development.GOODS}Goods/list`;
 pathDefult[MODULE_NAME.FORM] = development.FORM;
 pathDefult[MODULE_NAME.ORDER] = development.ORDER;
