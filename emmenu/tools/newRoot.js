@@ -63,6 +63,13 @@ export default (listArr, iconObj) => {
         if (hOwnProperty(child, 'children')) {
           const newSonAliases = child.children.reduce((sonKeys, son) => {
             sonKeys[son.aliases] = son;
+            if (hOwnProperty(son, 'children')) {
+              const newKidAliases = son.children.reduce((kidKeys, kid) => {
+                kidKeys[kid.aliases] = kid;
+                return kidKeys;
+              }, {});
+              obj[`${item.module_name}auth`] = Object.assign(obj[`${item.module_name}auth`], newKidAliases);
+            }
             return sonKeys;
           }, {});
           obj[`${item.module_name}auth`] = Object.assign(obj[`${item.module_name}auth`], newSonAliases);
