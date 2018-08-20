@@ -201,11 +201,11 @@ $title-color: #333;
     }
 
     &-item {
-      width: 100%;
+      width: calc(100% - 32px);
+      padding-left: 32px;
       display: block;
       line-height: 48px;
       height: 48px;
-      text-align: center;
       color: $thead-text-color;
       transition: color 0.4s, background 0.4s;
       cursor: pointer;
