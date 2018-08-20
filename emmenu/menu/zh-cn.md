@@ -20,7 +20,7 @@ export default {
   data() {
     return {
      menuAction: 'https://www.easy-mock.com/mock/59705d70a1d30433d838a12a/evente/power',
-     processValue: 'development',
+     processValue: 'testing',
      ajaxHeadersData: {
        'Authorization': 'Authorization',
      }
@@ -65,7 +65,7 @@ export default {
   data() {
     return {
       menuAction: 'https://www.easy-mock.com/mock/59705d70a1d30433d838a12a/evente/power',
-      processValue: 'development',
+      processValue: 'testing',
        ajaxHeadersData: {
          'Authorization' : 'Authorization',
        }
