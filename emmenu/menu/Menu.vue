@@ -291,8 +291,8 @@
         return item;
       },
       hideTime() {
-        // this.barStatus = false;
-        // this.barData = [];
+        this.barStatus = false;
+        this.barData = [];
       },
     },
     components: {
