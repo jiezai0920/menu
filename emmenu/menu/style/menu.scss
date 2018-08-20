@@ -201,7 +201,7 @@ $title-color: #333;
     }
 
     &-item {
-      width: calc(100% - 32px);
+      width: 100%;
       padding-left: 32px;
       display: block;
       line-height: 48px;
@@ -209,6 +209,7 @@ $title-color: #333;
       color: $thead-text-color;
       transition: color 0.4s, background 0.4s;
       cursor: pointer;
+      box-sizing: border-box !important;
 
       &:hover {
         text-decoration: none !important;
