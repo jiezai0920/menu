@@ -178,7 +178,6 @@
         this.menusData = newRoot(data, this.iconObj);
         this.header = this.menusData.header;
         this.datas = this.menusData.menuList;
-        console.log(this.menusData, 'this.menusData');
         const { dataauth } = this.menusData;
         const shopAuth = this.menusData.marketingauth[ALIASES.SHOP].is_auth;
         this.marketBar = [{
@@ -194,7 +193,6 @@
           name: '其他',
           path: `${development.ACCOUNT}theother`,
         }];
-        console.log(dataauth, 'dataauth');
         this.dataBar = [{
           name: '手机号分析',
           path: dataauth[ALIASES.DATA_MOBILE_ANALYZE] ? `${development.DATA}mobileanalyze` : this.pathNoAuth,
@@ -226,7 +224,9 @@
         // 检测主要除了 bar 之外的一级菜单
         let inSite = this.datas.filter(dataKey => href.indexOf(dataKey.path) > -1);
         // 检测头部
-        inSite = href.indexOf(this.header.path) > -1 ? [this.header] : [];
+        if (inSite.length === 0) {
+          inSite = href.indexOf(this.header.path) > -1 ? [this.header] : [];
+        }
 
         this.curMenuObject = inSite.length > 0 ? inSite[0].name : '';
         // 如果一级 不带有 bar 菜单中并未匹配到
