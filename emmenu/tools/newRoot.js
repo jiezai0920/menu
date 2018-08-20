@@ -7,24 +7,23 @@ const {
 } = CONSTANT;
 
 const pathDefult = {};
-// 默认每个项目跳转地址
-pathDefult[MODULE_NAME.EVENT] = `${development.ACTIVITY}activity?nav=match`;
-pathDefult[MODULE_NAME.MEET] = `${development.ACTIVITY}activity?nav=light`;
-pathDefult[MODULE_NAME.GOODS] = `${development.GOODS}Goods/list`;
-pathDefult[MODULE_NAME.FORM] = development.FORM;
-pathDefult[MODULE_NAME.ORDER] = development.ORDER;
-pathDefult[MODULE_NAME.MEMBER] = `${development.MEMBER}list`;
-pathDefult[MODULE_NAME.FINANCE] = development.FINANCE;
 
-const pathNoAuth = `${development.MEMBER}error`;
-
-export default (listArr, iconObj) => {
+export default (listArr, processEnv, iconObj) => {
   const obj = {
     header: {},
     menuList: [],
     control: [],
   };
   const newRoot = listArr.slice();
+  // 默认每个项目跳转地址
+  pathDefult[MODULE_NAME.EVENT] = `${development[processEnv].activity}activity?nav=match`;
+  pathDefult[MODULE_NAME.MEET] = `${development[processEnv].activity}activity?nav=light`;
+  pathDefult[MODULE_NAME.GOODS] = `${development[processEnv].goods}Goods/list`;
+  pathDefult[MODULE_NAME.FORM] = development[processEnv].form;
+  pathDefult[MODULE_NAME.ORDER] = development[processEnv].order;
+  pathDefult[MODULE_NAME.MEMBER] = `${development[processEnv].member}list`;
+  pathDefult[MODULE_NAME.FINANCE] = development[processEnv].finance;
+  const pathNoAuth = `${development[processEnv].member}error`;
   // 获取账户管理权限
   obj.control = newRoot.splice(
     newRoot.findIndex(item => item.module_name === MODULE_NAME.ACCOUNT),
@@ -35,7 +34,7 @@ export default (listArr, iconObj) => {
   newRoot.splice(newRoot.findIndex(item => item.module_name === MODULE_NAME.HOME), 1);
   obj.header = Object.assign(obj.header, {
     name: '控制台',
-    path: `${development.ACCOUNT}console`,
+    path: `${development[processEnv].account}console`,
     icon: iconObj[MODULE_NAME.HOME],
   });
 

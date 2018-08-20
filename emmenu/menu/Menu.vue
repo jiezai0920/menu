@@ -112,7 +112,7 @@
         datas: [],
         barStatus: false,
         barData: [],
-        pathNoAuth: `${development.MEMBER}error`,
+        pathNoAuth: `${development[this.processEnv].member}error`,
       };
     },
     props: {
@@ -135,9 +135,6 @@
       },
     },
     mounted() {
-      if (typeof window !== 'undefined') {
-        window.processEnv = this.processEnv;
-      }
       this.headers = Object.assign({}, this.ajaxHeaders);
       if (this.mode === 'handle') {
         this.handleData();
@@ -175,33 +172,33 @@
         }
       },
       afterrHandle(data) {
-        this.menusData = newRoot(data, this.iconObj);
+        this.menusData = newRoot(data, this.processEnv, this.iconObj);
         this.header = this.menusData.header;
         this.datas = this.menusData.menuList;
         const { dataauth } = this.menusData;
         const shopAuth = this.menusData.marketingauth[ALIASES.SHOP].is_auth;
         this.marketBar = [{
           name: '促销',
-          path: `${development.ACCOUNT}salespromotion`,
+          path: `${development[this.processEnv].account}salespromotion`,
         }, {
           name: '店铺',
-          path: shopAuth ? development.SHOP : this.pathNoAuth,
+          path: shopAuth ? development[this.processEnv].shop : this.pathNoAuth,
         }, {
           name: '分销',
-          path: development.DISTRI,
+          path: development[this.processEnv].distri,
         }, {
           name: '其他',
-          path: `${development.ACCOUNT}theother`,
+          path: `${development[this.processEnv].account}theother`,
         }];
         this.dataBar = [{
           name: '手机号分析',
-          path: dataauth[ALIASES.DATA_MOBILE_ANALYZE] ? `${development.DATA}mobileanalyze` : this.pathNoAuth,
+          path: dataauth[ALIASES.DATA_MOBILE_ANALYZE] ? `${development[this.processEnv].data}mobileanalyze` : this.pathNoAuth,
         }, {
           name: '身份证分析',
-          path: dataauth[ALIASES.DATA_IDENTITY_ANALYZE] ? `${development.DATA}identityanalyze` : this.pathNoAuth,
+          path: dataauth[ALIASES.DATA_IDENTITY_ANALYZE] ? `${development[this.processEnv].data}identityanalyze` : this.pathNoAuth,
         }, {
           name: '数据大屏',
-          path: dataauth ? `${development.DATA}profile` : this.pathNoAuth,
+          path: dataauth ? `${development[this.processEnv].data}profile` : this.pathNoAuth,
         }];
         this.$emit('getAllData', this.menusData);
 
