@@ -16,6 +16,7 @@ export default {
     MARKET: 'marketing',
     MEMBER: 'member',
     DATA: 'data',
+    SHOP: 'shop', // 店铺
   },
   ALIASES: { // 别名
     HOMEPAGE: 'homepage',

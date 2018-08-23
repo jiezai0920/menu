@@ -102,6 +102,7 @@
           finance: 'cw',
           marketing: 'yx',
           member: 'hy',
+          shop: 'dp',
         },
         curMenuObject: '',
         curBarObject: '',
