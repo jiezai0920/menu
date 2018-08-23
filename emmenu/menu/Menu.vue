@@ -63,7 +63,7 @@
       </ul>
     </div>
     <div class="w-menu-bar" :class="{['w-menu-bar-on']: barStatus}">
-      <h4 class="w-menu-bar-title" v-show="barData.name">{{barData.name}}</h4>
+      <h4 class="w-menu-bar-title" v-show="barData.name">{{barTitle[barData.module_name]}}</h4>
       <ul class="w-menu-bar-list" v-show="barData.children">
         <li class="w-menu-bar-item" :class="{on: curBarObject === child.name}" v-for="child in barData.child" @click="goToBarPath(child, barData)">{{child.name}}</li>
       </ul>
@@ -112,6 +112,10 @@
         headers: {},
         datas: [],
         barStatus: false,
+        barTitle: {
+          marketing: '营销应用',
+          data: '数据中心',
+        },
         barData: [],
         pathNoAuth: `${development[this.processEnv].member}error`,
       };
@@ -176,8 +180,9 @@
         this.menusData = newRoot(data, this.processEnv, this.iconObj);
         this.header = this.menusData.header;
         this.datas = this.menusData.menuList;
-        const { dataauth } = this.menusData;
-        const shopAuth = this.menusData.marketingauth[ALIASES.SHOP].is_auth;
+        const { dataauth = { is_auth: 0 } } = this.menusData;
+        const shopSource = this.menusData.marketingauth[ALIASES.SHOP];
+        const shopAuth = shopSource.is_auth ? shopSource.is_auth : 0;
         this.marketBar = [{
           name: '促销',
           path: `${development[this.processEnv].account}salespromotion`,
@@ -186,7 +191,7 @@
           path: shopAuth ? development[this.processEnv].shop : this.pathNoAuth,
         }, {
           name: '分销',
-          path: development[this.processEnv].distri,
+          url: development[this.processEnv].distri,
         }, {
           name: '其他',
           path: `${development[this.processEnv].account}theother`,
@@ -260,13 +265,17 @@
         }
       },
       goToBarPath(item, allData) {
-        if (hOwnProperty(item, 'path')) {
+        if (hOwnProperty(item, 'path') || hOwnProperty(item, 'url')) {
           this.curMenuObject = allData.name;
           this.curBarObject = item.name;
           setStorage(CUR_MENU_OBJECT, this.curMenuObject);
           setStorage(CUR_BAR_OBJECT, this.curBarObject);
           if (typeof window !== 'undefined') {
-            window.location.href = item.path;
+            if (hOwnProperty(item, 'url')) {
+              window.open(item.url);
+            } else {
+              window.location.href = item.path;
+            }
           }
         }
       },

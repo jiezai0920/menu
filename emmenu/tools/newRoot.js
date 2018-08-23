@@ -74,11 +74,12 @@ export default (listArr, processEnv, iconObj) => {
   });
 
   // 新增最外层的店铺显示
-  console.log(newRoot[4].children[8]);
+  const marketSource = newRoot.find(item => item.module_name === MODULE_NAME.MARKET);
+  const shopSource = marketSource.children.length > 8 ? marketSource.children[8] : { is_auth: 0 };
   const shopList = {
     name: '店铺',
     icon: iconObj.shop,
-    path: newRoot[4].children[8].is_auth ? development[processEnv].shop : pathNoAuth,
+    path: shopSource.is_auth ? development[processEnv].shop : pathNoAuth,
   };
   obj.menuList.splice(4, 0, shopList);
   return obj;
