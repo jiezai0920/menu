@@ -61,7 +61,6 @@ export default (listArr, processEnv, iconObj) => {
     };
     obj[`${item.module_name}source`] = item;
     // 如果是在事先准备好的路径中
-    console.log(hOwnProperty(pathDefult, item.module_name), MODULE_NAME.SHOP, item.module_name);
     if (hOwnProperty(pathDefult, item.module_name)) {
       // 如果有权限，如果没权限
       baseList.path = item.is_auth ? pathDefult[item.module_name] : pathNoAuth;
