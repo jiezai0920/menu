@@ -102,6 +102,7 @@
           finance: 'cw',
           marketing: 'yx',
           member: 'hy',
+          shop: 'dp',
         },
         curMenuObject: '',
         curBarObject: '',
@@ -176,14 +177,10 @@
         this.header = this.menusData.header;
         this.datas = this.menusData.menuList;
         const { dataauth } = this.menusData;
-        const shopAuth = this.menusData.marketingauth[ALIASES.SHOP].is_auth;
         this.marketBar = [{
           name: '促销',
           path: `${development[this.processEnv].account}salespromotion`,
-        }, {
-          name: '店铺',
-          path: shopAuth ? development[this.processEnv].shop : this.pathNoAuth,
-        }, {
+        },{
           name: '分销',
           path: development[this.processEnv].distri,
         }, {

@@ -23,6 +23,7 @@ export default (listArr, processEnv, iconObj) => {
   pathDefult[MODULE_NAME.ORDER] = development[processEnv].order;
   pathDefult[MODULE_NAME.MEMBER] = `${development[processEnv].member}list`;
   pathDefult[MODULE_NAME.FINANCE] = development[processEnv].finance;
+  pathDefult[MODULE_NAME.SHOP] = development[processEnv].shop;
   const pathNoAuth = `${development[processEnv].member}error`;
   // 获取账户管理权限
   obj.control = newRoot.splice(
@@ -52,7 +53,7 @@ export default (listArr, processEnv, iconObj) => {
     }
   };
 
-  // 处理 报名 | 票务 | 商品 | 表单 | 订单 | 财务 | 数据中心 | 营销
+  // 处理 报名 | 票务 | 周边 | 店铺 | 表单 | 订单 | 财务 | 数据中心 | 营销
   newRoot.forEach((item) => {
     const baseList = {
       name: item.name,
@@ -60,6 +61,7 @@ export default (listArr, processEnv, iconObj) => {
     };
     obj[`${item.module_name}source`] = item;
     // 如果是在事先准备好的路径中
+    console.log(hOwnProperty(pathDefult, item.module_name), MODULE_NAME.SHOP, item.module_name);
     if (hOwnProperty(pathDefult, item.module_name)) {
       // 如果有权限，如果没权限
       baseList.path = item.is_auth ? pathDefult[item.module_name] : pathNoAuth;
