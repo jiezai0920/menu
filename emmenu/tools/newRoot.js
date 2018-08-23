@@ -23,7 +23,7 @@ export default (listArr, processEnv, iconObj) => {
   pathDefult[MODULE_NAME.ORDER] = development[processEnv].order;
   pathDefult[MODULE_NAME.MEMBER] = `${development[processEnv].member}list`;
   pathDefult[MODULE_NAME.FINANCE] = development[processEnv].finance;
-  pathDefult[MODULE_NAME.SHOP] = development[processEnv].shop;
+  // pathDefult[MODULE_NAME.SHOP] = development[processEnv].shop;
   const pathNoAuth = `${development[processEnv].member}error`;
   // 获取账户管理权限
   obj.control = newRoot.splice(
@@ -53,7 +53,7 @@ export default (listArr, processEnv, iconObj) => {
     }
   };
 
-  // 处理 报名 | 票务 | 周边 | 店铺 | 表单 | 订单 | 财务 | 数据中心 | 营销
+  // 处理 报名 | 票务 | 周边 | 表单 | 订单 | 财务 | 数据中心 | 营销
   newRoot.forEach((item) => {
     const baseList = {
       name: item.name,
@@ -72,5 +72,14 @@ export default (listArr, processEnv, iconObj) => {
     // 如果有子级权限， 直接列岛 XXXauth 字段中，其中 XXX 代表某一权限
     handleReduce(item, item);
   });
+
+  // 新增最外层的店铺显示
+  console.log(newRoot[4].children[8]);
+  const shopList = {
+    name: '店铺',
+    icon: iconObj.shop,
+    path: newRoot[4].children[8].is_auth ? development[processEnv].shop : pathNoAuth,
+  };
+  obj.menuList.splice(4, 0, shopList);
   return obj;
 };
