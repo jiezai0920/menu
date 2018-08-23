@@ -181,7 +181,7 @@
         this.marketBar = [{
           name: '促销',
           path: `${development[this.processEnv].account}salespromotion`,
-        },{
+        }, {
           name: '店铺',
           path: shopAuth ? development[this.processEnv].shop : this.pathNoAuth,
         }, {
