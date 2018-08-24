@@ -1,8 +1,6 @@
 export default {
   EVENT_USER: 'EVENT_USER',
   EVENT_TOKE: 'Authorization',
-  CUR_MENU_OBJECT: 'curMenuObject',
-  CUR_BAR_OBJECT: 'curBarObject',
   SUCCESS: 10000,
   MODULE_NAME: { // 模块名字
     ACCOUNT: 'account',

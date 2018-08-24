@@ -166,17 +166,17 @@ $title-color: #333;
     height: calc(100% - 56px);
     position: absolute;
     top: 56px;
+    left: 96px;
     bottom: 0;
     z-index: 1;
     background: $nothing-color;
     font-size: 12px;
     width: 112px;
-    transition: left 0.3s, opacity 0.3s;
+    transition: opacity 0.2s;
     opacity: 0;
     border-right: 1px solid $bar-border-color;
 
     &-on {
-      left: 96px;
       opacity: 1;
     }
 
