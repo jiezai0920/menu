@@ -186,12 +186,21 @@
         const { dataauth = { is_auth: 0 } } = this.menusData;
         const shopSource = this.menusData.marketingauth[ALIASES.SHOP];
         const shopAuth = shopSource.is_auth ? shopSource.is_auth : 0;
+        const shopLink = shopAuth ? development[this.processEnv].shop : this.pathNoAuth;
+
+        // 处理店铺
+        this.datas.splice(4, 0, {
+          name: '店铺',
+          icon: this.iconObj.shop,
+          path: shopLink,
+        });
+        // 创建二级导航
         this.marketBar = [{
           name: '促销',
           path: `${development[this.processEnv].account}salespromotion`,
         }, {
           name: '店铺',
-          path: shopAuth ? development[this.processEnv].shop : this.pathNoAuth,
+          path: shopLink,
         }, {
           name: '分销',
           url: development[this.processEnv].distri,
