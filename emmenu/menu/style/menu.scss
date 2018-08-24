@@ -173,11 +173,11 @@ $title-color: #333;
     font-size: 12px;
     width: 112px;
     transition: opacity 0.2s;
-    opacity: 0;
+    display: none;
     border-right: 1px solid $bar-border-color;
 
     &-on {
-      opacity: 1;
+      display: block;
     }
 
     &-title {
