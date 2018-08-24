@@ -14,7 +14,7 @@
 ```
 
 ``` js
-import WMenu from './index';
+import WMenu from './emmenu';
 
 export default {
   data() {
@@ -46,6 +46,7 @@ export default {
 |---|----|---|-------|-----|
 |getMenuAction|获取菜单接口|String|是|-|
 |processEnv|环境变量|String|是|development|
+|hideBarMode|是否显示 bar 子菜单|Boolean|否|false|
 |ajaxHeaders|获取菜单接口header信息|Object|否|{}|
 |handleMenu|mode 为 handle 的时候，要处理的数据|Object|否|-|
 |mode|handle: 只处理 handleMenu 参数传过来的数据， ajax 调用 v2 权限接口并处理数据 |String|否|handle|
@@ -59,7 +60,7 @@ export default {
 |curBarStatus|获取当前选中子级的菜单名称|-|
 
 <script>
-import WMenu from './index';
+import WMenu from './menu';
 
 export default {
   data() {

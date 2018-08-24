@@ -1,8 +1,10 @@
 // 组件
-import WMenu from './menu/index';
+import WMenu from './menu/emmenu';
+import WBar from './menu/embar';
 
 const waterCpt = {
   WMenu,
+  WBar,
 };
 
 const install = (Vue) => {

@@ -62,12 +62,7 @@
         </template>
       </ul>
     </div>
-    <div class="w-menu-bar" :class="{['w-menu-bar-on']: barStatus}">
-      <h4 class="w-menu-bar-title" v-show="barData.name">{{barTitle[barData.module_name]}}</h4>
-      <ul class="w-menu-bar-list" v-show="barData.children">
-        <li class="w-menu-bar-item" :class="{on: curBarObject === child.name}" v-for="child in barData.child" @click="goToBarPath(child, barData)">{{child.name}}</li>
-      </ul>
-    </div>
+    <bar :data="barData" :status="barStatus" :name="curMenuObject" />
   </div>
 </template>
 <script>
@@ -75,15 +70,13 @@
   import CONSTANT from './common/constant';
   import ajax from '../tools/ajax';
   import newRoot from '../tools/newRoot';
-  import { setStorage, getStorage } from '../tools/localstorage';
   import menuMessage from './component/message/index';
+  import bar from './Bar';
   import development from '../menu/common/development';
 
   const {
     ALIASES,
     MODULE_NAME,
-    CUR_MENU_OBJECT,
-    CUR_BAR_OBJECT,
     SUCCESS,
   } = CONSTANT;
 
@@ -112,11 +105,13 @@
         headers: {},
         datas: [],
         barStatus: false,
+        barMode: false,
+        barName: '',
         barTitle: {
           marketing: '营销应用',
           data: '数据中心',
         },
-        barData: [],
+        barData: {},
         pathNoAuth: `${development[this.processEnv].member}error`,
       };
     },
@@ -138,8 +133,13 @@
           return {};
         },
       },
+      hideBarName: {
+        type: String,
+        default: 'all',
+      },
     },
     mounted() {
+      this.updateBarMode(this.hideBarName);
       this.headers = Object.assign({}, this.ajaxHeaders);
       if (this.mode === 'handle') {
         this.handleData();
@@ -152,6 +152,9 @@
         if (this.handleMenu) {
           this.afterrHandle(this.handleMenu);
         }
+      },
+      updateBarMode(val) {
+        this.barMode = val;
       },
       getMenu() {
         if (this.getMenuAction) {
@@ -207,16 +210,7 @@
           path: dataauth ? `${development[this.processEnv].data}profile` : this.pathNoAuth,
         }];
         this.$emit('getAllData', this.menusData);
-
-        if (getStorage(CUR_MENU_OBJECT)) {
-          this.curMenuObject = getStorage(CUR_MENU_OBJECT);
-        } else {
-          this.curMenuObject = this.header.name;
-          setStorage(CUR_MENU_OBJECT, this.curMenuObject);
-        }
-        if (getStorage(CUR_BAR_OBJECT)) {
-          this.curBarObject = getStorage(CUR_BAR_OBJECT);
-        }
+        // 检测匹配
         this.matchUrl();
       },
       // 如果直接按浏览器返回按钮，状态会失效
@@ -249,7 +243,6 @@
       goToPath(item) {
         if (hOwnProperty(item, 'path')) {
           this.curMenuObject = item.name;
-          setStorage(CUR_MENU_OBJECT, this.curMenuObject);
           if (typeof window !== 'undefined') {
             window.location.href = item.path;
           }
@@ -258,36 +251,23 @@
       goToUrl(item) {
         if (hOwnProperty(item, 'url')) {
           this.curMenuObject = item.name;
-          setStorage(CUR_MENU_OBJECT, this.curMenuObject);
           if (typeof window !== 'undefined') {
             window.open(item.url);
           }
         }
       },
-      goToBarPath(item, allData) {
-        if (hOwnProperty(item, 'path') || hOwnProperty(item, 'url')) {
-          this.curMenuObject = allData.name;
-          this.curBarObject = item.name;
-          setStorage(CUR_MENU_OBJECT, this.curMenuObject);
-          setStorage(CUR_BAR_OBJECT, this.curBarObject);
-          if (typeof window !== 'undefined') {
-            if (hOwnProperty(item, 'url')) {
-              window.open(item.url);
-            } else {
-              window.location.href = item.path;
-            }
-          }
-        }
-      },
       showTime(item) {
-        this.barStatus = true;
-        let newItem = null;
-        if (item.source.module_name === MODULE_NAME.MARKET) {
-          newItem = this.showMarket(item);
-        } else {
-          newItem = this.showData(item);
+        if (this.hideBarName !== item.name) {
+          this.barName = item.name;
+          this.barStatus = true;
+          let newItem = null;
+          if (item.source.module_name === MODULE_NAME.MARKET) {
+            newItem = this.showMarket(item);
+          } else {
+            newItem = this.showData(item);
+          }
+          this.barData = newItem.source;
         }
-        this.barData = newItem.source;
       },
       showMarket(item) {
         item.source.child = this.marketBar.slice();
@@ -298,12 +278,16 @@
         return item;
       },
       hideTime() {
-        this.barStatus = false;
-        this.barData = [];
+        if (this.hideBarName !== this.barName) {
+          this.barStatus = false;
+          this.barName = '';
+          this.barData = {};
+        }
       },
     },
     components: {
       menuMessage,
+      bar,
     },
     watch: {
       curMenuObject: {
@@ -312,6 +296,9 @@
           this.$emit('curBarStatus', this.curBarObject);
         },
         deep: true,
+      },
+      hideBarName(val) {
+        this.updateBarMode(val);
       },
     },
   };
