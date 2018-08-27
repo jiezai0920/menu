@@ -40,9 +40,9 @@
         if (isGetStorage) {
           try {
             const cacheData = getStorage(CONSTANT[`${val.toUpperCase()}_BAR`]) || '{}';
-            this[attr] = cacheData.split(',,').map(item=> JSON.parse(item));
+            this[attr] = cacheData.split(',,').map(item => JSON.parse(item));
           } catch (e) {
-
+            this[attr] = [];
           }
         }
       },

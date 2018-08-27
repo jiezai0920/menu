@@ -256,13 +256,13 @@
       },
       barClick(item) {
         if (this.hideBarName !== item.name) {
-          let newItem;
+          let newItem = null;
           if (item.source.module_name === MODULE_NAME.MARKET) {
-            newItem = this.marketBar[0];
+            newItem = this.marketBar;
           } else {
-            newItem = this.dataBar[0];
+            newItem = this.dataBar;
           }
-          window.location.href = newItem.path;
+          window.location.href = newItem[0].path;
         }
       },
       showTime(item) {
