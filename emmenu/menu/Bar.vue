@@ -38,7 +38,12 @@
       modifyAttr(attr, val, isGetStorage = false) {
         this[attr] = val;
         if (isGetStorage) {
-          this[attr] = getStorage(CONSTANT[`${val.toUpperCase()}_BAR`]).split(',,').map(item=> JSON.parse(item)) || '';
+          try {
+            const cacheData = getStorage(CONSTANT[`${val.toUpperCase()}_BAR`]) || '{}';
+            this[attr] = cacheData.split(',,').map(item=> JSON.parse(item));
+          } catch (e) {
+
+          }
         }
       },
       goToBarPath(item, allData) {
