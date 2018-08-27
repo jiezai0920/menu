@@ -50,14 +50,6 @@ $title-color: #333;
     cursor: pointer;
     font-weight: 400;
 
-    &:hover {
-      background: rgba(255, 255, 255, 0.2);
-
-      & .w-menu-text {
-        opacity: 1;
-      }
-    }
-
     &-link {
       height: 100%;
       line-height: 18px;
@@ -74,6 +66,7 @@ $title-color: #333;
     }
 
     &:active,
+    &:hover,
     &-on {
       background: $menu-on-bg;
 
@@ -91,10 +84,12 @@ $title-color: #333;
         color: $title-color;
       }
 
-      & .w-menu-icon {
-        &::before {
-          color: $title-color;
-        }
+      & .w-menu-list-li-img:nth-of-type(1) {
+        display: block;
+      }
+
+      & .w-menu-list-li-img:nth-of-type(2) {
+        display: none;
       }
     }
   }
@@ -119,17 +114,18 @@ $title-color: #333;
 
       &-img {
         width: 18px;
-      }
 
-      &:hover {
-        background: rgba(255, 255, 255, 0.2);
+        &:nth-of-type(1) {
+          display: none;
+        }
 
-        & .w-menu-text {
-          opacity: 1;
+        &:nth-of-type(2) {
+          display: block;
         }
       }
 
       &:active,
+      &:hover,
       &-on {
         background: $menu-on-bg;
 
@@ -140,12 +136,6 @@ $title-color: #333;
             opacity: 1;
             color: $title-color;
           }
-
-          & .w-menu-icon {
-            &::before {
-              color: $title-color;
-            }
-          }
         }
 
         & .w-menu-text {
@@ -153,10 +143,12 @@ $title-color: #333;
           color: $title-color;
         }
 
-        & .w-menu-icon {
-          &::before {
-            color: $title-color;
-          }
+        & .w-menu-list-li-img:nth-of-type(1) {
+          display: block;
+        }
+
+        & .w-menu-list-li-img:nth-of-type(2) {
+          display: none;
         }
       }
     }
