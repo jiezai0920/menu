@@ -3,50 +3,33 @@
   @mouseleave="hideTime()">
     <div class="w-menu-main">
       <h3 class="w-menu-header" :class="{'w-menu-header-on': curMenuObject === header.name}">
-        <router-link v-if="header.router" :to="header.router" class="w-menu-header-link"
-                     exact-active-class="w-menu-header-on">
+        <div class="w-menu-header-link" @click="goToPath(header)">
           <img class="w-menu-list-li-img" v-bind:src="require('./img/'+header.icon+'_selected.png')"
-               v-if="header.icon && curMenuObject === header.name">
+               v-if="header.icon">
           <img class="w-menu-list-li-img" v-bind:src="require('./img/'+header.icon+'_normal.png')"
-               v-if="header.icon && curMenuObject !== header.name">
-          <span class="w-menu-header-text">{{header.name}}</span>
-        </router-link>
-        <div v-else class="w-menu-header-link" @click="goToPath(header)">
-          <img class="w-menu-list-li-img" v-bind:src="require('./img/'+header.icon+'_selected.png')"
-               v-if="header.icon && curMenuObject === header.name">
-          <img class="w-menu-list-li-img" v-bind:src="require('./img/'+header.icon+'_normal.png')"
-               v-if="header.icon && curMenuObject !== header.name">
+               v-if="header.icon">
           <span class="w-menu-header-text">{{header.name}}</span>
         </div>
       </h3>
       <ul class="w-menu-list">
         <template v-for="(item, itemIndex) in datas">
-          <router-link v-if="item.router" class="w-menu-list-li" :to="item.router" tag="li"
-                       exact-active-class="w-menu-list-li-on"
-                       @mouseenter="hideTime()">
-            <img class="w-menu-list-li-img" v-bind:src="require('./img/'+item.icon+'_selected.png')"
-                 v-if="item.icon && curMenuObject === item.name">
-            <img class="w-menu-list-li-img" v-bind:src="require('./img/'+item.icon+'_normal.png')"
-                 v-if="item.icon && curMenuObject !== item.name">
-            <span class="w-menu-text">{{item.name}}</span>
-          </router-link>
-          <li v-else-if="item.path" class="w-menu-list-li"
+          <li v-if="item.path" class="w-menu-list-li"
               :class="{'w-menu-list-li-on': curMenuObject === item.name}"
               @click="goToPath(item)"
               @mouseenter="hideTime()">
             <img class="w-menu-list-li-img" v-bind:src="require('./img/'+item.icon+'_selected.png')"
-                 v-if="item.icon && curMenuObject === item.name">
+                 v-if="item.icon">
             <img class="w-menu-list-li-img" v-bind:src="require('./img/'+item.icon+'_normal.png')"
-                 v-if="item.icon && curMenuObject !== item.name">
+                 v-if="item.icon">
             <span class="w-menu-text">{{item.name}}</span>
           </li>
           <li v-else-if="item.source" class="w-menu-list-li"
               :class="{'w-menu-list-li-on': curMenuObject === item.name}"
-              @mouseenter="showTime(item)">
+              @mouseenter="showTime(item)" @click="barClick(item)">
             <img class="w-menu-list-li-img" v-bind:src="require('./img/'+item.icon+'_selected.png')"
-                 v-if="item.icon && curMenuObject === item.name">
+                 v-if="item.icon">
             <img class="w-menu-list-li-img" v-bind:src="require('./img/'+item.icon+'_normal.png')"
-                 v-if="item.icon && curMenuObject !== item.name">
+                 v-if="item.icon">
             <span class="w-menu-text">{{item.name}}</span>
           </li>
           <li v-else-if="item.url" class="w-menu-list-li"
@@ -54,9 +37,9 @@
               @click="goToUrl(item)"
               @mouseenter="hideTime()">
             <img class="w-menu-list-li-img" v-bind:src="require('./img/'+item.icon+'_selected.png')"
-                 v-if="item.icon && curMenuObject === item.name">
+                 v-if="item.icon">
             <img class="w-menu-list-li-img" v-bind:src="require('./img/'+item.icon+'_normal.png')"
-                 v-if="item.icon && curMenuObject !== item.name">
+                 v-if="item.icon">
             <span class="w-menu-text">{{item.name}}</span>
           </li>
         </template>
@@ -70,6 +53,7 @@
   import CONSTANT from './common/constant';
   import ajax from '../tools/ajax';
   import newRoot from '../tools/newRoot';
+  import { setStorage } from '../tools/localstorage';
   import menuMessage from './component/message/index';
   import bar from './Bar';
   import development from '../menu/common/development';
@@ -78,6 +62,8 @@
     ALIASES,
     MODULE_NAME,
     SUCCESS,
+    MARKETING_BAR,
+    DATA_BAR,
   } = CONSTANT;
 
   export default {
@@ -218,6 +204,9 @@
           name: '数据大屏',
           path: dataauth ? `${development[this.processEnv].data}profile` : this.pathNoAuth,
         }];
+        // 记录二级导航数据
+        setStorage(MARKETING_BAR, this.marketBar.slice().map(item => JSON.stringify(item)).join(',,'));
+        setStorage(DATA_BAR, this.dataBar.slice().map(item => JSON.stringify(item)).join(',,'));
         this.$emit('getAllData', this.menusData);
         // 检测匹配
         this.matchUrl();
@@ -263,6 +252,17 @@
           if (typeof window !== 'undefined') {
             window.open(item.url);
           }
+        }
+      },
+      barClick(item) {
+        if (this.hideBarName !== item.name) {
+          let newItem;
+          if (item.source.module_name === MODULE_NAME.MARKET) {
+            newItem = this.marketBar[0];
+          } else {
+            newItem = this.dataBar[0];
+          }
+          window.location.href = newItem.path;
         }
       },
       showTime(item) {
