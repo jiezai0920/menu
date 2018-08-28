@@ -8,8 +8,8 @@
 </div>
 
 ``` vue
-<div>
-   <w-menu mode="ajax" :getMenuAction="menuAction" :processEnv="processValue" :ajaxHeaders="ajaxHeadersData" @getAllData="getAllData" @curMenuStatus="getCurMenu"></w-menu>
+<div style="height:500px;">
+  <w-bar class="demo-bar" name="数据大屏" data="data" :status="true"></w-bar>
 </div>
 ```
 
@@ -26,7 +26,7 @@ export default {
 ## w-menu 案例演示
 
 <div>
-  <w-menu class="demo-menu" mode="ajax" :getMenuAction="menuAction" :processEnv="processValue" :ajaxHeaders="ajaxHeadersData" @getAllData="getAllData" @curMenuStatus="getCurMenu"></w-menu>
+  <w-menu class="demo-menu" mode="ajax" :getMenuAction="menuAction" :processEnv="processValue" :ajaxHeaders="ajaxHeadersData" @getAllData="getAllData" @curMenuStatus="getCurMenu" curMenu="报名" curBar="数据大屏"></w-menu>
 </div>
 
 ``` vue
@@ -72,6 +72,8 @@ export default {
 |ajaxHeaders|获取菜单接口header信息|Object|否|{}|
 |handleMenu|mode 为 handle 的时候，要处理的数据|Object|否|-|
 |mode|handle: 只处理 handleMenu 参数传过来的数据， ajax 调用 v2 权限接口并处理数据 |String|否|handle|
+|curMenu|当前菜单名字|String|否|-|
+|curBar|当前二级菜单名字|String|否|-|
 
 ## w-menu 方法
 

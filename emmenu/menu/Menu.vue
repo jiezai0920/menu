@@ -119,6 +119,8 @@
           return {};
         },
       },
+      curMenu: '',
+      curBar: '',
       hideBarName: {
         type: String,
         default: 'all',
@@ -236,6 +238,13 @@
           inSite = this.dataBar.filter(dataKey => href.indexOf(dataKey.path) > -1);
           this.curMenuObject = inSite.length > 0 ? '数据' : '';
           this.curBarObject = inSite.length > 0 ? inSite[0].name : '';
+        }
+        // 顶替名字
+        if (this.curMenu) {
+          this.curMenuObject = this.curMenu;
+        }
+        if (this.curBar) {
+          this.curBarObject = this.curBar;
         }
       },
       goToPath(item) {
