@@ -3,6 +3,7 @@ export default {
   EVENT_TOKE: 'Authorization',
   SUCCESS: 10000,
   MARKETING_BAR: 'EVENT_MARKETING_BAR',
+  IS_AUTH_URL: 'IS_AUTH_URL',
   DATA_BAR: 'EVENT_DATA_BAR',
   MODULE_NAME: { // 模块名字
     ACCOUNT: 'account',
