@@ -1,11 +1,9 @@
 import hOwnProperty from 'em-underline/hOwnProperty';
 import development from '../menu/common/development';
 import CONSTANT from '../menu/common/constant';
-import { setStorage } from './localstorage';
 
 const {
   MODULE_NAME,
-  IS_AUTH_URL,
 } = CONSTANT;
 
 const pathDefult = {};
@@ -65,10 +63,6 @@ export default (listArr, processEnv, iconObj) => {
     // 如果是在事先准备好的路径中
     if (hOwnProperty(pathDefult, item.module_name)) {
       // 如果有权限，如果没权限
-      if(!item.is_auth){
-        setStorage(IS_AUTH_URL,item);
-      }
-      console.log('item',item);
       baseList.path = item.is_auth ? pathDefult[item.module_name] : pathNoAuth;
     } else {
       baseList.source = item;
