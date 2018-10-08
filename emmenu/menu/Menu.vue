@@ -251,7 +251,11 @@
         if (hOwnProperty(item, 'path')) {
           this.curMenuObject = item.name;
           if (typeof window !== 'undefined') {
-            window.location.href = item.path;
+            if(item.name === '会员'){
+              window.open(item.path);
+            } else {
+              window.location.href = item.path;
+            }
           }
         }
       },
