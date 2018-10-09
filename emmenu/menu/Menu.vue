@@ -257,7 +257,6 @@
         }
       },
       goToPath(item) {
-        console.log('item1', item);
         if (hOwnProperty(item, 'path')) {
           if (item.no_auth) {
             window.open(item.path);
@@ -274,7 +273,6 @@
         }
       },
       goToUrl(item) {
-        console.log('item2', item);
         if (item.no_auth) {
           window.open(item.path);
           return
@@ -287,7 +285,6 @@
         }
       },
       barClick(item) {
-        console.log('item3', item);
         if (item.no_auth) {
           window.open(item.path);
           return
