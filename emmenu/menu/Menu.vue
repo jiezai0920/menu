@@ -177,11 +177,20 @@
         const shopLink = shopAuth ? development[this.processEnv].shop : this.pathNoAuth;
 
         // 处理店铺
-        this.datas.splice(4, 0, {
-          name: '店铺',
-          icon: this.iconObj.shop,
-          path: shopLink,
-        });
+        if (shopAuth) {
+          this.datas.splice(4, 0, {
+            name: '店铺',
+            icon: this.iconObj.shop,
+            path: shopLink,
+          });
+        } else {
+          this.datas.splice(4, 0, {
+            name: '店铺',
+            icon: this.iconObj.shop,
+            path: shopLink,
+            no_auth: true,
+          });
+        }
         // 创建二级导航
         this.marketBar = [{
           name: '促销',
@@ -248,7 +257,12 @@
         }
       },
       goToPath(item) {
+        console.log('item1', item);
         if (hOwnProperty(item, 'path')) {
+          if (item.no_auth) {
+            window.open(item.path);
+            return
+          }
           this.curMenuObject = item.name;
           if (typeof window !== 'undefined') {
             if(item.name === '会员'){
@@ -260,6 +274,11 @@
         }
       },
       goToUrl(item) {
+        console.log('item2', item);
+        if (item.no_auth) {
+          window.open(item.path);
+          return
+        }
         if (hOwnProperty(item, 'url')) {
           this.curMenuObject = item.name;
           if (typeof window !== 'undefined') {
@@ -268,6 +287,11 @@
         }
       },
       barClick(item) {
+        console.log('item3', item);
+        if (item.no_auth) {
+          window.open(item.path);
+          return
+        }
         if (this.hideBarName !== item.name) {
           let newItem = null;
           if (item.source.module_name === MODULE_NAME.MARKET) {

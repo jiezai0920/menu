@@ -63,7 +63,7 @@ export default (listArr, processEnv, iconObj) => {
     // 如果是在事先准备好的路径中
     if (hOwnProperty(pathDefult, item.module_name)) {
       // 如果有权限，如果没权限
-      baseList.path = item.is_auth ? pathDefult[item.module_name] : pathNoAuth;
+      baseList.path = item.is_auth ? pathDefult[item.module_name] : (pathNoAuth, baseList.no_auth=true);
     } else {
       baseList.source = item;
     }
