@@ -177,20 +177,15 @@
         const shopLink = shopAuth ? development[this.processEnv].shop : this.pathNoAuth;
 
         // 处理店铺
-        if (shopAuth) {
-          this.datas.splice(4, 0, {
-            name: '店铺',
-            icon: this.iconObj.shop,
-            path: shopLink,
-          });
-        } else {
-          this.datas.splice(4, 0, {
-            name: '店铺',
-            icon: this.iconObj.shop,
-            path: shopLink,
-            no_auth: true,
-          });
+        let curObject= {
+          name: '店铺',
+          icon: this.iconObj.shop,
+          path: shopLink,
+        };
+        if (!shopAuth) {
+          curObject.noAuth = true;
         }
+        this.datas.splice(4, 0, curObject);
         // 创建二级导航
         this.marketBar = [{
           name: '促销',
@@ -258,13 +253,13 @@
       },
       goToPath(item) {
         if (hOwnProperty(item, 'path')) {
-          if (item.no_auth) {
+          if (item.noAuth) {
             window.open(item.path);
-            return
+            return;
           }
           this.curMenuObject = item.name;
           if (typeof window !== 'undefined') {
-            if(item.name === '会员'){
+            if (item.name === '会员') {
               window.open(item.path);
             } else {
               window.location.href = item.path;
@@ -273,11 +268,11 @@
         }
       },
       goToUrl(item) {
-        if (item.no_auth) {
-          window.open(item.path);
-          return
-        }
         if (hOwnProperty(item, 'url')) {
+          if (item.noAuth) {
+            window.open(item.path);
+            return;
+          }
           this.curMenuObject = item.name;
           if (typeof window !== 'undefined') {
             window.open(item.url);
@@ -285,9 +280,9 @@
         }
       },
       barClick(item) {
-        if (item.no_auth) {
+        if (item.noAuth) {
           window.open(item.path);
-          return
+          return;
         }
         if (this.hideBarName !== item.name) {
           let newItem = null;
