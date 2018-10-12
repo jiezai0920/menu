@@ -67,7 +67,7 @@ export default (listArr, processEnv, iconObj) => {
         baseList.path = pathDefult[item.module_name];
       } else {
         baseList.path = pathNoAuth;
-        baseList.noAuth=true;
+        baseList.noAuth = true;
       }
     } else {
       baseList.source = item;
