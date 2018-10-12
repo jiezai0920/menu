@@ -177,7 +177,7 @@
         const shopLink = shopAuth ? development[this.processEnv].shop : this.pathNoAuth;
 
         // 处理店铺
-        let curObject= {
+        const curObject = {
           name: '店铺',
           icon: this.iconObj.shop,
           path: shopLink,
