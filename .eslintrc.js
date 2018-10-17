@@ -36,7 +36,7 @@ module.exports = {
     "no-plusplus": "off",
     // allow optionalDependencies
     "import/no-extraneous-dependencies": ["error", {
-      "optionalDependencies": ["test/unit/cookie.js"]
+      "optionalDependencies": ["test/unit/index.js"]
     }],
     "no-param-reassign": ["error", { "props": false }],
     // allow debugger during development
