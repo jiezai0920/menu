@@ -94,64 +94,6 @@
           '周边': `${development[this.processEnv].goods}list`,
           '订单': `${development[this.processEnv].order}allorder`,
         },
-        barArr: [
-          {
-            name: '控制台',
-            path: '',
-            processEnv: 'ACCOUNT',
-          },
-          {
-            name: '报名',
-            path: '',
-            processEnv: 'ACTIVITY',
-          },
-          {
-            name: '票务',
-            path: 'overview',
-            processEnv: 'EVENTT',
-          },
-          {
-            name: '表单',
-            path: '',
-            processEnv: 'FORM',
-          },
-          {
-            name: '店铺',
-            path: 'list',
-            processEnv: 'SHOP',
-          },
-          {
-            name: '营销',
-            path: `salespromotion`,
-            processEnv: 'ACCOUNT',
-          },
-
-          {
-            name: '会员',
-            path: `list`,
-            processEnv: 'MEMBER',
-          },
-          {
-            name: '数据',
-            path: `mobileanalyze`,
-            processEnv: 'DATA',
-          },
-          {
-            name: '财务',
-            path: `overview`,
-            processEnv:'FINANCE'
-          },
-          {
-            name: '周边',
-            path: `list`,
-            processEnv:'GOODS'
-          },
-          {
-            name: '订单',
-            path: `allorder`,
-            processEnv:'ORDER'
-          }
-        ],
         curMenuObject: '',
         curBarObject: '',
         user: '',
@@ -331,12 +273,6 @@
           this.curMenuObject = item.name;
           window.$cookie.set("CURMENUNAME", item.name);
           if (typeof window !== 'undefined') {
-            // this.barArr.forEach((barItem)=>{
-            //   if (barItem.name==item.name) {
-            //     let n=`${development[this.processEnv][this.barItem.processEnv]}${item.path}`;
-            //     setStorage('activeBarUrl', n);
-            //   }
-            // });
             let activeBarUrl = this.barObject[item.name];
             window.$cookie.set("ACTIVEBARURL", activeBarUrl);
             if (item.name === '会员') {
@@ -357,7 +293,6 @@
           window.$cookie.set("CURMENUNAME", item.name);
           if (typeof window !== 'undefined') {
             let activeBarUrl = this.barObject[item.name];
-            //setStorage('activeBarUrl', activeBarUrl);
             window.$cookie.set("ACTIVEBARURL", activeBarUrl);
             window.open(item.url);
           }
@@ -368,7 +303,6 @@
           window.open(item.path);
           return;
         }
-        // if (this.hideBarName !== item.name) {
         let newItem = null;
         this.curMenuObject = item.name;
         window.$cookie.set("CURMENUNAME", item.name);
@@ -378,10 +312,8 @@
           newItem = this.dataBar;
         }
         let activeBarUrl = this.barObject[item.name];
-        //setStorage('activeBarUrl', activeBarUrl);
         window.$cookie.set("ACTIVEBARURL", activeBarUrl);
         window.location.href = newItem[0].path;
-        // }
       },
       showTime(item) {
         if (this.hideBarName !== item.name) {
