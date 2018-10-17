@@ -9,7 +9,7 @@
 <script>
   import hOwnProperty from 'em-underline/hOwnProperty';
   import { getStorage } from '../tools/localstorage';
-  import { VueCookies } from '../tools/cookie'
+  import VueCookies from '../tools/cookie'
   import CONSTANT from './common/constant';
 
   export default {
@@ -44,6 +44,7 @@
       name: String,
     },
     mounted() {
+      window.$cookie = VueCookies;
       this.modifyAttr('barStatus', this.status);
       this.modifyAttr('barData', this.data, typeof this.data === 'string');
       this.modifyAttr('curName', this.name);

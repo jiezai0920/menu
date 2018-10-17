@@ -54,7 +54,7 @@
   import ajax from '../tools/ajax';
   import newRoot from '../tools/newRoot';
   import { setStorage } from '../tools/localstorage';
-  import { VueCookies } from '../tools/cookie'
+  import VueCookies from '../tools/cookie'
   import menuMessage from './component/message/index';
   import bar from './Bar';
   import development from '../menu/common/development';
@@ -141,6 +141,7 @@
       },
     },
     mounted() {
+      window.$cookie = VueCookies;
       this.updateBarMode(this.hideBarName);
       this.headers = Object.assign({}, this.ajaxHeaders);
       if (this.mode === 'handle') {
