@@ -54,9 +54,11 @@
   import ajax from '../tools/ajax';
   import newRoot from '../tools/newRoot';
   import { setStorage } from '../tools/localstorage';
+  import { VueCookies } from '../tools/cookie'
   import menuMessage from './component/message/index';
   import bar from './Bar';
   import development from '../menu/common/development';
+
   const {
     ALIASES,
     MODULE_NAME,
@@ -64,6 +66,7 @@
     MARKETING_BAR,
     DATA_BAR,
   } = CONSTANT;
+
   export default {
     name: 'WMenu',
     data() {
@@ -191,7 +194,7 @@
         const shopAuth = shopSource.is_auth ? shopSource.is_auth : 0;
         const shopLink = shopAuth ? development[this.processEnv].shop : this.pathNoAuth;
         // 处理店铺
-        let curObject= {
+        let curObject = {
           name: '店铺',
           icon: this.iconObj.shop,
           path: shopLink,

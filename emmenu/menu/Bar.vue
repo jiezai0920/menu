@@ -9,7 +9,9 @@
 <script>
   import hOwnProperty from 'em-underline/hOwnProperty';
   import { getStorage } from '../tools/localstorage';
+  import { VueCookies } from '../tools/cookie'
   import CONSTANT from './common/constant';
+
   export default {
     name: 'WBar',
     data() {
