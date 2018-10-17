@@ -1,6 +1,6 @@
 <template>
   <div class="w-menu" :class="{[`${prefix}-menu`]: !!prefix}" ref="menu"
-  @mouseleave="hideTime()">
+       @mouseleave="hideTime()">
     <div class="w-menu-main">
       <h3 class="w-menu-header" :class="{'w-menu-header-on': curMenuObject === header.name}">
         <div class="w-menu-header-link" @click="goToPath(header)">
@@ -57,7 +57,6 @@
   import menuMessage from './component/message/index';
   import bar from './Bar';
   import development from '../menu/common/development';
-
   const {
     ALIASES,
     MODULE_NAME,
@@ -65,7 +64,6 @@
     MARKETING_BAR,
     DATA_BAR,
   } = CONSTANT;
-
   export default {
     name: 'WMenu',
     data() {
@@ -83,6 +81,77 @@
           member: 'hy',
           shop: 'dp',
         },
+        barObject:{
+          '控制台':`${development[this.processEnv].account}`,
+          '报名': `${development[this.processEnv].activity}`,
+          '票务': `${development[this.processEnv].event}overview`,
+          '表单': `${development[this.processEnv].form}`,
+          '店铺': `${development[this.processEnv].shop}list`,
+          '营销': `${development[this.processEnv].account}salespromotion`,
+          '会员': `${development[this.processEnv].member}list`,
+          '数据': `${development[this.processEnv].data}mobileanalyze`,
+          '财务': `${development[this.processEnv].finance}overview`,
+          '周边': `${development[this.processEnv].goods}list`,
+          '订单': `${development[this.processEnv].order}allorder`,
+        },
+        barArr: [
+          {
+            name: '控制台',
+            path: '',
+            processEnv: 'ACCOUNT',
+          },
+          {
+            name: '报名',
+            path: '',
+            processEnv: 'ACTIVITY',
+          },
+          {
+            name: '票务',
+            path: 'overview',
+            processEnv: 'EVENTT',
+          },
+          {
+            name: '表单',
+            path: '',
+            processEnv: 'FORM',
+          },
+          {
+            name: '店铺',
+            path: 'list',
+            processEnv: 'SHOP',
+          },
+          {
+            name: '营销',
+            path: `salespromotion`,
+            processEnv: 'ACCOUNT',
+          },
+
+          {
+            name: '会员',
+            path: `list`,
+            processEnv: 'MEMBER',
+          },
+          {
+            name: '数据',
+            path: `mobileanalyze`,
+            processEnv: 'DATA',
+          },
+          {
+            name: '财务',
+            path: `overview`,
+            processEnv:'FINANCE'
+          },
+          {
+            name: '周边',
+            path: `list`,
+            processEnv:'GOODS'
+          },
+          {
+            name: '订单',
+            path: `allorder`,
+            processEnv:'ORDER'
+          }
+        ],
         curMenuObject: '',
         curBarObject: '',
         user: '',
@@ -134,6 +203,10 @@
       } else {
         this.getMenu();
       }
+      if (!window.$cookie.get("CURMENUNAME")) {
+        window.$cookie.set("CURMENUNAME", '控制台');
+      }
+      this.curMenuObject = window.$cookie.get("CURMENUNAME");
     },
     methods: {
       handleData() {
@@ -175,13 +248,16 @@
         const shopSource = this.menusData.marketingauth[ALIASES.SHOP];
         const shopAuth = shopSource.is_auth ? shopSource.is_auth : 0;
         const shopLink = shopAuth ? development[this.processEnv].shop : this.pathNoAuth;
-
         // 处理店铺
-        this.datas.splice(4, 0, {
+        let curObject= {
           name: '店铺',
           icon: this.iconObj.shop,
           path: shopLink,
-        });
+        };
+        if (!shopAuth) {
+          curObject.noAuth = true;
+        }
+        this.datas.splice(4, 0, curObject);
         // 创建二级导航
         this.marketBar = [{
           name: '促销',
@@ -211,7 +287,7 @@
         setStorage(DATA_BAR, this.dataBar.slice().map(item => JSON.stringify(item)).join(',,'));
         this.$emit('getAllData', this.menusData);
         // 检测匹配
-        this.matchUrl();
+        //this.matchUrl();
       },
       // 如果直接按浏览器返回按钮，状态会失效
       matchUrl() {
@@ -224,7 +300,6 @@
         if (inSite.length === 0) {
           inSite = href.indexOf(this.header.path) > -1 ? [this.header] : [];
         }
-
         this.curMenuObject = inSite.length > 0 ? inSite[0].name : '';
         // 如果一级 不带有 bar 菜单中并未匹配到
         // 匹配营销
@@ -249,30 +324,64 @@
       },
       goToPath(item) {
         if (hOwnProperty(item, 'path')) {
+          if (item.noAuth) {
+            window.open(item.path);
+            return;
+          }
           this.curMenuObject = item.name;
+          window.$cookie.set("CURMENUNAME", item.name);
           if (typeof window !== 'undefined') {
-            window.location.href = item.path;
+            // this.barArr.forEach((barItem)=>{
+            //   if (barItem.name==item.name) {
+            //     let n=`${development[this.processEnv][this.barItem.processEnv]}${item.path}`;
+            //     setStorage('activeBarUrl', n);
+            //   }
+            // });
+            let activeBarUrl = this.barObject[item.name];
+            window.$cookie.set("ACTIVEBARURL", activeBarUrl);
+            if (item.name === '会员') {
+              window.open(item.path);
+            } else {
+              window.location.href = item.path;
+            }
           }
         }
       },
       goToUrl(item) {
         if (hOwnProperty(item, 'url')) {
+          if (item.noAuth) {
+            window.open(item.path);
+            return;
+          }
           this.curMenuObject = item.name;
+          window.$cookie.set("CURMENUNAME", item.name);
           if (typeof window !== 'undefined') {
+            let activeBarUrl = this.barObject[item.name];
+            //setStorage('activeBarUrl', activeBarUrl);
+            window.$cookie.set("ACTIVEBARURL", activeBarUrl);
             window.open(item.url);
           }
         }
       },
       barClick(item) {
-        if (this.hideBarName !== item.name) {
-          let newItem = null;
-          if (item.source.module_name === MODULE_NAME.MARKET) {
-            newItem = this.marketBar;
-          } else {
-            newItem = this.dataBar;
-          }
-          window.location.href = newItem[0].path;
+        if (item.noAuth) {
+          window.open(item.path);
+          return;
         }
+        // if (this.hideBarName !== item.name) {
+        let newItem = null;
+        this.curMenuObject = item.name;
+        window.$cookie.set("CURMENUNAME", item.name);
+        if (item.source.module_name === MODULE_NAME.MARKET) {
+          newItem = this.marketBar;
+        } else {
+          newItem = this.dataBar;
+        }
+        let activeBarUrl = this.barObject[item.name];
+        //setStorage('activeBarUrl', activeBarUrl);
+        window.$cookie.set("ACTIVEBARURL", activeBarUrl);
+        window.location.href = newItem[0].path;
+        // }
       },
       showTime(item) {
         if (this.hideBarName !== item.name) {
