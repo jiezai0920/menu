@@ -54,7 +54,7 @@
   import ajax from '../tools/ajax';
   import newRoot from '../tools/newRoot';
   import { setStorage } from '../tools/localstorage';
-  import VueCookies from '../tools/cookie'
+  import VueCookies from '../tools/cookie';
   import menuMessage from './component/message/index';
   import bar from './Bar';
   import development from '../menu/common/development';
@@ -84,18 +84,18 @@
           member: 'hy',
           shop: 'dp',
         },
-        barObject:{
-          '控制台':`${development[this.processEnv].account}`,
-          '报名': `${development[this.processEnv].activity}`,
-          '票务': `${development[this.processEnv].event}overview`,
-          '表单': `${development[this.processEnv].form}`,
-          '店铺': `${development[this.processEnv].shop}list`,
-          '营销': `${development[this.processEnv].account}salespromotion`,
-          '会员': `${development[this.processEnv].member}list`,
-          '数据': `${development[this.processEnv].data}mobileanalyze`,
-          '财务': `${development[this.processEnv].finance}overview`,
-          '周边': `${development[this.processEnv].goods}list`,
-          '订单': `${development[this.processEnv].order}allorder`,
+        barObject: {
+          控制台: `${development[this.processEnv].account}`,
+          报名: `${development[this.processEnv].activity}`,
+          票务: `${development[this.processEnv].event}overview`,
+          表单: `${development[this.processEnv].form}`,
+          店铺: `${development[this.processEnv].shop}list`,
+          营销: `${development[this.processEnv].account}salespromotion`,
+          会员: `${development[this.processEnv].member}list`,
+          数据: `${development[this.processEnv].data}mobileanalyze`,
+          财务: `${development[this.processEnv].finance}overview`,
+          周边: `${development[this.processEnv].goods}list`,
+          订单: `${development[this.processEnv].order}allorder`,
         },
         curMenuObject: '',
         curBarObject: '',
@@ -149,10 +149,10 @@
       } else {
         this.getMenu();
       }
-      if (!window.$cookie.get("CURMENUNAME")) {
-        window.$cookie.set("CURMENUNAME", '控制台');
+      if (!window.$cookie.get('CURMENUNAME')) {
+        window.$cookie.set('CURMENUNAME', '控制台');
       }
-      this.curMenuObject = window.$cookie.get("CURMENUNAME");
+      this.curMenuObject = window.$cookie.get('CURMENUNAME');
     },
     methods: {
       handleData() {
@@ -195,7 +195,7 @@
         const shopAuth = shopSource.is_auth ? shopSource.is_auth : 0;
         const shopLink = shopAuth ? development[this.processEnv].shop : this.pathNoAuth;
         // 处理店铺
-        let curObject = {
+        const curObject = {
           name: '店铺',
           icon: this.iconObj.shop,
           path: shopLink,
@@ -275,10 +275,10 @@
             return;
           }
           this.curMenuObject = item.name;
-          window.$cookie.set("CURMENUNAME", item.name);
+          window.$cookie.set('CURMENUNAME', item.name);
           if (typeof window !== 'undefined') {
-            let activeBarUrl = this.barObject[item.name];
-            window.$cookie.set("ACTIVEBARURL", activeBarUrl);
+            const activeBarUrl = this.barObject[item.name];
+            window.$cookie.set('ACTIVEBARURL', activeBarUrl);
             if (item.name === '会员') {
               window.open(item.path);
             } else {
@@ -294,10 +294,10 @@
             return;
           }
           this.curMenuObject = item.name;
-          window.$cookie.set("CURMENUNAME", item.name);
+          window.$cookie.set('CURMENUNAME', item.name);
           if (typeof window !== 'undefined') {
-            let activeBarUrl = this.barObject[item.name];
-            window.$cookie.set("ACTIVEBARURL", activeBarUrl);
+            const activeBarUrl = this.barObject[item.name];
+            window.$cookie.set('ACTIVEBARURL', activeBarUrl);
             window.open(item.url);
           }
         }
@@ -309,14 +309,14 @@
         }
         let newItem = null;
         this.curMenuObject = item.name;
-        window.$cookie.set("CURMENUNAME", item.name);
+        window.$cookie.set('CURMENUNAME', item.name);
         if (item.source.module_name === MODULE_NAME.MARKET) {
           newItem = this.marketBar;
         } else {
           newItem = this.dataBar;
         }
-        let activeBarUrl = this.barObject[item.name];
-        window.$cookie.set("ACTIVEBARURL", activeBarUrl);
+        const activeBarUrl = this.barObject[item.name];
+        window.$cookie.set('ACTIVEBARURL', activeBarUrl);
         window.location.href = newItem[0].path;
       },
       showTime(item) {
