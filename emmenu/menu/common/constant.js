@@ -17,6 +17,7 @@ export default {
     MEMBER: 'member',
     DATA: 'data',
     SHOP: 'shop', // 店铺
+    CRM: 'crm',
   },
   ALIASES: { // 别名
     HOMEPAGE: 'homepage',
@@ -49,6 +50,7 @@ export default {
     MEET_SUBMIT: 'meetupSubmit', // 活动发布
     GOODS: 'goodsAndStore',
     FORM: 'form',
+    CRM: 'crm',
     ORDER: 'orderCenterThree',
     ORDER_ALL: 'orderAll', // 全部
     ORDER_EVENT: 'orderEvent', // 活动 演出赛事 票务
