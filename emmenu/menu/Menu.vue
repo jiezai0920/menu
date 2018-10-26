@@ -88,10 +88,11 @@
           '控制台':`${development[this.processEnv].account}`,
           '报名': `${development[this.processEnv].activity}`,
           '票务': `${development[this.processEnv].event}overview`,
-          '表单': `${development[this.processEnv].form}`,
+          '表单': `${development[this.processEnv].form}overview`,
           '店铺': `${development[this.processEnv].shop}list`,
           '营销': `${development[this.processEnv].account}salespromotion`,
           '会员': `${development[this.processEnv].member}list`,
+          'CRM': `${development[this.processEnv].crm}contacts`,
           '数据': `${development[this.processEnv].data}mobileanalyze`,
           '财务': `${development[this.processEnv].finance}overview`,
           '周边': `${development[this.processEnv].goods}list`,
@@ -279,7 +280,7 @@
           if (typeof window !== 'undefined') {
             let activeBarUrl = this.barObject[item.name];
             window.$cookie.set("ACTIVEBARURL", activeBarUrl);
-            if (item.name === '会员') {
+            if (item.name === 'CRM' || item.name === '会员') {
               window.open(item.path);
             } else {
               window.location.href = item.path;

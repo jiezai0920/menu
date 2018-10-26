@@ -25,10 +25,11 @@
           '控制台': '',
           '报名':  '',
           '票务': '/overview',
-          '表单': '',
+          '表单': '/overview',
           '店铺': '/list',
           '营销': '/salespromotion',
           '会员': '/list',
+          'CRM': '/contacts',
           '数据': '/mobileanalyze',
           '财务': '/overview',
           '周边': '/list',
@@ -65,6 +66,9 @@
         if (hOwnProperty(item, 'path') || hOwnProperty(item, 'url')) {
           this.curMenuObject = allData.name;
           this.curBarObject = item.name;
+          if(this.curBarObject == '店铺'){
+            window.$cookie.set("CURMENUNAME", "店铺");
+          }
           if (typeof window !== 'undefined') {
             if (hOwnProperty(item, 'url')) {
               if (this.barObject[item.name]) {
