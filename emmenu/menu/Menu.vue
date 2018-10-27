@@ -85,7 +85,7 @@
           shop: 'dp',
         },
         barObject:{
-          '控制台':`${development[this.processEnv].account}`,
+          '控制台': `${development[this.processEnv].account}`,
           '报名': `${development[this.processEnv].activity}`,
           '票务': `${development[this.processEnv].event}overview`,
           '表单': `${development[this.processEnv].form}overview`,
@@ -97,6 +97,20 @@
           '财务': `${development[this.processEnv].finance}overview`,
           '周边': `${development[this.processEnv].goods}list`,
           '订单': `${development[this.processEnv].order}allorder`,
+        },
+        domainName : {
+          '控制台': `${development[this.processEnv].account}`,
+          '报名': `${development[this.processEnv].activity}`,
+          '票务': `${development[this.processEnv].event}`,
+          '表单': `${development[this.processEnv].form}`,
+          '店铺': `${development[this.processEnv].shop}`,
+          '营销': `${development[this.processEnv].marketing}`,
+          '会员': `${development[this.processEnv].member}`,
+          'CRM': `${development[this.processEnv].crm}`,
+          '数据': `${development[this.processEnv].data}`,
+          '财务': `${development[this.processEnv].finance}`,
+          '周边': `${development[this.processEnv].goods}`,
+          '订单': `${development[this.processEnv].order}`,
         },
         curMenuObject: '',
         curBarObject: '',
@@ -150,6 +164,7 @@
       } else {
         this.getMenu();
       }
+      this.matchUrl1();
       if (!window.$cookie.get("CURMENUNAME")) {
         window.$cookie.set("CURMENUNAME", '控制台');
       }
@@ -241,6 +256,11 @@
         const {
           href,
         } = window.location;
+        // let m = window.$cookie.get("CURMENUNAME");
+        // let domainName = this.domainName.m;
+        // if (href.indexOf(m) === -1) {
+        //   window.$cookie.set("CURMENUNAME", this.curMenuObject);
+        // }
         // 检测主要除了 bar 之外的一级菜单
         let inSite = this.datas.filter(dataKey => href.indexOf(dataKey.path) > -1);
         // 检测头部
@@ -268,6 +288,33 @@
         if (this.curBar) {
           this.curBarObject = this.curBar;
         }
+        window.$cookie.set("CURMENUNAME", this.curMenuObject);
+      },
+      matchUrl1() {
+        const {
+          href,
+        } = window.location;
+        let m = decodeURIComponent(window.$cookie.get("CURMENUNAME"));
+        let domainName = this.domainName[m];
+        if (href.indexOf(domainName) === -1) {
+          for(let keyItem in this.domainName){
+            if(href.indexOf(this.domainName[keyItem]) !== -1){
+              if (keyItem ==='控制台' && m === '营销') {
+                window.$cookie.set("CURMENUNAME", '营销');
+                window.$cookie.set("ACTIVEBARURL", href);
+              } else if(keyItem ==='报名' && m === '票务') {
+                window.$cookie.set("CURMENUNAME", '票务');
+              } else {
+                window.$cookie.set("CURMENUNAME", keyItem);
+                window.$cookie.set("ACTIVEBARURL", href);
+              }
+            }
+          }
+        }
+        // else {
+        //   window.$cookie.set("CURMENUNAME", '营销');
+        //   window.$cookie.set("ACTIVEBARURL", href);
+        // }
       },
       goToPath(item) {
         if (hOwnProperty(item, 'path')) {

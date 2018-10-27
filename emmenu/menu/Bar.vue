@@ -66,7 +66,7 @@
         if (hOwnProperty(item, 'path') || hOwnProperty(item, 'url')) {
           this.curMenuObject = allData.name;
           this.curBarObject = item.name;
-          if(this.curBarObject == '店铺'){
+          if(this.curBarObject === '店铺'){
             window.$cookie.set("CURMENUNAME", "店铺");
           }
           if (typeof window !== 'undefined') {
