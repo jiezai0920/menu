@@ -54,7 +54,7 @@
   import ajax from '../tools/ajax';
   import newRoot from '../tools/newRoot';
   import { setStorage } from '../tools/localstorage';
-  import VueCookies from '../tools/cookie'
+  import VueCookies from '../tools/cookie';
   import menuMessage from './component/message/index';
   import bar from './Bar';
   import development from '../menu/common/development';
@@ -168,7 +168,7 @@
       if (!window.$cookie.get("CURMENUNAME")) {
         window.$cookie.set("CURMENUNAME", '控制台');
       }
-      this.curMenuObject = window.$cookie.get("CURMENUNAME");
+      this.curMenuObject = window.$cookie.get('CURMENUNAME');
     },
     methods: {
       handleData() {
@@ -211,7 +211,7 @@
         const shopAuth = shopSource.is_auth ? shopSource.is_auth : 0;
         const shopLink = shopAuth ? development[this.processEnv].shop : this.pathNoAuth;
         // 处理店铺
-        let curObject = {
+        const curObject = {
           name: '店铺',
           icon: this.iconObj.shop,
           path: shopLink,
@@ -323,7 +323,7 @@
             return;
           }
           this.curMenuObject = item.name;
-          window.$cookie.set("CURMENUNAME", item.name);
+          window.$cookie.set('CURMENUNAME', item.name);
           if (typeof window !== 'undefined') {
             let activeBarUrl = this.barObject[item.name];
             window.$cookie.set("ACTIVEBARURL", activeBarUrl);
@@ -342,10 +342,10 @@
             return;
           }
           this.curMenuObject = item.name;
-          window.$cookie.set("CURMENUNAME", item.name);
+          window.$cookie.set('CURMENUNAME', item.name);
           if (typeof window !== 'undefined') {
-            let activeBarUrl = this.barObject[item.name];
-            window.$cookie.set("ACTIVEBARURL", activeBarUrl);
+            const activeBarUrl = this.barObject[item.name];
+            window.$cookie.set('ACTIVEBARURL', activeBarUrl);
             window.open(item.url);
           }
         }
@@ -357,14 +357,14 @@
         }
         let newItem = null;
         this.curMenuObject = item.name;
-        window.$cookie.set("CURMENUNAME", item.name);
+        window.$cookie.set('CURMENUNAME', item.name);
         if (item.source.module_name === MODULE_NAME.MARKET) {
           newItem = this.marketBar;
         } else {
           newItem = this.dataBar;
         }
-        let activeBarUrl = this.barObject[item.name];
-        window.$cookie.set("ACTIVEBARURL", activeBarUrl);
+        const activeBarUrl = this.barObject[item.name];
+        window.$cookie.set('ACTIVEBARURL', activeBarUrl);
         window.location.href = newItem[0].path;
       },
       showTime(item) {
