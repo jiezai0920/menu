@@ -11,6 +11,7 @@
   import { getStorage } from '../tools/localstorage';
   import VueCookies from '../tools/cookie';
   import CONSTANT from './common/constant';
+  import development from '../menu/common/development';
 
   export default {
     name: 'WBar',
@@ -21,6 +22,8 @@
           marketing: '营销应用',
           data: '数据中心',
         },
+        pathNoAuth: `${development[this.processEnvs].member}error`,
+        /* eslint-disable */
         barObject:{
           '控制台': '',
           '报名':  '',
@@ -35,6 +38,7 @@
           '周边': '/list',
           '订单': '/allorder',
         },
+        /* eslint-enable */
         barData: [],
         curName: '',
       };
@@ -43,6 +47,10 @@
       status: Boolean,
       data: [Object, String],
       name: String,
+      processEnvs: {
+        type: String,
+        default: 'development',
+      },
     },
     mounted() {
       window.$cookie = VueCookies;
@@ -73,17 +81,25 @@
             if (hOwnProperty(item, 'url')) {
               if (this.barObject[item.name]) {
                 const activeBarUrl = this.barObject[item.name];
-                window.$cookie.set('ACTIVEBARURL', activeBarUrl);
+                if (activeBarUrl !== this.pathNoAuth) {
+                  window.$cookie.set('ACTIVEBARURL', activeBarUrl);
+                }
               } else {
-                window.$cookie.set('ACTIVEBARURL', item.url);
+                if (item.url !== this.pathNoAuth) {
+                  window.$cookie.set('ACTIVEBARURL', item.url);
+                }
               }
               window.open(item.url);
             } else {
               if (this.barObject[item.name]) {
                 const activeBarUrl = this.barObject[item.name];
-                window.$cookie.set('ACTIVEBARURL', activeBarUrl);
+                if (activeBarUrl !== this.pathNoAuth) {
+                  window.$cookie.set('ACTIVEBARURL', activeBarUrl);
+                }
               } else {
-                window.$cookie.set('ACTIVEBARURL', item.path);
+                if (item.path !== this.pathNoAuth) {
+                  window.$cookie.set('ACTIVEBARURL', item.path);
+                }
               }
               window.location.href = item.path;
             }

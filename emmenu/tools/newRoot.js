@@ -21,7 +21,7 @@ export default (listArr, processEnv, iconObj) => {
   pathDefult[MODULE_NAME.GOODS] = `${development[processEnv].goods}Goods/list`;
   pathDefult[MODULE_NAME.FORM] = development[processEnv].form;
   pathDefult[MODULE_NAME.ORDER] = development[processEnv].order;
-  pathDefult[MODULE_NAME.MEMBER] = `${development[processEnv].member}list`;
+  pathDefult[MODULE_NAME.MEMBER] = `${development[processEnv].crm}contacts`;
   pathDefult[MODULE_NAME.FINANCE] = development[processEnv].finance;
   // pathDefult[MODULE_NAME.SHOP] = development[processEnv].shop;
   const pathNoAuth = `${development[processEnv].member}error`;
@@ -63,6 +63,7 @@ export default (listArr, processEnv, iconObj) => {
     // 如果是在事先准备好的路径中
     if (hOwnProperty(pathDefult, item.module_name)) {
       // 如果有权限，如果没权限
+      debugger
       if (item.is_auth) {
         baseList.path = pathDefult[item.module_name];
       } else {

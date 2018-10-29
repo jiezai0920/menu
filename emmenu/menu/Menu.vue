@@ -13,8 +13,18 @@
       </h3>
       <ul class="w-menu-list">
         <template v-for="(item, itemIndex) in datas">
-          <li v-if="item.path" class="w-menu-list-li"
+          <li v-if="item.path && item.name!=='CRM'" class="w-menu-list-li"
               :class="{'w-menu-list-li-on': curMenuObject === item.name}"
+              @click="goToPath(item)"
+              @mouseenter="hideTime()">
+            <img class="w-menu-list-li-img" v-bind:src="require('./img/'+item.icon+'_selected.png')"
+                 v-if="item.icon">
+            <img class="w-menu-list-li-img" v-bind:src="require('./img/'+item.icon+'_normal.png')"
+                 v-if="item.icon">
+            <span class="w-menu-text">{{item.name}}</span>
+          </li>
+          <li v-if="item.path && item.name==='CRM'" class="w-menu-list-li"
+              :class="{'w-menu-list-li-on': curMenuObject === item.name || curMenuObject === '会员' }"
               @click="goToPath(item)"
               @mouseenter="hideTime()">
             <img class="w-menu-list-li-img" v-bind:src="require('./img/'+item.icon+'_selected.png')"
@@ -45,7 +55,7 @@
         </template>
       </ul>
     </div>
-    <bar :data="barData" :status="barStatus" :name="curMenuObject" />
+    <bar :data="barData" :status="barStatus" :name="curMenuObject" :processEnvs="processEnv"/>
   </div>
 </template>
 <script>
@@ -84,6 +94,7 @@
           member: 'hy',
           shop: 'dp',
         },
+        /* eslint-disable */
         barObject:{
           '控制台': `${development[this.processEnv].account}`,
           '报名': `${development[this.processEnv].activity}`,
@@ -91,7 +102,7 @@
           '表单': `${development[this.processEnv].form}overview`,
           '店铺': `${development[this.processEnv].shop}list`,
           '营销': `${development[this.processEnv].account}salespromotion`,
-          '会员': `${development[this.processEnv].member}list`,
+          '会员': `${development[this.processEnv].member}register`,
           'CRM': `${development[this.processEnv].crm}contacts`,
           '数据': `${development[this.processEnv].data}mobileanalyze`,
           '财务': `${development[this.processEnv].finance}overview`,
@@ -112,6 +123,7 @@
           '周边': `${development[this.processEnv].goods}`,
           '订单': `${development[this.processEnv].order}`,
         },
+        /* eslint-enable */
         curMenuObject: '',
         curBarObject: '',
         user: '',
@@ -165,8 +177,8 @@
         this.getMenu();
       }
       this.matchUrl1();
-      if (!window.$cookie.get("CURMENUNAME")) {
-        window.$cookie.set("CURMENUNAME", '控制台');
+      if (!window.$cookie.get('CURMENUNAME')) {
+        window.$cookie.set('CURMENUNAME', '控制台');
       }
       this.curMenuObject = window.$cookie.get('CURMENUNAME');
     },
@@ -288,33 +300,35 @@
         if (this.curBar) {
           this.curBarObject = this.curBar;
         }
-        window.$cookie.set("CURMENUNAME", this.curMenuObject);
+        window.$cookie.set('CURMENUNAME', this.curMenuObject);
       },
       matchUrl1() {
         const {
           href,
         } = window.location;
-        let m = decodeURIComponent(window.$cookie.get("CURMENUNAME"));
-        let domainName = this.domainName[m];
+        const m = decodeURIComponent(window.$cookie.get('CURMENUNAME'));
+        const domainName = this.domainName[m];
         if (href.indexOf(domainName) === -1) {
+          /* eslint-disable */
           for(let keyItem in this.domainName){
-            if(href.indexOf(this.domainName[keyItem]) !== -1){
-              if (keyItem ==='控制台' && m === '营销') {
-                window.$cookie.set("CURMENUNAME", '营销');
-                window.$cookie.set("ACTIVEBARURL", href);
-              } else if(keyItem ==='报名' && m === '票务') {
-                window.$cookie.set("CURMENUNAME", '票务');
+            if (href.indexOf(this.domainName[keyItem]) !== -1) {
+              if (keyItem === '控制台' && m === '营销') {
+                window.$cookie.set('CURMENUNAME', '营销');
+                if (href !== this.pathNoAuth) {
+                  window.$cookie.set('ACTIVEBARURL', href);
+                }
+              } else if (keyItem  === '报名' && m === '票务') {
+                window.$cookie.set('CURMENUNAME', '票务');
               } else {
-                window.$cookie.set("CURMENUNAME", keyItem);
-                window.$cookie.set("ACTIVEBARURL", href);
+                window.$cookie.set('CURMENUNAME', keyItem);
+                if (href !== this.pathNoAuth) {
+                  window.$cookie.set('ACTIVEBARURL', href);
+                }
               }
             }
           }
+          /* eslint-enable */
         }
-        // else {
-        //   window.$cookie.set("CURMENUNAME", '营销');
-        //   window.$cookie.set("ACTIVEBARURL", href);
-        // }
       },
       goToPath(item) {
         if (hOwnProperty(item, 'path')) {
@@ -326,14 +340,33 @@
           window.$cookie.set('CURMENUNAME', item.name);
           if (typeof window !== 'undefined') {
             let activeBarUrl = this.barObject[item.name];
-            window.$cookie.set("ACTIVEBARURL", activeBarUrl);
+            if (activeBarUrl !== this.pathNoAuth) {
+              window.$cookie.set('ACTIVEBARURL', activeBarUrl);
+            }
             if (item.name === 'CRM' || item.name === '会员') {
-              window.open(item.path);
+              if(this.checkCrmAuth()){
+                window.open(item.path);
+              } else {
+                window.$cookie.set('CURMENUNAME', '会员');
+                if (this.barObject['会员'] !== this.pathNoAuth) {
+                  window.$cookie.set('ACTIVEBARURL', this.barObject['会员']);
+                }
+                window.open(this.barObject['会员']);
+              }
             } else {
               window.location.href = item.path;
             }
           }
         }
+      },
+      checkCrmAuth() {
+        let cur = this.menusData.member;
+        for(let i=0;i<cur.length;i++){
+          if (cur[i].aliases === 'crm' && cur[i].is_auth === 1){
+            return true
+          }
+        }
+        return false
       },
       goToUrl(item) {
         if (hOwnProperty(item, 'url')) {
@@ -345,7 +378,9 @@
           window.$cookie.set('CURMENUNAME', item.name);
           if (typeof window !== 'undefined') {
             const activeBarUrl = this.barObject[item.name];
-            window.$cookie.set('ACTIVEBARURL', activeBarUrl);
+            if (activeBarUrl !== this.pathNoAuth) {
+              window.$cookie.set('ACTIVEBARURL', activeBarUrl);
+            }
             window.open(item.url);
           }
         }
@@ -364,7 +399,9 @@
           newItem = this.dataBar;
         }
         const activeBarUrl = this.barObject[item.name];
-        window.$cookie.set('ACTIVEBARURL', activeBarUrl);
+        if (activeBarUrl !== this.pathNoAuth) {
+          window.$cookie.set('ACTIVEBARURL', activeBarUrl);
+        }
         window.location.href = newItem[0].path;
       },
       showTime(item) {
