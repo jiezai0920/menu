@@ -74,8 +74,8 @@
         if (hOwnProperty(item, 'path') || hOwnProperty(item, 'url')) {
           this.curMenuObject = allData.name;
           this.curBarObject = item.name;
-          if(this.curBarObject === '店铺'){
-            window.$cookie.set("CURMENUNAME", "店铺");
+          if (this.curBarObject === '店铺') {
+            window.$cookie.set('CURMENUNAME', '店铺');
           }
           if (typeof window !== 'undefined') {
             if (hOwnProperty(item, 'url')) {
@@ -84,10 +84,8 @@
                 if (activeBarUrl !== this.pathNoAuth) {
                   window.$cookie.set('ACTIVEBARURL', activeBarUrl);
                 }
-              } else {
-                if (item.url !== this.pathNoAuth) {
-                  window.$cookie.set('ACTIVEBARURL', item.url);
-                }
+              } else if (item.url !== this.pathNoAuth) {
+                window.$cookie.set('ACTIVEBARURL', item.url);
               }
               window.open(item.url);
             } else {
@@ -96,10 +94,8 @@
                 if (activeBarUrl !== this.pathNoAuth) {
                   window.$cookie.set('ACTIVEBARURL', activeBarUrl);
                 }
-              } else {
-                if (item.path !== this.pathNoAuth) {
-                  window.$cookie.set('ACTIVEBARURL', item.path);
-                }
+              } else if (item.path !== this.pathNoAuth) {
+                window.$cookie.set('ACTIVEBARURL', item.path);
               }
               window.location.href = item.path;
             }
