@@ -176,11 +176,11 @@
       } else {
         this.getMenu();
       }
-      this.matchUrl1();
       if (!window.$cookie.get('CURMENUNAME')) {
         window.$cookie.set('CURMENUNAME', '控制台');
       }
       this.curMenuObject = window.$cookie.get('CURMENUNAME');
+      this.matchUrl1();
     },
     methods: {
       handleData() {
@@ -314,13 +314,16 @@
             if (href.indexOf(this.domainName[keyItem]) !== -1) {
               if (keyItem === '控制台' && m === '营销') {
                 window.$cookie.set('CURMENUNAME', '营销');
+                this.curMenuObject = '营销';
                 if (href !== this.pathNoAuth) {
                   window.$cookie.set('ACTIVEBARURL', href);
                 }
               } else if (keyItem  === '报名' && m === '票务') {
                 window.$cookie.set('CURMENUNAME', '票务');
+                this.curMenuObject = '票务';
               } else {
                 window.$cookie.set('CURMENUNAME', keyItem);
+                this.curMenuObject = keyItem;
                 if (href !== this.pathNoAuth) {
                   window.$cookie.set('ACTIVEBARURL', href);
                 }
@@ -328,6 +331,8 @@
             }
           }
           /* eslint-enable */
+        } else {
+          this.curMenuObject = m;
         }
       },
       goToPath(item) {
@@ -447,6 +452,11 @@
       },
       hideBarName(val) {
         this.updateBarMode(val);
+      },
+      fullpath(val, oldVal) {
+        if (val !== oldVal) {
+          this.matchUrl1();
+        }
       },
     },
   };
