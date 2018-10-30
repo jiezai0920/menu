@@ -339,12 +339,12 @@
           this.curMenuObject = item.name;
           window.$cookie.set('CURMENUNAME', item.name);
           if (typeof window !== 'undefined') {
-            let activeBarUrl = this.barObject[item.name];
+            const activeBarUrl = this.barObject[item.name];
             if (activeBarUrl !== this.pathNoAuth) {
               window.$cookie.set('ACTIVEBARURL', activeBarUrl);
             }
             if (item.name === 'CRM' || item.name === '会员') {
-              if(this.checkCrmAuth()){
+              if (this.checkCrmAuth()) {
                 window.open(item.path);
               } else {
                 window.$cookie.set('CURMENUNAME', '会员');
@@ -360,13 +360,13 @@
         }
       },
       checkCrmAuth() {
-        let cur = this.menusData.member;
-        for(let i=0;i<cur.length;i++){
-          if (cur[i].aliases === 'crm' && cur[i].is_auth === 1){
-            return true
+        const cur = this.menusData.member;
+        for (let i = 0; i < cur.length; i++) {
+          if (cur[i].aliases === 'crm' && cur[i].is_auth === 1) {
+            return true;
           }
         }
-        return false
+        return false;
       },
       goToUrl(item) {
         if (hOwnProperty(item, 'url')) {
