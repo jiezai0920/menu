@@ -10,10 +10,10 @@
     "emmenu"
   ],
   "scripts": {
-    "start": "vuepress dev emmenu",
-    "build:site": "cross-env GH=1 && vuepress build emmenu",
+    "start": "vuepress dev site",
+    "build:site": "cross-env GH=1 && vuepress build site",
     "build": "cross-env BABEL_ENV=production && node build/build.water.js && gulp --gulpfile build/gulpfile.js",
-    "eslint": "eslint --ext .js,.vue site emmenu --fix",
+    "eslint": "eslint --ext .js,.vue emmenu --fix",
     "stylelint": "stylelint site/**/*.scss emmenu/**/*.scss",
     "lint": "npm run eslint && npm run stylelint",
     "lint-staged": "lint-staged",
@@ -143,8 +143,5 @@
   },
   "pre-commit": [
     "lint-staged"
-  ],
-  "dependencies": {
-    "vuex": "^3.0.1"
-  }
+  ]
 }
