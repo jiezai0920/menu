@@ -1,4 +1,9 @@
-/* istanbul ignore next */
+/* eslint-disable */
+export function hasClass(el, cls) {
+  if (!el || !cls) return false;
+  return el.className.indexOf(cls) > -1;
+}
+
 export function addClass(el, cls) {
   if (!el) return;
   let curClass = el.className;
@@ -10,10 +15,8 @@ export function addClass(el, cls) {
 
     if (el.classList) {
       el.classList.add(clsName);
-    } else {
-      if (!hasClass(el, clsName)) {
-        curClass += ` clsName`;
-      }
+    } else if (!hasClass(el, clsName)) {
+      curClass += ' clsName';
     }
   }
   if (!el.classList) {
@@ -21,7 +24,6 @@ export function addClass(el, cls) {
   }
 }
 
-/* istanbul ignore next */
 export function removeClass(el, cls) {
   if (!el || !cls) return;
   const classes = cls.split(' ');
@@ -33,10 +35,8 @@ export function removeClass(el, cls) {
 
     if (el.classList) {
       el.classList.remove(clsName);
-    } else {
-      if (hasClass(el, clsName)) {
-        curClass = curClass.replace(' ' + clsName + ' ', ' ');
-      }
+    } else if (hasClass(el, clsName)) {
+      curClass = curClass.replace(` ${clsName} `, ' ');
     }
   }
   if (!el.classList) {
@@ -44,14 +44,8 @@ export function removeClass(el, cls) {
   }
 }
 
-/* istanbul ignore next */
-export function hasClass(el, cls) {
-  if (!el || !cls) return false;
-  return el.className.indexOf(cls) > -1;
-}
 
-
-  /**
+/**
    * Dom 设置|获取样式
    *
    * @param {Object} params 如果是一位，那么就是获取某个属性
@@ -60,8 +54,8 @@ export function hasClass(el, cls) {
    height: 200
  });
    */
-  export function css(elem, params) {
-    Object.keys(params).forEach((paramsKey) => {
-      elem.style[paramsKey] = params[paramsKey];
-    });
-  }
+export function css(elem, params) {
+  Object.keys(params).forEach((paramsKey) => {
+    elem.style[paramsKey] = params[paramsKey];
+  });
+}

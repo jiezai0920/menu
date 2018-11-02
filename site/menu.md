@@ -1,11 +1,13 @@
 # em 左侧菜单
 > em 公共级左导航业务组件
 
-<w-menu :env="env" class="demo" eventUrl="http://www.qq.com/" lightUrl="http://news.qq.com/" logoutAction="https://www.easy-mock.com/mock/5ab386ecca15e11ded65b593/chinese/getLoginOutCallBackUrl"></w-menu>
+<w-menu :env="env" :rule="menuTestRule" class="demo" eventUrl="http://www.qq.com/" lightUrl="http://news.qq.com/" logoutAction="https://www.easy-mock.com/mock/5ab386ecca15e11ded65b593/chinese/getLoginOutCallBackUrl"></w-menu>
 
 
 <script>
 import WMenu from '../emmenu/menu/Menu';
+//  权限测试数据
+import menuTestRule from './menudata';
 
 export default {
   data() {
@@ -31,6 +33,7 @@ export default {
         NODE_ENV: "development",
         ORDER: "http://localhost:8185/",
       },
+      menuTestRule,
     };
   },
   components: {

@@ -25,9 +25,7 @@
   </div>
 </template>
 <script>
-  import {
-    addClass, removeClass, hasClass, css,
-  } from '../helper/node';
+  import { addClass, removeClass, css } from '../helper/node';
 
   const commonTransitionClass = 'w-bar-gradual';
 
@@ -82,20 +80,23 @@
       },
       updateOpen() {
         const { href } = window.location;
-        this.goValue.forEach((go, goIndex) => {
+        this.goValue.forEach((go) => {
           if (go.child) {
-            const result = go.child.findIndex(goChild => href.indexOf(goChild.to ? goChild.to.path : goChild.url) > -1);
+            const result = go.child.findIndex((goChild) => {
+              const indexOfValue = goChild.to ? goChild.to.path : goChild.url;
+              return href.indexOf(indexOfValue) > -1;
+            });
             go.open = go.open || this.openValue || result > -1;
           }
         });
       },
       addOpen() {
-        this.goValue = this.goValue.map(val => {
+        this.goValue = this.goValue.map((val) => {
           if (val.child) {
             val.open = val.open || this.openValue;
           }
           return val;
-        })
+        });
       },
       beforeEnter(el) {
         addClass(el, commonTransitionClass);

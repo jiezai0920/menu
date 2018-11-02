@@ -1,24 +1,25 @@
 <template>
   <div class="w-menu-warp">
-    <div class="w-menu" :class="{'w-menu-hover': hover}" @mouseenter="menuEnter" @mouseleave="menuLeave">
+    <div class="w-menu" :class="{'w-menu-hover': hover}" @mouseenter="hover = true" @mouseleave="hover = false">
       <div class="w-menu-header">
         <img class="w-menu-header-icon" :src="icon">
         <span class="w-menu-header-title">{{title}}</span>
       </div>
       <ul class="w-menu-list">
-        <li class="w-menu-list-item">
-          <a href="#" class="w-menu-list-link on">
-            <img class="w-menu-list-img" src="../assets/img/form_normal.png">
-            <img class="w-menu-list-img" src="../assets/img/form_selected.png">
-            <span class="w-menu-list-title">H5/小程序店铺H5/小程序店铺H5/小程序店铺</span>
+        <li class="w-menu-list-item" v-for="(rule, ruleIndex) in power.menuList" :key="ruleIndex">
+          <!-- on -->
+          <a :href="rule.path" class="w-menu-list-link">
+            <img class="w-menu-list-img" :src="require(`../assets/img/${rule.icon}_normal.png`)">
+            <img class="w-menu-list-img" :src="require(`../assets/img/${rule.icon}_selected.png`)">
+            <span class="w-menu-list-title">{{rule.name}}</span>
           </a>
         </li>
       </ul>
-      <a href="javascript:;" class="w-menu-release" @click="goIndex">
+      <a href="javascript:;" class="w-menu-release" @click="isMask = true">
         <img class="w-menu-release-img" src="../assets/img/release.png">
         <span class="w-menu-release-title">免费发活动</span>
       </a>
-      <a class="w-menu-quit" @click="logout">
+      <a class="w-menu-quit" @click="modalShow = true">
         <img class="w-menu-quit-img" src="../assets/img/quit.png">
         <img class="w-menu-quit-img" src="../assets/img/quit_hover.png">
         <span class="w-menu-quit-title">退出</span>
@@ -27,7 +28,7 @@
     <!-- 免费发活动 start -->
     <div v-if="isMask" class="w-menu-mask">
       <div class="w-menu-mask-box">
-        <span class="w-menu-mask-close" @click="closeMask">+</span>
+        <span class="w-menu-mask-close" @click="isMask = false">+</span>
         <h4 class="w-menu-mask-title">选择发布的活动类型</h4>
         <div class="w-menu-mask-modal">
           <a :href="`${env.ACTIVITY}light`" class="w-menu-mask-light">
@@ -50,11 +51,11 @@
       <div class="w-menu-modal-wrap">
         <div class="w-menu-modal-header">
           <div class="w-menu-modal-inner">退出账号</div>
-          <div class="w-menu-modal-close" @click="modalClose">＋</div>
+          <div class="w-menu-modal-close" @click="modalShow = false">＋</div>
         </div>
         <div class="w-menu-modal-main">确定要退出账号？</div>
         <div class="w-menu-modal-footer">
-          <button class="w-menu-modal-cancel" @click="modalCancel">取消</button>
+          <button class="w-menu-modal-cancel" @click="modalShow = false">取消</button>
           <button class="w-menu-modal-ok" @click="modalOk">确定</button>
         </div>
       </div>
@@ -68,12 +69,12 @@
   import message from '../component/message/index';
   import CONSTANT from '../helper/constant';
   import ajax from '../helper/ajax';
+  import newRoot from '../helper/newRoot';
 
   export default {
     name: 'WMenu',
     data() {
       return {
-        url: this.env,
         // hover: false,
         hover: true,
 
@@ -81,6 +82,7 @@
         user: '',
         modalShow: false,
         callbackUrl: [],
+        power: {},
       };
     },
     props: {
@@ -97,28 +99,18 @@
         default: 'https://static2.evente.cn/static/img/icon.jpg',
       },
       logoutAction: String,
-      rule: Object,
+      rule: Array,
     },
     mounted() {
-      console.log(message, 'WMessage');
+      this.handleData();
     },
     methods: {
-      menuEnter() {
-        this.hover = true;
-      },
-      menuLeave() {
-        this.hover = false;
+      // 处理权限接口数据
+      handleData() {
+        this.power = newRoot(this.rule, this.env);
+        console.log(this.power);
       },
       // 免费发活动和退出 start
-      logout() {
-        this.modalShow = true;
-      },
-      modalClose() {
-        this.modalShow = false;
-      },
-      modalCancel() {
-        this.modalShow = false;
-      },
       modalOk() {
         this.modalShow = false;
         this.goOut();
@@ -143,12 +135,6 @@
             });
           },
         });
-      },
-      goIndex() {
-        this.isMask = true;
-      },
-      closeMask() {
-        this.isMask = false;
       },
       afterLogout(inow) {
         let theIndex = inow;
