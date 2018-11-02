@@ -1,12 +1,9 @@
+@import './config.scss';
 @import './mixin.scss';
-
-$time: 0.4s;
-$family: Helvetica, MicrosoftYaHeiUI;
 
 .w-menu {
   width: 46px;
   background: #404040;
-  font-size: 14px;
   position: fixed;
   top: 0;
   bottom: 0;

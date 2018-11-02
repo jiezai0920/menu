@@ -18,6 +18,7 @@ module.exports = {
     sidebar: [
       '/',
       '/menu',
+      '/bar',
     ]
   }
 }

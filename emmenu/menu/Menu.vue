@@ -118,6 +118,10 @@
         default: 'https://static2.evente.cn/static/img/icon.jpg',
       },
       rule: Object,
+      base: {
+        type: String,
+        default: '/',
+      },
     },
     mounted() {
 

@@ -1,0 +1,179 @@
+<template>
+  <div class="w-bar">
+    <h3 class="w-bar-title">{{titleValue}}</h3>
+    <ul class="w-bar-list">
+      <li class="w-bar-item" v-for="(value, valueIndex) in goValue">
+        <router-link class="w-bar-link" :class="{'disabled': disabledValue}" :to="value.to" active-class="on" exact-active-class="exact" :target="value.target || '_self'" v-if="value.to">{{value.title}}</router-link>
+        <a class="w-bar-link" :class="{'disabled': disabledValue}" :href="value.url" v-if="value.url" :target="value.target || '_self'">{{value.title}}</a>
+        <div class="w-bar-fold" :class="{'on': value.open, 'disabled': disabledValue}" v-if="value.child" @click="childLink(value, valueIndex)">{{value.title}}</div>
+        <transition
+          v-on:before-enter="beforeEnter"
+          v-on:enter="enter"
+          v-on:after-enter="afterEnter"
+          v-on:before-leave="beforeLeave"
+          v-on:leave="leave"
+          v-on:after-leave="afterLeave">
+          <ul class="w-bar-child" v-show="value.open">
+            <li class="w-bar-item" v-for="(childValue, childIndex) in value.child">
+              <router-link class="w-bar-link-child" :class="{'disabled': disabledValue}" :to="childValue.to" active-class="on" exact-active-class="exact" :target="childValue.target || '_self'" v-if="childValue.to" :ref="`link${valueIndex}${childIndex}`">{{childValue.title}}</router-link>
+              <a class="w-bar-link-child" :class="{'disabled': disabledValue}" :href="childValue.url" v-if="childValue.url" :target="childValue.target || '_self'">{{childValue.title}}</a>
+            </li>
+          </ul>
+        </transition>
+      </li>
+    </ul>
+  </div>
+</template>
+<script>
+  import {
+    addClass, removeClass, hasClass, css,
+  } from '../helper/node';
+
+  const commonTransitionClass = 'w-bar-gradual';
+
+  export default {
+    name: 'WBar',
+    data() {
+      return {
+        goValue: [],
+        titleValue: '',
+        disabledValue: false,
+        status: false,
+        openValue: this.open,
+      };
+    },
+    props: {
+      title: String,
+      navs: {
+        type: Array,
+        default: () => [],
+      },
+      open: {
+        type: Boolean,
+        default: false,
+      },
+      disabled: {
+        type: Boolean,
+        default: false,
+      },
+    },
+    mounted() {
+      this.updateNavs(this.navs);
+      this.updateTitle(this.title);
+      this.updateDisabled(this.disabled);
+      this.updateOpen();
+    },
+    methods: {
+      childLink(value, valueIndex) {
+        const newValue = Object.assign({}, value, {
+          open: !value.open,
+        });
+        this.goValue.splice(valueIndex, 1, newValue);
+      },
+      updateNavs(val) {
+        this.goValue = val.slice();
+        this.addOpen();
+      },
+      updateTitle(val) {
+        this.titleValue = val;
+      },
+      updateDisabled(val) {
+        this.disabledValue = val;
+      },
+      updateOpen() {
+        const { href } = window.location;
+        this.goValue.forEach((go, goIndex) => {
+          if (go.child) {
+            const result = go.child.findIndex(goChild => href.indexOf(goChild.to ? goChild.to.path : goChild.url) > -1);
+            go.open = go.open || this.openValue || result > -1;
+          }
+        });
+      },
+      addOpen() {
+        this.goValue = this.goValue.map(val => {
+          if (val.child) {
+            val.open = val.open || this.openValue;
+          }
+          return val;
+        })
+      },
+      beforeEnter(el) {
+        addClass(el, commonTransitionClass);
+        if (!el.dataset) el.dataset = {};
+
+        el.dataset.oldPaddingTop = el.style.paddingTop;
+        el.dataset.oldPaddingBottom = el.style.paddingBottom;
+
+        css(el, {
+          height: '0',
+          paddingTop: 0,
+          paddingBottom: 0,
+        });
+      },
+
+      enter(el) {
+        el.dataset.oldOverflow = el.style.overflow;
+        const hasHeight = el.scrollHeight !== 0;
+
+        css(el, {
+          height: hasHeight ? `${el.scrollHeight}px` : '',
+          paddingTop: el.dataset.oldPaddingTop,
+          paddingBottom: el.dataset.oldPaddingBottom,
+          overflow: 'hidden',
+        });
+      },
+
+      afterEnter(el) {
+        removeClass(el, commonTransitionClass);
+
+        css(el, {
+          height: '',
+          overflow: el.dataset.oldOverflow,
+        });
+      },
+
+      beforeLeave(el) {
+        if (!el.dataset) el.dataset = {};
+        el.dataset.oldPaddingTop = el.style.paddingTop;
+        el.dataset.oldPaddingBottom = el.style.paddingBottom;
+        el.dataset.oldOverflow = el.style.overflow;
+
+        css(el, {
+          height: `${el.scrollHeight}px`,
+          overflow: 'hidden',
+        });
+      },
+
+      leave(el) {
+        if (el.scrollHeight !== 0) {
+          addClass(el, commonTransitionClass);
+          css(el, {
+            height: 0,
+            paddingTop: 0,
+            paddingBottom: 0,
+          });
+        }
+      },
+      afterLeave(el) {
+        removeClass(el, commonTransitionClass);
+        css(el, {
+          height: '',
+          overflow: el.dataset.oldOverflow,
+          paddingTop: el.dataset.oldPaddingTop,
+          paddingBottom: el.dataset.oldPaddingBottom,
+        });
+      },
+    },
+    watch: {
+      navs(val) {
+        this.updateNavs(val);
+      },
+      title(val) {
+        this.updateTitle(val);
+      },
+      disabled(val) {
+        this.updateDisabled(val);
+      },
+    },
+  };
+</script>
