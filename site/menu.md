@@ -1,7 +1,7 @@
 # em 左侧菜单
 > em 公共级左导航业务组件
 
-<w-menu :env="env" class="demo"></w-menu>
+<w-menu :env="env" class="demo" eventUrl="http://www.qq.com/" lightUrl="http://news.qq.com/" logoutAction="https://www.easy-mock.com/mock/5ab386ecca15e11ded65b593/chinese/getLoginOutCallBackUrl"></w-menu>
 
 
 <script>
@@ -50,5 +50,10 @@ export default {
 .demo {
   position: relative;
   height: 500px;
+}
+
+.page {
+  position: relative;
+  z-index: 9999;
 }
 </style>
