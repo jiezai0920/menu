@@ -395,20 +395,19 @@
             const activeBarUrl = this.barObject[item.name];
             if (activeBarUrl !== this.pathNoAuth) {
               window.$cookie.set('ACTIVEBARURL', activeBarUrl, EXPIRED);
-          // this.setCookie('CURMENUNAME', item.name);
-          // if(this.getCookie('CURMENUNAME')){
-          //   this.delCookie('CURMENUNAME');
-          //   debugger;
-          // }
-          // debugger;
-          // this.setCookie('CURMENUNAME', item.name);
-          // if (typeof window !== 'undefined') {
-          //   const activeBarUrl = this.barObject[item.name];
-          //   if (activeBarUrl !== this.pathNoAuth) {
-          //     this.setCookie('ACTIVEBARURL', activeBarUrl);
+              // this.setCookie('CURMENUNAME', item.name);
+              // if(this.getCookie('CURMENUNAME')){
+              //   this.delCookie('CURMENUNAME');
+              //   debugger;
+              // }
+              // debugger;
+              // this.setCookie('CURMENUNAME', item.name);
+              // if (typeof window !== 'undefined') {
+              //   const activeBarUrl = this.barObject[item.name];
+              //   if (activeBarUrl !== this.pathNoAuth) {
+              //     this.setCookie('ACTIVEBARURL', activeBarUrl);
               // document.cookie = `${encodeURIComponent('ACTIVEBARURL')}=
               //${encodeURIComponent(activeBarUrl)}${encodeURIComponent(';')}`;
-
             }
             if (item.name === 'CRM' || item.name === '会员') {
               if (this.checkCrmAuth()) {
@@ -450,12 +449,11 @@
             const activeBarUrl = this.barObject[item.name];
             if (activeBarUrl !== this.pathNoAuth) {
               window.$cookie.set('ACTIVEBARURL', activeBarUrl, EXPIRED);
-          // this.setCookie('CURMENUNAME', item.name);
-          // if (typeof window !== 'undefined') {
-          //   const activeBarUrl = this.barObject[item.name];
-          //   if (activeBarUrl !== this.pathNoAuth) {
-          //     this.setCookie('ACTIVEBARURL', activeBarUrl);
-
+              // this.setCookie('CURMENUNAME', item.name);
+              // if (typeof window !== 'undefined') {
+              //   const activeBarUrl = this.barObject[item.name];
+              //   if (activeBarUrl !== this.pathNoAuth) {
+              //     this.setCookie('ACTIVEBARURL', activeBarUrl);
             }
             window.open(item.url);
           }
