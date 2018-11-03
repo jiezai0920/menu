@@ -30,6 +30,7 @@ module.exports = {
     editLinkText: '帮助我们改善此页面！',
     sidebar: [
       '/',
+      '/layout',
       '/menu',
       '/bar',
     ]

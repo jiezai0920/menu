@@ -14,8 +14,8 @@ export default (rule, env) => {
   };
   const newRoot = rule.slice();
   // 默认每个项目跳转地址
-  pathDefult[MODULE_NAME.EVENT] = `${env.ACTIVITY}activity?nav=match`;
-  pathDefult[MODULE_NAME.MEET] = `${env.ACTIVITY}activity?nav=light`;
+  pathDefult[MODULE_NAME.EVENT] = `${env.MEET}activity?nav=match`;
+  pathDefult[MODULE_NAME.MEET] = `${env.MEET}activity?nav=light`;
   pathDefult[MODULE_NAME.GOODS] = `${env.GOODS}Goods/list`;
   pathDefult[MODULE_NAME.FORM] = env.FORM;
   pathDefult[MODULE_NAME.ORDER] = env.ORDER;

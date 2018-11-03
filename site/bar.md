@@ -1,6 +1,6 @@
 # bar
 
-<w-bar class="demo" :navs="navDatas" title="二级导航"></w-bar>
+<w-bar class="demo" :navs="barTestRule" title="二级导航"></w-bar>
 
 ## API
 
@@ -15,59 +15,13 @@
 
 <script>
 import WBar from '../emmenu/core/bar/Bar';
+//  二级白色导航测试数据
+import barTestRule from './barDatas';
 
 export default {
   data() {
     return {
-      navDatas: [
-        {
-          title: '菜单',
-          to: {
-            path: '/menu.html',
-          },
-        },
-        {
-          title: '一级1',
-          child: [
-            {
-              title: '二级菜单',
-              to: {
-                path: '/bar.html',
-              },
-            },
-            {
-              title: '二级菜单',
-              to: {
-                path: '/menu.html',
-              },
-            },
-            {
-              title: '二级腾讯',
-              url: 'http://qq.com',
-            },
-          ],
-        },
-        {
-          title: '一级2',
-          child: [
-            {
-              title: '二级菜单',
-              to: {
-                path: '/menu.html',
-              },
-            },
-            {
-              title: '二级腾讯',
-              url: 'http://qq.com',
-            },
-          ],
-        },
-        {
-          url: 'http://baidu.com',
-          target: '_blank',
-          title: '百度',
-        },
-      ],
+      barTestRule,
     };
   },
   components: {
