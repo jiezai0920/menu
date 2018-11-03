@@ -75,6 +75,7 @@
     SUCCESS,
     MARKETING_BAR,
     DATA_BAR,
+    EXPIRED,
   } = CONSTANT;
 
   export default {
@@ -176,8 +177,11 @@
       } else {
         this.getMenu();
       }
-      if (!this.getCookie('CURMENUNAME')) {
-        this.setCookie('CURMENUNAME', '控制台');
+
+      if (!window.$cookie.get('CURMENUNAME')) {
+        window.$cookie.set('CURMENUNAME', '控制台', EXPIRED);
+      //if (!this.getCookie('CURMENUNAME')) {
+      //  this.setCookie('CURMENUNAME', '控制台');
       }
       this.curMenuObject = this.getCookie('CURMENUNAME');
       this.matchUrl1();
@@ -325,7 +329,9 @@
         if (this.curBar) {
           this.curBarObject = this.curBar;
         }
-        this.setCookie('CURMENUNAME', this.curMenuObject);
+
+        window.$cookie.set('CURMENUNAME', this.curMenuObject, EXPIRED);
+        // this.setCookie('CURMENUNAME', this.curMenuObject);
       },
       matchUrl1() {
         const {
@@ -339,6 +345,20 @@
           for(let keyItem in this.domainName){
             if (href.indexOf(this.domainName[keyItem]) !== -1) {
               if (keyItem === '控制台' && m === '营销') {
+                window.$cookie.set('CURMENUNAME', '营销', EXPIRED);
+                this.curMenuObject = '营销';
+                if (href !== this.pathNoAuth) {
+                  window.$cookie.set('ACTIVEBARURL', href, EXPIRED);
+                }
+              } else if (keyItem  === '报名' && m === '票务') {
+                window.$cookie.set('CURMENUNAME', '票务', EXPIRED);
+                this.curMenuObject = '票务';
+              } else {
+                window.$cookie.set('CURMENUNAME', keyItem, EXPIRED);
+                this.curMenuObject = keyItem;
+                if (href !== this.pathNoAuth) {
+                  window.$cookie.set('ACTIVEBARURL', href, EXPIRED);
+                /* 
                 this.setCookie('CURMENUNAME', '营销');
                 this.curMenuObject = '营销';
                 if (href !== this.pathNoAuth) {
@@ -352,6 +372,7 @@
                 this.curMenuObject = keyItem;
                 if (href !== this.pathNoAuth) {
                   this.setCookie('ACTIVEBARURL', href);
+                */
                 }
               }
             }
@@ -368,27 +389,37 @@
             return;
           }
           this.curMenuObject = item.name;
+
+          window.$cookie.set('CURMENUNAME', item.name, EXPIRED);
+          if (typeof window !== 'undefined') {
+            const activeBarUrl = this.barObject[item.name];
+            if (activeBarUrl !== this.pathNoAuth) {
+              window.$cookie.set('ACTIVEBARURL', activeBarUrl, EXPIRED);
           // this.setCookie('CURMENUNAME', item.name);
           // if(this.getCookie('CURMENUNAME')){
           //   this.delCookie('CURMENUNAME');
           //   debugger;
           // }
           // debugger;
-          this.setCookie('CURMENUNAME', item.name);
-          if (typeof window !== 'undefined') {
-            const activeBarUrl = this.barObject[item.name];
-            if (activeBarUrl !== this.pathNoAuth) {
-              this.setCookie('ACTIVEBARURL', activeBarUrl);
+          // this.setCookie('CURMENUNAME', item.name);
+          // if (typeof window !== 'undefined') {
+          //   const activeBarUrl = this.barObject[item.name];
+          //   if (activeBarUrl !== this.pathNoAuth) {
+          //     this.setCookie('ACTIVEBARURL', activeBarUrl);
               // document.cookie = `${encodeURIComponent('ACTIVEBARURL')}=
               //${encodeURIComponent(activeBarUrl)}${encodeURIComponent(';')}`;
+
             }
             if (item.name === 'CRM' || item.name === '会员') {
               if (this.checkCrmAuth()) {
                 window.open(item.path);
               } else {
-                this.setCookie('CURMENUNAME', '会员');
+                window.$cookie.set('CURMENUNAME', '会员', EXPIRED);
                 if (this.barObject['会员'] !== this.pathNoAuth) {
-                  this.setCookie('ACTIVEBARURL', this.barObject['会员']);
+                  window.$cookie.set('ACTIVEBARURL', this.barObject['会员'], EXPIRED);
+                // this.setCookie('CURMENUNAME', '会员');
+                // if (this.barObject['会员'] !== this.pathNoAuth) {
+                //   this.setCookie('ACTIVEBARURL', this.barObject['会员']);
                 }
                 window.open(this.barObject['会员']);
               }
@@ -414,11 +445,17 @@
             return;
           }
           this.curMenuObject = item.name;
-          this.setCookie('CURMENUNAME', item.name);
+          window.$cookie.set('CURMENUNAME', item.name, EXPIRED);
           if (typeof window !== 'undefined') {
             const activeBarUrl = this.barObject[item.name];
             if (activeBarUrl !== this.pathNoAuth) {
-              this.setCookie('ACTIVEBARURL', activeBarUrl);
+              window.$cookie.set('ACTIVEBARURL', activeBarUrl, EXPIRED);
+          // this.setCookie('CURMENUNAME', item.name);
+          // if (typeof window !== 'undefined') {
+          //   const activeBarUrl = this.barObject[item.name];
+          //   if (activeBarUrl !== this.pathNoAuth) {
+          //     this.setCookie('ACTIVEBARURL', activeBarUrl);
+
             }
             window.open(item.url);
           }
@@ -431,7 +468,8 @@
         }
         let newItem = null;
         this.curMenuObject = item.name;
-        this.setCookie('CURMENUNAME', item.name);
+        window.$cookie.set('CURMENUNAME', item.name, EXPIRED);
+        // this.setCookie('CURMENUNAME', item.name);
         if (item.source.module_name === MODULE_NAME.MARKET) {
           newItem = this.marketBar;
         } else {
@@ -439,7 +477,8 @@
         }
         const activeBarUrl = this.barObject[item.name];
         if (activeBarUrl !== this.pathNoAuth) {
-          this.setCookie('ACTIVEBARURL', activeBarUrl);
+          window.$cookie.set('ACTIVEBARURL', activeBarUrl, EXPIRED);
+        //   this.setCookie('ACTIVEBARURL', activeBarUrl);
         }
         window.location.href = newItem[0].path;
       },
