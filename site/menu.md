@@ -58,5 +58,7 @@ export default {
 .page {
   position: relative;
   z-index: 9999;
+  padding-left: 0;
+  margin-left: 20rem;
 }
 </style>
