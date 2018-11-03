@@ -59,6 +59,31 @@
       this.modifyAttr('curName', this.name);
     },
     methods: {
+      /* eslint-disable */
+      setCookie(name, value) {
+        const Days = 30;
+        const exp = new Date();
+        exp.setTime(exp.getTime() + Days * 24 * 60 * 60 * 1000);
+        document.cookie = `${encodeURIComponent(name)}=${encodeURIComponent(value)};expires=${exp.toGMTString()}`;
+      },
+      getCookie(name) {
+        let arr,
+          reg = new RegExp(`(^| )${name}=([^;]*)(;|$)`);
+        if (arr = document.cookie.match(reg)) {
+          const m = decodeURIComponent(arr[2]);
+          return (m);
+        }
+        return null;
+      },
+      delCookie(name) {
+        const exp = new Date();
+        exp.setTime(exp.getTime() - 1);
+        const cval = this.getCookie(name);
+        if (cval != null) {
+          document.cookie = `${name}=${cval};expires=${exp.toGMTString()}`;
+        }
+      },
+      /* eslint-enable */
       modifyAttr(attr, val, isGetStorage = false) {
         this[attr] = val;
         if (isGetStorage) {
@@ -75,27 +100,27 @@
           this.curMenuObject = allData.name;
           this.curBarObject = item.name;
           if (this.curBarObject === '店铺') {
-            window.$cookie.set('CURMENUNAME', '店铺');
+            this.setCookie('CURMENUNAME', '店铺');
           }
           if (typeof window !== 'undefined') {
             if (hOwnProperty(item, 'url')) {
               if (this.barObject[item.name]) {
                 const activeBarUrl = this.barObject[item.name];
                 if (activeBarUrl !== this.pathNoAuth) {
-                  window.$cookie.set('ACTIVEBARURL', activeBarUrl);
+                  this.setCookie('ACTIVEBARURL', activeBarUrl);
                 }
               } else if (item.url !== this.pathNoAuth) {
-                window.$cookie.set('ACTIVEBARURL', item.url);
+                this.setCookie('ACTIVEBARURL', item.url);
               }
               window.open(item.url);
             } else {
               if (this.barObject[item.name]) {
                 const activeBarUrl = this.barObject[item.name];
                 if (activeBarUrl !== this.pathNoAuth) {
-                  window.$cookie.set('ACTIVEBARURL', activeBarUrl);
+                  this.setCookie('ACTIVEBARURL', activeBarUrl);
                 }
               } else if (item.path !== this.pathNoAuth) {
-                window.$cookie.set('ACTIVEBARURL', item.path);
+                this.setCookie('ACTIVEBARURL', item.path);
               }
               window.location.href = item.path;
             }
