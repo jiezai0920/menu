@@ -75,6 +75,7 @@
     SUCCESS,
     MARKETING_BAR,
     DATA_BAR,
+    EXPIRED,
   } = CONSTANT;
 
   export default {
@@ -177,7 +178,7 @@
         this.getMenu();
       }
       if (!window.$cookie.get('CURMENUNAME')) {
-        window.$cookie.set('CURMENUNAME', '控制台');
+        window.$cookie.set('CURMENUNAME', '控制台', EXPIRED);
       }
       this.curMenuObject = window.$cookie.get('CURMENUNAME');
       this.matchUrl1();
@@ -300,7 +301,7 @@
         if (this.curBar) {
           this.curBarObject = this.curBar;
         }
-        window.$cookie.set('CURMENUNAME', this.curMenuObject);
+        window.$cookie.set('CURMENUNAME', this.curMenuObject, EXPIRED);
       },
       matchUrl1() {
         const {
@@ -313,19 +314,19 @@
           for(let keyItem in this.domainName){
             if (href.indexOf(this.domainName[keyItem]) !== -1) {
               if (keyItem === '控制台' && m === '营销') {
-                window.$cookie.set('CURMENUNAME', '营销');
+                window.$cookie.set('CURMENUNAME', '营销', EXPIRED);
                 this.curMenuObject = '营销';
                 if (href !== this.pathNoAuth) {
-                  window.$cookie.set('ACTIVEBARURL', href);
+                  window.$cookie.set('ACTIVEBARURL', href, EXPIRED);
                 }
               } else if (keyItem  === '报名' && m === '票务') {
-                window.$cookie.set('CURMENUNAME', '票务');
+                window.$cookie.set('CURMENUNAME', '票务', EXPIRED);
                 this.curMenuObject = '票务';
               } else {
-                window.$cookie.set('CURMENUNAME', keyItem);
+                window.$cookie.set('CURMENUNAME', keyItem, EXPIRED);
                 this.curMenuObject = keyItem;
                 if (href !== this.pathNoAuth) {
-                  window.$cookie.set('ACTIVEBARURL', href);
+                  window.$cookie.set('ACTIVEBARURL', href, EXPIRED);
                 }
               }
             }
@@ -342,19 +343,19 @@
             return;
           }
           this.curMenuObject = item.name;
-          window.$cookie.set('CURMENUNAME', item.name);
+          window.$cookie.set('CURMENUNAME', item.name, EXPIRED);
           if (typeof window !== 'undefined') {
             const activeBarUrl = this.barObject[item.name];
             if (activeBarUrl !== this.pathNoAuth) {
-              window.$cookie.set('ACTIVEBARURL', activeBarUrl);
+              window.$cookie.set('ACTIVEBARURL', activeBarUrl, EXPIRED);
             }
             if (item.name === 'CRM' || item.name === '会员') {
               if (this.checkCrmAuth()) {
                 window.open(item.path);
               } else {
-                window.$cookie.set('CURMENUNAME', '会员');
+                window.$cookie.set('CURMENUNAME', '会员', EXPIRED);
                 if (this.barObject['会员'] !== this.pathNoAuth) {
-                  window.$cookie.set('ACTIVEBARURL', this.barObject['会员']);
+                  window.$cookie.set('ACTIVEBARURL', this.barObject['会员'], EXPIRED);
                 }
                 window.open(this.barObject['会员']);
               }
@@ -380,11 +381,11 @@
             return;
           }
           this.curMenuObject = item.name;
-          window.$cookie.set('CURMENUNAME', item.name);
+          window.$cookie.set('CURMENUNAME', item.name, EXPIRED);
           if (typeof window !== 'undefined') {
             const activeBarUrl = this.barObject[item.name];
             if (activeBarUrl !== this.pathNoAuth) {
-              window.$cookie.set('ACTIVEBARURL', activeBarUrl);
+              window.$cookie.set('ACTIVEBARURL', activeBarUrl, EXPIRED);
             }
             window.open(item.url);
           }
@@ -397,7 +398,7 @@
         }
         let newItem = null;
         this.curMenuObject = item.name;
-        window.$cookie.set('CURMENUNAME', item.name);
+        window.$cookie.set('CURMENUNAME', item.name, EXPIRED);
         if (item.source.module_name === MODULE_NAME.MARKET) {
           newItem = this.marketBar;
         } else {
@@ -405,7 +406,7 @@
         }
         const activeBarUrl = this.barObject[item.name];
         if (activeBarUrl !== this.pathNoAuth) {
-          window.$cookie.set('ACTIVEBARURL', activeBarUrl);
+          window.$cookie.set('ACTIVEBARURL', activeBarUrl, EXPIRED);
         }
         window.location.href = newItem[0].path;
       },

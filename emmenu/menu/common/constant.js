@@ -2,6 +2,7 @@ export default {
   EVENT_USER: 'EVENT_USER',
   EVENT_TOKE: 'Authorization',
   SUCCESS: 10000,
+  EXPIRED: 3600 * 24,
   MARKETING_BAR: 'EVENT_MARKETING_BAR',
   DATA_BAR: 'EVENT_DATA_BAR',
   MODULE_NAME: { // 模块名字
