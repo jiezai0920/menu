@@ -379,7 +379,8 @@
             const activeBarUrl = this.barObject[item.name];
             if (activeBarUrl !== this.pathNoAuth) {
               this.setCookie('ACTIVEBARURL', activeBarUrl);
-              // document.cookie = `${encodeURIComponent('ACTIVEBARURL')}=${encodeURIComponent(activeBarUrl)}${encodeURIComponent(';')}`;
+              // document.cookie = `${encodeURIComponent('ACTIVEBARURL')}=
+              //${encodeURIComponent(activeBarUrl)}${encodeURIComponent(';')}`;
             }
             if (item.name === 'CRM' || item.name === '会员') {
               if (this.checkCrmAuth()) {
