@@ -14,7 +14,7 @@ function getUuid() {
 }
 
 export default {
-  name: 'emfe-message',
+  name: 'WMessage',
   data() {
     return {
       notices: [],

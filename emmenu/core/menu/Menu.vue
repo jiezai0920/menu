@@ -1,6 +1,6 @@
 <template>
   <div class="w-menu-warp">
-    <div class="w-menu" :class="{'w-menu-hover': hover}" @mouseenter="hover = true" @mouseleave="hover = false">
+    <div class="w-menu" :class="{'w-menu-hover': hover}">
       <div class="w-menu-header">
         <img class="w-menu-header-icon" :src="icon">
         <span class="w-menu-header-title">{{title}}</span>
@@ -16,12 +16,12 @@
         </li>
       </ul>
       <a href="javascript:;" class="w-menu-release" @click="isMask = true">
-        <img class="w-menu-release-img" src="assets/img/release.png">
+        <img class="w-menu-release-img" :src="require(`assets/img/release.png`)">
         <span class="w-menu-release-title">免费发活动</span>
       </a>
       <a class="w-menu-quit" @click="modalShow = true">
-        <img class="w-menu-quit-img" src="assets/img/quit.png">
-        <img class="w-menu-quit-img" src="assets/img/quit_hover.png">
+        <img class="w-menu-quit-img" :src="require(`assets/img/quit.png`)">
+        <img class="w-menu-quit-img" :src="require(`assets/img/quit_hover.png`)">
         <span class="w-menu-quit-title">退出</span>
       </a>
     </div>
@@ -32,12 +32,12 @@
         <h4 class="w-menu-mask-title">选择发布的活动类型</h4>
         <div class="w-menu-mask-modal">
           <a :href="`${env.ACTIVITY}light`" class="w-menu-mask-light">
-            <img class="w-menu-mask-img" src="assets/img/light.svg">
+            <img class="w-menu-mask-img" :src="require(`assets/img/light.svg`)">
             <span class="w-menu-mask-name">报名</span>
             <span class="w-menu-mask-content">聚会、沙龙、排队、培训、会议、粉丝赠票、签到二维码、可审核、可付费、邀请函</span>
           </a>
           <a :href="`${env.EVENTT}event/pub`" class="w-menu-mask-light">
-            <img class="w-menu-mask-img" src="assets/img/event.svg">
+            <img class="w-menu-mask-img" :src="require(`assets/img/event.svg`)">
             <span class="w-menu-mask-name">票务</span>
             <span class="w-menu-mask-content">剧场、音乐节、巡演、赛事、会议、展览、游园、多票种、多场次、选座、秒杀抢票、多种核销、代金券、年卡、外币支付</span>
           </a>
@@ -75,8 +75,9 @@
     name: 'WMenu',
     data() {
       return {
-        // hover: false,
-        hover: true,
+        // 调试一级黑色导航样式的时候可以为 true 方便调试
+        hover: false,
+        // hover: true,
 
         isMask: false,
         user: '',
@@ -108,7 +109,7 @@
       // 处理权限接口数据
       handleData() {
         this.power = newRoot(this.rule, this.env);
-        console.log(this.power);
+        this.$emit('analysised', this.power);
       },
       // 免费发活动和退出 start
       modalOk() {
