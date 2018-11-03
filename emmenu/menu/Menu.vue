@@ -176,13 +176,38 @@
       } else {
         this.getMenu();
       }
-      if (!window.$cookie.get('CURMENUNAME')) {
-        window.$cookie.set('CURMENUNAME', '控制台');
+      if (!this.getCookie('CURMENUNAME')) {
+        this.setCookie('CURMENUNAME', '控制台');
       }
-      this.curMenuObject = window.$cookie.get('CURMENUNAME');
+      this.curMenuObject = this.getCookie('CURMENUNAME');
       this.matchUrl1();
     },
     methods: {
+      /* eslint-disable */
+      setCookie(name, value) {
+        const Days = 30;
+        const exp = new Date();
+        exp.setTime(exp.getTime() + Days * 24 * 60 * 60 * 1000);
+        document.cookie = `${encodeURIComponent(name)}=${encodeURIComponent(value)};expires=${exp.toGMTString()}`;
+      },
+      getCookie(name) {
+        let arr,
+          reg = new RegExp(`(^| )${name}=([^;]*)(;|$)`);
+        if (arr = document.cookie.match(reg)) {
+          const m = decodeURIComponent(arr[2]);
+          return (m);
+        }
+        return null;
+      },
+      delCookie(name) {
+        const exp = new Date();
+        exp.setTime(exp.getTime() - 1);
+        const cval = this.getCookie(name);
+        if (cval != null) {
+          document.cookie = `${name}=${cval};expires=${exp.toGMTString()}`;
+        }
+      },
+      /* eslint-enable */
       handleData() {
         if (this.handleMenu) {
           this.afterrHandle(this.handleMenu);
@@ -268,10 +293,10 @@
         const {
           href,
         } = window.location;
-        // let m = window.$cookie.get("CURMENUNAME");
+        // let m = this.getCookie("CURMENUNAME");
         // let domainName = this.domainName.m;
         // if (href.indexOf(m) === -1) {
-        //   window.$cookie.set("CURMENUNAME", this.curMenuObject);
+        //   this.setCookie("CURMENUNAME", this.curMenuObject);
         // }
         // 检测主要除了 bar 之外的一级菜单
         let inSite = this.datas.filter(dataKey => href.indexOf(dataKey.path) > -1);
@@ -300,32 +325,33 @@
         if (this.curBar) {
           this.curBarObject = this.curBar;
         }
-        window.$cookie.set('CURMENUNAME', this.curMenuObject);
+        this.setCookie('CURMENUNAME', this.curMenuObject);
       },
       matchUrl1() {
         const {
           href,
         } = window.location;
-        const m = decodeURIComponent(window.$cookie.get('CURMENUNAME'));
+        // const m = decodeURIComponent(this.getCookie('CURMENUNAME'));
+        const m = this.getCookie('CURMENUNAME');
         const domainName = this.domainName[m];
         if (href.indexOf(domainName) === -1) {
           /* eslint-disable */
           for(let keyItem in this.domainName){
             if (href.indexOf(this.domainName[keyItem]) !== -1) {
               if (keyItem === '控制台' && m === '营销') {
-                window.$cookie.set('CURMENUNAME', '营销');
+                this.setCookie('CURMENUNAME', '营销');
                 this.curMenuObject = '营销';
                 if (href !== this.pathNoAuth) {
-                  window.$cookie.set('ACTIVEBARURL', href);
+                  this.setCookie('ACTIVEBARURL', href);
                 }
               } else if (keyItem  === '报名' && m === '票务') {
-                window.$cookie.set('CURMENUNAME', '票务');
+                this.setCookie('CURMENUNAME', '票务');
                 this.curMenuObject = '票务';
               } else {
-                window.$cookie.set('CURMENUNAME', keyItem);
+                this.setCookie('CURMENUNAME', keyItem);
                 this.curMenuObject = keyItem;
                 if (href !== this.pathNoAuth) {
-                  window.$cookie.set('ACTIVEBARURL', href);
+                  this.setCookie('ACTIVEBARURL', href);
                 }
               }
             }
@@ -342,19 +368,26 @@
             return;
           }
           this.curMenuObject = item.name;
-          window.$cookie.set('CURMENUNAME', item.name);
+          // this.setCookie('CURMENUNAME', item.name);
+          // if(this.getCookie('CURMENUNAME')){
+          //   this.delCookie('CURMENUNAME');
+          //   debugger;
+          // }
+          // debugger;
+          this.setCookie('CURMENUNAME', item.name);
           if (typeof window !== 'undefined') {
             const activeBarUrl = this.barObject[item.name];
             if (activeBarUrl !== this.pathNoAuth) {
-              window.$cookie.set('ACTIVEBARURL', activeBarUrl);
+              this.setCookie('ACTIVEBARURL', activeBarUrl);
+              // document.cookie = `${encodeURIComponent('ACTIVEBARURL')}=${encodeURIComponent(activeBarUrl)}${encodeURIComponent(';')}`;
             }
             if (item.name === 'CRM' || item.name === '会员') {
               if (this.checkCrmAuth()) {
                 window.open(item.path);
               } else {
-                window.$cookie.set('CURMENUNAME', '会员');
+                this.setCookie('CURMENUNAME', '会员');
                 if (this.barObject['会员'] !== this.pathNoAuth) {
-                  window.$cookie.set('ACTIVEBARURL', this.barObject['会员']);
+                  this.setCookie('ACTIVEBARURL', this.barObject['会员']);
                 }
                 window.open(this.barObject['会员']);
               }
@@ -380,11 +413,11 @@
             return;
           }
           this.curMenuObject = item.name;
-          window.$cookie.set('CURMENUNAME', item.name);
+          this.setCookie('CURMENUNAME', item.name);
           if (typeof window !== 'undefined') {
             const activeBarUrl = this.barObject[item.name];
             if (activeBarUrl !== this.pathNoAuth) {
-              window.$cookie.set('ACTIVEBARURL', activeBarUrl);
+              this.setCookie('ACTIVEBARURL', activeBarUrl);
             }
             window.open(item.url);
           }
@@ -397,7 +430,7 @@
         }
         let newItem = null;
         this.curMenuObject = item.name;
-        window.$cookie.set('CURMENUNAME', item.name);
+        this.setCookie('CURMENUNAME', item.name);
         if (item.source.module_name === MODULE_NAME.MARKET) {
           newItem = this.marketBar;
         } else {
@@ -405,7 +438,7 @@
         }
         const activeBarUrl = this.barObject[item.name];
         if (activeBarUrl !== this.pathNoAuth) {
-          window.$cookie.set('ACTIVEBARURL', activeBarUrl);
+          this.setCookie('ACTIVEBARURL', activeBarUrl);
         }
         window.location.href = newItem[0].path;
       },
