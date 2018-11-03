@@ -30,6 +30,9 @@ module.exports = {
     extensions: ['.js', '.md', '.vue', '.json'],
     alias: {
       'vue$': 'vue/dist/vue.esm.js',
+      helper: resolve('emmenu/helper'),
+      assets: resolve('emmenu/assets'),
+      message: resolve('emmenu/core/message'),
     }
   },
   performance: {

@@ -9,19 +9,19 @@
         <li class="w-menu-list-item" v-for="(rule, ruleIndex) in power.menuList" :key="ruleIndex">
           <!-- on -->
           <a :href="rule.path" class="w-menu-list-link">
-            <img class="w-menu-list-img" :src="require(`../assets/img/${rule.icon}_normal.png`)">
-            <img class="w-menu-list-img" :src="require(`../assets/img/${rule.icon}_selected.png`)">
+            <img class="w-menu-list-img" :src="require(`assets/img/${rule.icon}_normal.png`)">
+            <img class="w-menu-list-img" :src="require(`assets/img/${rule.icon}_selected.png`)">
             <span class="w-menu-list-title">{{rule.name}}</span>
           </a>
         </li>
       </ul>
       <a href="javascript:;" class="w-menu-release" @click="isMask = true">
-        <img class="w-menu-release-img" src="../assets/img/release.png">
+        <img class="w-menu-release-img" src="assets/img/release.png">
         <span class="w-menu-release-title">免费发活动</span>
       </a>
       <a class="w-menu-quit" @click="modalShow = true">
-        <img class="w-menu-quit-img" src="../assets/img/quit.png">
-        <img class="w-menu-quit-img" src="../assets/img/quit_hover.png">
+        <img class="w-menu-quit-img" src="assets/img/quit.png">
+        <img class="w-menu-quit-img" src="assets/img/quit_hover.png">
         <span class="w-menu-quit-title">退出</span>
       </a>
     </div>
@@ -32,12 +32,12 @@
         <h4 class="w-menu-mask-title">选择发布的活动类型</h4>
         <div class="w-menu-mask-modal">
           <a :href="`${env.ACTIVITY}light`" class="w-menu-mask-light">
-            <img class="w-menu-mask-img" src="../assets/img/light.svg">
+            <img class="w-menu-mask-img" src="assets/img/light.svg">
             <span class="w-menu-mask-name">报名</span>
             <span class="w-menu-mask-content">聚会、沙龙、排队、培训、会议、粉丝赠票、签到二维码、可审核、可付费、邀请函</span>
           </a>
           <a :href="`${env.EVENTT}event/pub`" class="w-menu-mask-light">
-            <img class="w-menu-mask-img" src="../assets/img/event.svg">
+            <img class="w-menu-mask-img" src="assets/img/event.svg">
             <span class="w-menu-mask-name">票务</span>
             <span class="w-menu-mask-content">剧场、音乐节、巡演、赛事、会议、展览、游园、多票种、多场次、选座、秒杀抢票、多种核销、代金券、年卡、外币支付</span>
           </a>
@@ -66,10 +66,10 @@
 <script>
   import 'em-cookie';
   import 'em-jsonp';
-  import message from '../component/message/index';
-  import CONSTANT from '../helper/constant';
-  import ajax from '../helper/ajax';
-  import newRoot from '../helper/newRoot';
+  import message from 'message/index';
+  import CONSTANT from 'helper/constant';
+  import ajax from 'helper/ajax';
+  import newRoot from 'helper/newRoot';
 
   export default {
     name: 'WMenu',

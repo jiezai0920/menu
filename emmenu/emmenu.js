@@ -1,6 +1,6 @@
 // 组件
-import WMenu from './menu/emmenu';
-import WBar from './bar/embar';
+import WMenu from './core/menu/emmenu';
+import WBar from './core/bar/embar';
 
 const waterCpt = {
   WMenu,

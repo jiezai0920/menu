@@ -1,3 +1,7 @@
+const path = require('path');
+
+const resolve = p => path.resolve(__dirname, '../../', p);
+
 const base = process.env.GH ? '/emmenu/' : '/'
 
 module.exports = {
@@ -8,6 +12,15 @@ module.exports = {
   ],
   dest: './docs',
   serviceWorker: true,
+  configureWebpack: {
+    resolve: {
+      alias: {
+        helper: resolve('emmenu/helper'),
+        assets: resolve('emmenu/assets'),
+        message: resolve('emmenu/core/message'),
+      }
+    }
+  },
   themeConfig: {
     repo: 'em-fe/menu',
     editLinks: false,

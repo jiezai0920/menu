@@ -5,7 +5,7 @@
 
 
 <script>
-import WMenu from '../emmenu/menu/Menu';
+import WMenu from '../emmenu/core/menu/Menu';
 //  权限测试数据
 import menuTestRule from './menudata';
 

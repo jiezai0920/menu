@@ -14,7 +14,7 @@
 |open|是否全部打开|Boolean|否|false|
 
 <script>
-import WBar from '../emmenu/bar/Bar';
+import WBar from '../emmenu/core/bar/Bar';
 
 export default {
   data() {

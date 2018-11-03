@@ -25,7 +25,7 @@
   </div>
 </template>
 <script>
-  import { addClass, removeClass, css } from '../helper/node';
+  import { addClass, removeClass, css } from '../../helper/node';
 
   const commonTransitionClass = 'w-bar-gradual';
 
