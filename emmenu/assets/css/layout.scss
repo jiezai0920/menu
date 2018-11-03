@@ -1,0 +1,22 @@
+.w-layout {
+  display: flex;
+
+  &-main {
+    width: calc(100% - 180px);
+  }
+
+  &.on {
+    .w-layout-main {
+      width: calc(100% - 46px);
+    }
+  }
+
+  &-collapse {
+    position: absolute;
+    right: 0;
+    top: 50%;
+    width: 14px;
+    height: 52px;
+    background: #f8f8f8;
+  }
+}

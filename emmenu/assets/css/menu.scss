@@ -8,10 +8,11 @@
   cursor: pointer;
   transition: width $time;
   height: 100%;
+  position: relative;
 
   &-warp {
     width: 46px;
-    position: fixed;
+    position: absolute;
     top: 0;
     bottom: 0;
     z-index: 2;

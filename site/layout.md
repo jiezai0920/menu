@@ -1,6 +1,6 @@
 # 真正的页面
 
-<w-layout :env="env" :rule="menuTestRule" class="demo" logoutAction="https://www.easy-mock.com/mock/5ab386ecca15e11ded65b593/chinese/getLoginOutCallBackUrl" :navs="barTestRule" title="二级导航">
+<w-layout :env="env" :rule="menuTestRule" class="demo" logoutAction="https://www.easy-mock.com/mock/5ab386ecca15e11ded65b593/chinese/getLoginOutCallBackUrl" :navs="barTestRule" menuName="123123" barName="二级导航" :show="true">
   <h1>这是真正的标题</h1>
   <p>这是真正内容</p>
 </w-layout>
@@ -31,6 +31,7 @@ export default {
 </script>
 
 <style lang="scss">
+@import '../emmenu/assets/css/layout.scss';
 @import '../emmenu/assets/css/menu.scss';
 @import '../emmenu/assets/css/bar.scss';
 

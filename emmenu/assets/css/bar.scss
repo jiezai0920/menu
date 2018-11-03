@@ -4,13 +4,19 @@
   width: 134px;
   border-right: 1px solid #ddd;
   height: 100%;
-  position: absolute;
-  top: 0;
-  bottom: 0;
-  z-index: 1;
+  position: relative;
+  margin-left: 46px;
   background: #fff;
+  transition: width $time;
+
+  // 小时的状态
+  &-hide {
+    width: 0;
+    overflow: hidden;
+  }
 
   &-title {
+    width: 130px;
     height: 53px;
     font-size: 12px;
     font-family: $family;
@@ -26,9 +32,9 @@
   }
 
   &-list {
-    width: 106px;
-    margin: 0 auto;
+    width: 134px;
     padding: 20px 0 0;
+    margin: 0;
   }
 
   &-child {
@@ -51,12 +57,13 @@
     display: block;
     height: 38px;
     line-height: 38px;
-    padding-left: 18px;
+    padding-left: 32px;
     color: #333;
     font-weight: 500;
     font-size: 12px;
     font-family: $family;
     position: relative;
+    width: 88px;
 
     &:hover {
       text-decoration: none !important;
@@ -120,7 +127,7 @@
       border-width: 6px 5px 0;
       top: 50%;
       margin: -3px 0 0;
-      left: -1px;
+      left: 13px;
       transition: transform 0.4s;
       transform: rotate(-90deg);
       content: ' ';

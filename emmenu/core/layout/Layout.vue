@@ -1,22 +1,35 @@
 <template>
-  <div>
-    <w-bar class="demo" :navs="navs" :title="title"></w-bar>
-layout
+  <div class="w-layout">
+    <w-menu :env="env" :icon="iconValue" :rule="rule" :logoutAction="logoutAction" :title="menuNameValue"></w-menu>
+    <w-bar :navs="navsValue" :disabled="disabledValue" :title="barNameValue" :show="showStatus" v-if="navsValue.length"></w-bar>
+    <div class="w-layout-main">
+      <span class="w-layout-collapse"><img class="w-collapse-icon" :src="require('assets/img/corrw.png')"></span>
+      <button v-if="collapseValue" @click="handleCollapse">点击</button>
+      <slot></slot>
+    </div>
   </div>
 </template>
 <script>
 import WBar from '../bar/Bar';
+import WMenu from '../menu/Menu';
+
 export default {
   name: 'WLayout',
   data() {
     return {
       navsValue: [],
-      titleValue: '',
-      disabledValue: '',
+      barNameValue: '',
+      menuNameValue: '',
+      disabledValue: false,
+      iconValue: '',
+      showStatus: true,
+      collapseValue: false,
     };
   },
   props: {
-    title: String,
+    barName: String,
+    menuName: String,
+    icon: String,
     navs: {
       type: Array,
       default: () => [],
@@ -29,30 +42,80 @@ export default {
       type: Boolean,
       default: false,
     },
+    env: {
+      type: Object,
+      default: () => {},
+    },
+    collapse: { // 是否有收起
+      type: Boolean,
+      default: true,
+    },
+    show: Boolean, // 二级是否显示
+    logoutAction: String,
+    rule: Array,
   },
-  components: {
-    WBar,
+  mounted() {
+    this.updateIcon(this.icon);
+    this.updateNavs(this.navs);
+    this.updateMenuName(this.menuName);
+    this.updateBarName(this.barName);
+    this.updateDisabled(this.disabled);
+    this.updateShow(this.show);
+    this.updateCollapse(this.collapse);
   },
   methods: {
+    handleCollapse() {
+      if (this.collapseValue) {
+        this.showStatus = !this.showStatus;
+      }
+    },
     updateNavs(val) {
       this.navsValue = val.slice();
     },
-    updateTitle(val) {
-      this.titleValue = val;
+    updateCollapse(val) {
+      this.collapseValue = val;
+    },
+    updateMenuName(val) {
+      this.menuNameValue = val;
+    },
+    updateBarName(val) {
+      this.barNameValue = val;
     },
     updateDisabled(val) {
       this.disabledValue = val;
     },
+    updateIcon(val) {
+      this.iconValue = val;
+    },
+    updateShow(val) {
+      this.showStatus = val;
+    },
+  },
+  components: {
+    WMenu,
+    WBar,
   },
   watch: {
     navs(val) {
       this.updateNavs(val);
     },
-    title(val) {
-      this.updateTitle(val);
+    menuName(val) {
+      this.updateMenuName(val);
+    },
+    barName(val) {
+      this.updateBarName(val);
     },
     disabled(val) {
       this.updateDisabled(val);
+    },
+    icon(val) {
+      this.updateIcon(val);
+    },
+    show(val) {
+      this.updateShow(val);
+    },
+    collapse(val) {
+      this.updateCollapse(val);
     },
   },
 }

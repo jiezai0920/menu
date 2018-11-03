@@ -1,5 +1,5 @@
 <template>
-  <div class="w-bar">
+  <div class="w-bar" :class="{'w-bar-hide': !showValue}">
     <h3 class="w-bar-title">{{titleValue}}</h3>
     <ul class="w-bar-list">
       <li class="w-bar-item" v-for="(value, valueIndex) in goValue">
@@ -37,11 +37,13 @@
         titleValue: '',
         disabledValue: false,
         status: false,
+        showValue: false,
         openValue: this.open,
       };
     },
     props: {
       title: String,
+      show: Boolean,
       navs: {
         type: Array,
         default: () => [],
@@ -59,6 +61,7 @@
       this.updateNavs(this.navs);
       this.updateTitle(this.title);
       this.updateDisabled(this.disabled);
+      this.updateShow(this.show);
       this.updateOpen();
     },
     methods: {
@@ -77,6 +80,9 @@
       },
       updateDisabled(val) {
         this.disabledValue = val;
+      },
+      updateShow(val) {
+        this.showValue = val;
       },
       updateOpen() {
         const { href } = window.location;
@@ -111,7 +117,6 @@
           paddingBottom: 0,
         });
       },
-
       enter(el) {
         el.dataset.oldOverflow = el.style.overflow;
         const hasHeight = el.scrollHeight !== 0;
@@ -123,7 +128,6 @@
           overflow: 'hidden',
         });
       },
-
       afterEnter(el) {
         removeClass(el, commonTransitionClass);
 
@@ -132,7 +136,6 @@
           overflow: el.dataset.oldOverflow,
         });
       },
-
       beforeLeave(el) {
         if (!el.dataset) el.dataset = {};
         el.dataset.oldPaddingTop = el.style.paddingTop;
@@ -144,7 +147,6 @@
           overflow: 'hidden',
         });
       },
-
       leave(el) {
         if (el.scrollHeight !== 0) {
           addClass(el, commonTransitionClass);
@@ -174,6 +176,9 @@
       },
       disabled(val) {
         this.updateDisabled(val);
+      },
+      show(val) {
+        this.updateShow(val);
       },
     },
   };
