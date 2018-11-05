@@ -1,6 +1,9 @@
 <template>
   <div class="w-bar" :class="{'w-bar-hide': !showValue}">
-    <h3 class="w-bar-title">{{titleValue}}</h3>
+    <h3 class="w-bar-title-box"><span class="w-bar-title">{{titleValue}}</span></h3>
+    <span class="w-bar-collapse" :class="{'w-bar-collapse-hide': collapseValue && !showValue}" v-if="collapseValue" @click="handleCollapse">
+      <img class="w-bar-collapse-icon" :src="require('assets/img/corrw.png')">
+    </span>
     <ul class="w-bar-list">
       <li class="w-bar-item" v-for="(value, valueIndex) in goValue">
         <router-link class="w-bar-link" :class="{'disabled': disabledValue}" :to="value.to" active-class="on" exact-active-class="exact" :target="value.target || '_self'" v-if="value.to">{{value.title}}</router-link>
@@ -39,11 +42,15 @@
         status: false,
         showValue: false,
         openValue: this.open,
+        collapseValue: false,
       };
     },
     props: {
       title: String,
-      show: Boolean,
+      show: {
+        type: Boolean,
+        default: true,
+      },
       navs: {
         type: Array,
         default: () => [],
@@ -56,6 +63,10 @@
         type: Boolean,
         default: false,
       },
+      collapse: { // 是否有收起
+        type: Boolean,
+        default: true,
+      },
     },
     mounted() {
       this.updateNavs(this.navs);
@@ -63,6 +74,7 @@
       this.updateDisabled(this.disabled);
       this.updateShow(this.show);
       this.updateOpen();
+      this.updateCollapse(this.collapse);
     },
     methods: {
       childLink(value, valueIndex) {
@@ -70,6 +82,15 @@
           open: !value.open,
         });
         this.goValue.splice(valueIndex, 1, newValue);
+      },
+      handleCollapse() {
+        if (this.collapseValue) {
+          this.showValue = !this.showValue;
+          this.$emit('collapsed', this.showValue);
+        }
+      },
+      updateCollapse(val) {
+        this.collapseValue = val;
       },
       updateNavs(val) {
         this.goValue = val.slice();
@@ -179,6 +200,9 @@
       },
       show(val) {
         this.updateShow(val);
+      },
+      collapse(val) {
+        this.updateCollapse(val);
       },
     },
   };

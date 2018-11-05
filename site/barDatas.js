@@ -9,13 +9,13 @@ export default [
     title: '一级1',
     child: [
       {
-        title: '二级菜单',
+        title: 'layout',
         to: {
-          path: '/bar.html',
+          path: '/layout.html',
         },
       },
       {
-        title: '二级菜单',
+        title: 'menu',
         to: {
           path: '/menu.html',
         },
@@ -30,7 +30,7 @@ export default [
     title: '一级2',
     child: [
       {
-        title: '二级菜单',
+        title: 'menu',
         to: {
           path: '/menu.html',
         },
@@ -38,6 +38,12 @@ export default [
       {
         title: '二级腾讯',
         url: 'http://qq.com',
+      },
+      {
+        title: 'bar',
+        to: {
+          path: '/bar.html',
+        },
       },
     ],
   },

@@ -1,3 +1,5 @@
+@import './config.scss';
+
 .w-layout {
   display: flex;
 
@@ -9,14 +11,5 @@
     .w-layout-main {
       width: calc(100% - 46px);
     }
-  }
-
-  &-collapse {
-    position: absolute;
-    right: 0;
-    top: 50%;
-    width: 14px;
-    height: 52px;
-    background: #f8f8f8;
   }
 }

@@ -12,6 +12,8 @@
 |navs|导航数据。目前 路由跳转只支持 path 方法。|Array|否|[]|
 |disabled|禁用|Boolean|否|false|
 |open|是否全部打开|Boolean|否|false|
+|collapse|是否折叠按钮|Boolean|否|true|
+|show|是否展开|Boolean|否|true|
 
 <script>
 import WBar from '../emmenu/core/bar/Bar';

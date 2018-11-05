@@ -1,10 +1,8 @@
 <template>
-  <div class="w-layout">
+  <div class="w-layout" :class="{'on': !mainStatus}">
     <w-menu :env="env" :icon="iconValue" :rule="rule" :logoutAction="logoutAction" :title="menuNameValue"></w-menu>
-    <w-bar :navs="navsValue" :disabled="disabledValue" :title="barNameValue" :show="showStatus" v-if="navsValue.length"></w-bar>
+    <w-bar :navs="navsValue" :disabled="disabledValue" :title="barNameValue" :show="showStatus" v-if="navsValue.length" :collapse="collapseValue" @collapsed="changeShowStatus"></w-bar>
     <div class="w-layout-main">
-      <span class="w-layout-collapse"><img class="w-collapse-icon" :src="require('assets/img/corrw.png')"></span>
-      <button v-if="collapseValue" @click="handleCollapse">点击</button>
       <slot></slot>
     </div>
   </div>
@@ -23,6 +21,7 @@ export default {
       disabledValue: false,
       iconValue: '',
       showStatus: true,
+      mainStatus: true,
       collapseValue: false,
     };
   },
@@ -64,10 +63,8 @@ export default {
     this.updateCollapse(this.collapse);
   },
   methods: {
-    handleCollapse() {
-      if (this.collapseValue) {
-        this.showStatus = !this.showStatus;
-      }
+    changeShowStatus(val) {
+      this.updateMain(val);
     },
     updateNavs(val) {
       this.navsValue = val.slice();
@@ -89,6 +86,9 @@ export default {
     },
     updateShow(val) {
       this.showStatus = val;
+    },
+    updateMain(val) {
+      this.mainStatus = val;
     },
   },
   components: {
