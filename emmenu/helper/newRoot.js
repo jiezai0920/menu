@@ -8,7 +8,6 @@ export default (rule, env) => {
   } = CONSTANT;
   const pathDefult = {};
   const obj = {
-    header: {},
     menuList: [],
     control: [],
     title: rule.title,
@@ -21,7 +20,11 @@ export default (rule, env) => {
   pathDefult[MODULE_NAME.GOODS] = `${env.GOODS}Goods/list`;
   pathDefult[MODULE_NAME.FORM] = env.FORM;
   pathDefult[MODULE_NAME.ORDER] = env.ORDER;
+  pathDefult[MODULE_NAME.DATA] = `${env.DATA}mobileanalyze`;
+  pathDefult[MODULE_NAME.HOME] = `${env.ACCOUNT}console`;
+  pathDefult[MODULE_NAME.MARKET] = `${env.ACCOUNT}salespromotion`;
   pathDefult[MODULE_NAME.MEMBER] = `${env.CRM}contacts`;
+  pathDefult[MODULE_NAME.SHOP] = `${env.SHOP}`;
   pathDefult[MODULE_NAME.FINANCE] = env.FINANCE;
   const pathNoAuth = `${env.MEMBER}error`;
   // 获取账户管理权限
@@ -29,14 +32,6 @@ export default (rule, env) => {
     newRoot.findIndex(item => item.module_name === MODULE_NAME.ACCOUNT),
     1,
   );
-
-  // 获取大首页的权限
-  newRoot.splice(newRoot.findIndex(item => item.module_name === MODULE_NAME.HOME), 1);
-  obj.header = Object.assign(obj.header, {
-    name: '控制台',
-    path: `${env.ACCOUNT}console`,
-    icon: 'home',
-  });
   // 递归累加所有权限输出
   const handleReduce = (item, kids) => {
     if (hOwnProperty(kids, 'children') && kids.children.length > 0) {
@@ -52,7 +47,7 @@ export default (rule, env) => {
     }
   };
 
-  // 处理 报名 | 票务 | 周边 | 表单 | 订单 | 财务 | 数据中心 | 营销
+  // pathDefult 中配置好，即可显示，成为导航
   newRoot.forEach((item) => {
     const moduleName = item.module_name;
     const baseList = {

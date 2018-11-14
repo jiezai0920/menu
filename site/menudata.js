@@ -2,32 +2,8 @@ export default {
   root: [
     {
       'id': 1,
-      'name': '\u9996\u9875',
+      'name': '管理控制台',
       'aliases': 'homepage',
-      'module_name': 'home',
-      'route': 'account\/console',
-      'version': '3.0',
-      'is_show_index': 1,
-      'parent_id': 0,
-      'sort': 2000,
-      'is_auth': 1,
-      'children': []
-    },{
-      'id': 1,
-      'name': '\u9996\u9875',
-      'aliases': 'ho3mepage',
-      'module_name': 'home',
-      'route': 'account\/console',
-      'version': '3.0',
-      'is_show_index': 1,
-      'parent_id': 0,
-      'sort': 2000,
-      'is_auth': 1,
-      'children': []
-    },{
-      'id': 1,
-      'name': '\u9996\u9875',
-      'aliases': 'ho2mepage',
       'module_name': 'home',
       'route': 'account\/console',
       'version': '3.0',
@@ -407,6 +383,64 @@ export default {
       'is_auth': 1,
       'children': []
     }, {
+      'id': 64,
+      'name': 'H5/小程序店铺',
+      'aliases': 'shop',
+      'module_name': 'shop',
+      'route': '\/list',
+      'version': '3.0',
+      'is_show_index': 1,
+      'parent_id': 5,
+      'sort': 1300,
+      'is_auth': 1,
+      'children': [
+        {
+          'id': 65,
+          'name': '\u5e97\u94fa\u9875\u9762',
+          'aliases': 'list',
+          'module_name': 'shop',
+          'route': '\/list',
+          'version': '3.0',
+          'is_show_index': 1,
+          'parent_id': 64,
+          'sort': 0,
+          'is_auth': 1
+        }, {
+          'id': 66,
+          'name': '\u5e97\u94fa\u5e95\u5bfc\u822a',
+          'aliases': 'shop_nav',
+          'module_name': 'shop',
+          'route': '\/navlist',
+          'version': '3.0',
+          'is_show_index': 1,
+          'parent_id': 64,
+          'sort': 0,
+          'is_auth': 1
+        }, {
+          'id': 67,
+          'name': '\u6d3b\u52a8\u5217\u8868',
+          'aliases': 'event_list',
+          'module_name': 'shop',
+          'route': '\/eventlist',
+          'version': '3.0',
+          'is_show_index': 1,
+          'parent_id': 64,
+          'sort': 0,
+          'is_auth': 1
+        }, {
+          'id': 68,
+          'name': '\u5546\u54c1\u5217\u8868',
+          'aliases': 'good_list',
+          'module_name': 'shop',
+          'route': '\/goodslist',
+          'version': '3.0',
+          'is_show_index': 1,
+          'parent_id': 64,
+          'sort': 0,
+          'is_auth': 1
+        }
+      ]
+    }, {
       'id': 5,
       'name': '\u8425\u9500',
       'aliases': 'marketing',
@@ -617,69 +651,11 @@ export default {
           'parent_id': 5,
           'sort': 1310,
           'is_auth': 1
-        }, {
-          'id': 64,
-          'name': '\u5e97\u94fa\uff08\u65b0\uff09',
-          'aliases': 'shop',
-          'module_name': 'marketing',
-          'route': '\/list',
-          'version': '3.0',
-          'is_show_index': 1,
-          'parent_id': 5,
-          'sort': 1300,
-          'is_auth': 1,
-          'children': [
-            {
-              'id': 65,
-              'name': '\u5e97\u94fa\u9875\u9762',
-              'aliases': 'list',
-              'module_name': 'marketing',
-              'route': '\/list',
-              'version': '3.0',
-              'is_show_index': 1,
-              'parent_id': 64,
-              'sort': 0,
-              'is_auth': 1
-            }, {
-              'id': 66,
-              'name': '\u5e97\u94fa\u5e95\u5bfc\u822a',
-              'aliases': 'shop_nav',
-              'module_name': 'marketing',
-              'route': '\/navlist',
-              'version': '3.0',
-              'is_show_index': 1,
-              'parent_id': 64,
-              'sort': 0,
-              'is_auth': 1
-            }, {
-              'id': 67,
-              'name': '\u6d3b\u52a8\u5217\u8868',
-              'aliases': 'event_list',
-              'module_name': 'marketing',
-              'route': '\/eventlist',
-              'version': '3.0',
-              'is_show_index': 1,
-              'parent_id': 64,
-              'sort': 0,
-              'is_auth': 1
-            }, {
-              'id': 68,
-              'name': '\u5546\u54c1\u5217\u8868',
-              'aliases': 'good_list',
-              'module_name': 'marketing',
-              'route': '\/goodslist',
-              'version': '3.0',
-              'is_show_index': 1,
-              'parent_id': 64,
-              'sort': 0,
-              'is_auth': 1
-            }
-          ]
         }
       ]
     }, {
       'id': 6,
-      'name': 'CRM',
+      'name': '客户管理',
       'aliases': 'member',
       'module_name': 'member',
       'route': 'member\/overview',
@@ -1008,7 +984,7 @@ export default {
       ]
     }, {
       'id': 54,
-      'name': '\u8d22\u52a1',
+      'name': '财务系统',
       'aliases': 'financeThree',
       'module_name': 'finance',
       'route': 'finance',
