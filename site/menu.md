@@ -1,7 +1,7 @@
 # em 左侧菜单
 > em 公共级左导航业务组件
 
-<w-menu :env="env" :rule="menuTestRule" class="demo" logoutAction="https://www.easy-mock.com/mock/5ab386ecca15e11ded65b593/chinese/getLoginOutCallBackUrl"></w-menu>
+<w-menu :env="env" :rule="menuTestRule" class="demo" active="home" logoutAction="https://www.easy-mock.com/mock/5ab386ecca15e11ded65b593/chinese/getLoginOutCallBackUrl"></w-menu>
 
 ## API
 
@@ -51,7 +51,7 @@ export default {
 
 .demo {
   position: relative;
-  height: 500px;
+  height: 657px;
 }
 
 .page {

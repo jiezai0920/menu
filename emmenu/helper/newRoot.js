@@ -11,8 +11,10 @@ export default (rule, env) => {
     header: {},
     menuList: [],
     control: [],
+    title: rule.title,
+    logo: rule.logo,
   };
-  const newRoot = rule.slice();
+  const newRoot = rule.root.slice();
   // 默认每个项目跳转地址
   pathDefult[MODULE_NAME.EVENT] = `${env.MEET}activity?nav=match`;
   pathDefult[MODULE_NAME.MEET] = `${env.MEET}activity?nav=light`;

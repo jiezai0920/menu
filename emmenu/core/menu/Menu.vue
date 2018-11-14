@@ -2,13 +2,13 @@
   <div class="w-menu-warp">
     <div class="w-menu" :class="{'w-menu-hover': hover}">
       <div class="w-menu-header">
-        <img class="w-menu-header-icon" :src="icon">
-        <span class="w-menu-header-title">{{title}}</span>
+        <img class="w-menu-header-icon" :src="power.logo">
+        <span class="w-menu-header-title">{{power.title}}</span>
       </div>
       <ul class="w-menu-list">
         <li class="w-menu-list-item" v-for="(rule, ruleIndex) in power.menuList" :key="ruleIndex">
           <!-- on -->
-          <a :href="rule.path" class="w-menu-list-link">
+          <a :href="rule.path" class="w-menu-list-link" :class="{on: activeValue === rule.icon}">
             <img class="w-menu-list-img" :src="require(`assets/img/${rule.icon}_normal.png`)">
             <img class="w-menu-list-img" :src="require(`assets/img/${rule.icon}_selected.png`)">
             <span class="w-menu-list-title">{{rule.name}}</span>
@@ -76,8 +76,8 @@
     data() {
       return {
         // 调试一级黑色导航样式的时候可以为 true 方便调试
-        hover: false,
-        // hover: true,
+        // hover: false,
+        hover: true,
 
         isMask: false,
         user: '',
@@ -91,16 +91,17 @@
         type: Object,
         default: () => {},
       },
-      title: {
+      active: {
         type: String,
-        default: '活动主办自己的系统',
-      },
-      icon: {
-        type: String,
-        default: 'https://static2.evente.cn/static/img/icon.jpg',
+        default: '',
       },
       logoutAction: String,
-      rule: Array,
+      rule: Object,
+    },
+    computed: {
+      activeValue() {
+        return this.active;
+      },
     },
     mounted() {
       this.handleData();
