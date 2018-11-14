@@ -76,8 +76,8 @@
     data() {
       return {
         // 调试一级黑色导航样式的时候可以为 true 方便调试
-        // hover: false,
-        hover: true,
+        hover: false,
+        // hover: true,
 
         isMask: false,
         user: '',

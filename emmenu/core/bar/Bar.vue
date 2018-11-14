@@ -16,7 +16,7 @@
           v-on:before-leave="beforeLeave"
           v-on:leave="leave"
           v-on:after-leave="afterLeave">
-          <ul class="w-bar-child" v-show="value.open">
+          <ul class="w-bar-child" v-if="value.child" v-show="value.open">
             <li class="w-bar-item" v-for="(childValue, childIndex) in value.child">
               <router-link class="w-bar-link-child" :class="{'disabled': disabledValue}" :to="childValue.to" active-class="on" exact-active-class="exact" :target="childValue.target || '_self'" v-if="childValue.to" :ref="`link${valueIndex}${childIndex}`">{{childValue.title}}</router-link>
               <a class="w-bar-link-child" :class="{'disabled': disabledValue}" :href="childValue.url" v-if="childValue.url" :target="childValue.target || '_self'">{{childValue.title}}</a>
