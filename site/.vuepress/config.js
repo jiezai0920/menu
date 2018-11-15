@@ -2,7 +2,7 @@ const path = require('path');
 
 const resolve = p => path.resolve(__dirname, '../../', p);
 
-const base = process.env.GH ? '/emmenu/' : '/'
+const base = process.env.GH ? '/menu/' : '/'
 
 module.exports = {
   title: '菜单',
