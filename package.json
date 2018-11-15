@@ -1,6 +1,6 @@
 {
   "name": "emmenu",
-  "version": "0.7.11",
+  "version": "1.0.0-alpha.1",
   "description": "Vue.js 组件库模板",
   "author": "李梦龙 <649076408@qq.com>",
   "main": "dist/emmenu.js",
@@ -51,8 +51,8 @@
     "copy-webpack-plugin": "^4.5.1",
     "cross-env": "^5.1.4",
     "css-loader": "^0.28.11",
-    "em-jsonp": "^1.0.4",
     "em-cookie": "^1.0.6",
+    "em-jsonp": "^1.0.4",
     "em-underline": "^1.2.2",
     "eslint": "^4.19.1",
     "eslint-config-airbnb-base": "^12.1.0",
@@ -145,6 +145,5 @@
   "pre-commit": [
     "lint-staged"
   ],
-  "dependencies": {
-  }
+  "dependencies": {}
 }
