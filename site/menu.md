@@ -10,10 +10,9 @@
 |参数|说明|类型|是否必填|默认值|
 |---|----|---|-------|-----|
 |env|根据环境变化的各项目链接|String|否|{}|
-|title|主办名称|Array|否|活动主办自己的系统|
-|icon|主办icon|Boolean|否|https://static2.evente.cn/static/img/icon.jpg|
 |logoutAction|退出登录的接口地址|String|否|false|
 |rule|权限接口请求回来的数据|Array|否|false|
+|active|选中字样，添加模块名一样|String|否|无|
 
 ### 方法
 

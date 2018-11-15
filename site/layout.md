@@ -5,6 +5,29 @@
   <p>这是真正内容</p>
 </w-layout>
 
+## API
+
+### 属性
+
+|参数|说明|类型|是否必填|默认值|
+|---|----|---|-------|-----|
+|barName|二级导航标题|String|否|无|
+|navs|导航数据。目前 路由跳转只支持 path 方法。|Array|否|[]|
+|open|是否全部打开|Boolean|否|false|
+|disabled|禁用|Boolean|否|false|
+|env|根据环境变化的各项目链接|String|否|{}|
+|collapse|是否折叠按钮|Boolean|否|true|
+|active|选中字样，添加模块名一样|String|否|无|
+|show|是否展开|Boolean|否|true|
+|logoutAction|退出登录的接口地址|String|否|false|
+|rule|权限接口请求回来的数据|Array|否|false|
+
+### 方法
+
+|事件名|说明|返回值|
+|---|------|-----|
+|analysised|获取菜单时触发|所有顶级权限|
+
 <script>
 import WLayout from '../emmenu/core/layout/Layout';
 //  权限测试数据
