@@ -1,0 +1,15 @@
+@import './config.scss';
+
+.w-layout {
+  display: flex;
+
+  &-main {
+    width: calc(100% - 180px);
+  }
+
+  &.on {
+    .w-layout-main {
+      width: calc(100% - 46px);
+    }
+  }
+}

@@ -1,0 +1,237 @@
+@import './config.scss';
+
+$collapseTime: $time - 0.2s;
+
+.w-bar {
+  width: 134px;
+  border-right: 1px solid #ddd;
+  height: 100%;
+  position: relative;
+  margin-left: 46px;
+  background: #fff;
+  transition: width $time;
+
+  // 小时的状态
+  &-hide {
+    width: 0;
+
+    & .w-bar-title-box,
+    & .w-bar-list {
+      width: 0;
+      overflow: hidden;
+    }
+  }
+
+  &-title {
+    display: block;
+    width: 116px;
+    height: 53px;
+    font-size: 12px;
+    font-family: $family;
+    line-height: 12px;
+    text-align: center;
+    font-weight: normal;
+    display: flex;
+    align-items: center;
+    padding-left: 14px;
+    border-bottom: 1px solid #f2f2f2;
+    color: #333;
+
+    &-box {
+      transition: width $time;
+      width: 134px;
+      word-break: keep-all;
+      margin: 0;
+    }
+  }
+
+  &-list {
+    width: 134px;
+    padding: 20px 0 0;
+    margin: 0;
+    transition: width $time;
+  }
+
+  &-child {
+    @extend .w-bar-list;
+
+    padding: 0;
+    height: auto;
+  }
+
+  &-item {
+    list-style: none;
+    padding-bottom: 4px;
+
+    &:last-child {
+      padding-bottom: 0;
+    }
+  }
+
+  &-link {
+    display: block;
+    height: 38px;
+    line-height: 38px;
+    padding-left: 16px;
+    margin-left: 16px;
+    color: #333;
+    font-weight: 500;
+    font-size: 12px;
+    font-family: $family;
+    position: relative;
+    width: 88px;
+
+    &:hover {
+      text-decoration: none !important;
+      color: #1996f9;
+    }
+
+    &.on,
+    &.exact {
+      background: #f8f8f8;
+      color: #333;
+
+      &.disabled {
+        color: #333;
+      }
+
+      &:hover {
+        text-decoration: none !important;
+        color: #333;
+      }
+    }
+
+    &.disabled {
+      color: #d8d8d8;
+      pointer-events: none;
+      cursor: not-allowed;
+    }
+
+    &-child {
+      @extend .w-bar-link;
+
+      color: #666;
+
+      &.on,
+      &.exact {
+        color: #666;
+
+        &.disabled {
+          color: #666;
+        }
+
+        &:hover {
+          color: #666;
+        }
+      }
+    }
+  }
+
+  &-fold {
+    @extend .w-bar-link;
+
+    color: #333;
+    cursor: pointer;
+
+    // 三角 start
+    &::before {
+      position: absolute;
+      width: 0;
+      height: 0;
+      border-color: #999 transparent transparent;
+      border-style: solid;
+      border-width: 6px 5px 0;
+      top: 50%;
+      margin: -3px 0 0;
+      left: 0;
+      transition: transform 0.4s;
+      transform: rotate(-90deg);
+      content: ' ';
+    }
+    // 三角 end
+
+    &:hover {
+      color: #333;
+    }
+
+    &.on,
+    &.exact {
+      background: none;
+
+      &:hover {
+        color: #333;
+      }
+
+      &::before {
+        transform: rotate(0);
+      }
+    }
+
+    &.disabled {
+      color: #d8d8d8;
+      pointer-events: none;
+      cursor: not-allowed;
+
+      &::before {
+        border-color: #d8d8d8 transparent transparent;
+      }
+    }
+  }
+  // 下拉折叠动画 start
+  &-gradual {
+    transition: height 0.3s ease-in-out, padding-top 0.3s ease-in-out, padding-bottom 0.3s ease-in-out;
+  }
+  // 下拉折叠动画 end
+
+  // 收缩 icon 样式 start
+  &-collapse {
+    position: absolute;
+    right: 0;
+    top: 50%;
+    width: 14px;
+    height: 52px;
+    align-items: center;
+    display: flex;
+    cursor: pointer;
+    transition: width $collapseTime, transform $collapseTime;
+    overflow: hidden;
+    transform-origin: right;
+    transform-style: preserve-3d;
+
+    &-icon {
+      position: relative;
+      width: 14px;
+      transition: transform $collapseTime;
+      transform: translateX(2px);
+    }
+
+    &::before {
+      position: absolute;
+      top: 0;
+      right: 0;
+      width: 0;
+      height: 0;
+      border-top: 26px solid transparent;
+      border-bottom: 26px solid transparent;
+      border-right: 40px solid #f8f8f8;
+      content: ' ';
+      transition: border-width $collapseTime;
+    }
+
+    &:hover {
+      width: 18px;
+
+      & .w-bar-collapse-icon {
+        transform: translateX(3px);
+      }
+    }
+
+    &-hide {
+      transform: rotateY(180deg);
+
+      &:hover {
+        transform: rotateY(180deg);
+      }
+    }
+  } // 收缩 icon 样式 end
+}
