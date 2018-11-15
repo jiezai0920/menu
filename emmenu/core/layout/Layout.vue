@@ -80,5 +80,5 @@ export default {
     WMenu,
     WBar,
   },
-}
+};
 </script>

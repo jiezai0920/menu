@@ -1,8 +1,10 @@
 // 组件
 import WMenu from './core/menu/emmenu';
 import WBar from './core/bar/embar';
+import WLayout from './core/layout/emlayout';
 
 const waterCpt = {
+  WLayout,
   WMenu,
   WBar,
 };
@@ -21,6 +23,5 @@ if (typeof window !== 'undefined' && window.Vue) {
 }
 
 export default {
-  version: '1.0.0',
   install,
 };
