@@ -10,10 +10,10 @@
     "emmenu"
   ],
   "scripts": {
-    "start": "vuepress dev emmenu",
-    "build:site": "cross-env GH=1 && vuepress build emmenu",
+    "start": "vuepress dev site",
+    "build:site": "cross-env GH=1 && vuepress build site",
     "build": "cross-env BABEL_ENV=production && node build/build.water.js && gulp --gulpfile build/gulpfile.js",
-    "eslint": "eslint --ext .js,.vue site emmenu --fix",
+    "eslint": "eslint --ext .js,.vue emmenu --fix",
     "stylelint": "stylelint site/**/*.scss emmenu/**/*.scss",
     "lint": "npm run eslint && npm run stylelint",
     "lint-staged": "lint-staged",
@@ -52,6 +52,7 @@
     "cross-env": "^5.1.4",
     "css-loader": "^0.28.11",
     "em-jsonp": "^1.0.4",
+    "em-cookie": "^1.0.6",
     "em-underline": "^1.2.2",
     "eslint": "^4.19.1",
     "eslint-config-airbnb-base": "^12.1.0",
@@ -145,6 +146,5 @@
     "lint-staged"
   ],
   "dependencies": {
-    "vuex": "^3.0.1"
   }
 }
