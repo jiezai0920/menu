@@ -2,7 +2,7 @@
   <div class="w-layout" :class="{'on': !mainStatus}">
     <w-menu :env="env" :active="activeValue" :rule="rule" :logoutAction="logoutAction"></w-menu>
     <w-bar :navs="navsValue" :disabled="disabledValue" :title="barNameValue" :show="showStatus" v-if="navsValue.length" :collapse="collapseValue" @collapsed="changeShowStatus"></w-bar>
-    <div class="w-layout-main">
+    <div class="w-layout-main" :class="{'w-layout-main-large': !navsValue.length}">
       <slot></slot>
     </div>
   </div>
