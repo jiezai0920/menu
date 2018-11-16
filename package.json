@@ -1,6 +1,6 @@
 {
   "name": "emmenu",
-  "version": "1.0.0-alpha.4",
+  "version": "1.0.0-alpha.5",
   "description": "Vue.js 组件库模板",
   "author": "李梦龙 <649076408@qq.com>",
   "main": "dist/emmenu.js",
