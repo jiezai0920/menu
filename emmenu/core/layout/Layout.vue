@@ -1,6 +1,6 @@
 <template>
   <div class="w-layout" :class="{'on': !mainStatus}">
-    <w-menu :env="env" :active="activeValue" :rule="rule" :logoutAction="logoutAction"></w-menu>
+    <w-menu :env="env" :active="activeValue" :rule="rule" :logoutAction="logoutAction" @analysised="analysised"></w-menu>
     <w-bar :navs="navsValue" :disabled="disabledValue" :title="barNameValue" :show="showStatus" v-if="navsValue.length" :collapse="collapseValue" @collapsed="changeShowStatus"></w-bar>
     <div class="w-layout-main" :class="{'w-layout-main-large': !navsValue.length}">
       <slot></slot>
@@ -69,6 +69,9 @@ export default {
     },
   },
   methods: {
+    analysised(power) {
+      this.$emit('analysised', power);
+    },
     changeShowStatus(val) {
       this.updateMain(val);
     },
