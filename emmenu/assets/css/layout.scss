@@ -2,14 +2,25 @@
 
 .w-layout {
   display: flex;
+  position: relative;
 
   &-main {
     width: calc(100% - 180px);
+    transition: width $time, left $time;
+    position: absolute;
+    left: 180px;
+    top: 0;
+
+    &-large {
+      width: calc(100% - 46px);
+      left: 46px;
+    }
   }
 
   &.on {
     .w-layout-main {
       width: calc(100% - 46px);
+      left: 46px;
     }
   }
 }
