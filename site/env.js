@@ -10,6 +10,7 @@ export default {
     ORDER: "http://localhost:8185/",
     SHOP: "http://localhost:8483/",
     CRM: "http://localhost:8191/",
+    EVENT_OLD: 'http://event.inner.evente.cn:30391/',
     NODE_ENV: "development",
   },
   testing: {
@@ -23,6 +24,7 @@ export default {
     ORDER: "http://home.inner.evente.cn:8000/order/",
     SHOP: "http://home.inner.evente.cn:8000/shop/",
     CRM: "http://home.inner.evente.cn:8000/crm/",
+    EVENT_OLD: 'http://event.inner.evente.cn:30391/',
     NODE_ENV: "testing",
   },
   labing: {
@@ -36,6 +38,7 @@ export default {
     ORDER: "http://home.lab.evente.cn/order/",
     SHOP: "http://home.lab.evente.cn/shop/",
     CRM: "http://home.lab.evente.cn/crm/",
+    EVENT_OLD: 'http://event.lab.evente.cn/',
     NODE_ENV: "labing",
   },
   production: {
@@ -49,6 +52,7 @@ export default {
     ORDER: "https://home.evente.cn/order/",
     SHOP: "https://home.evente.cn/shop/",
     CRM: "https://home.evente.cn/crm/",
+    EVENT_OLD: 'https://event.evente.cn/',
     NODE_ENV: "production",
   },
 };
