@@ -6,8 +6,11 @@ $collapseTime: $time - 0.2s;
   width: 134px;
   border-right: 1px solid #ddd;
   height: 100%;
-  position: relative;
-  margin-left: 46px;
+  position: fixed;
+  z-index: 80;
+  left: 46px;
+  top: 0;
+  bottom: 0;
   background: #fff;
   transition: width $time;
 

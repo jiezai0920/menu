@@ -66,5 +66,9 @@ export default {
   & .w-menu-warp {
     position: absolute;
   }
+
+  & .w-bar {
+    position: relative;
+  }
 }
 </style>
