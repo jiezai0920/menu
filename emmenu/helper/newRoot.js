@@ -26,7 +26,7 @@ export default (rule, env) => {
   pathDefult[MODULE_NAME.MEMBER] = `${env.CRM}contacts`;
   pathDefult[MODULE_NAME.SHOP] = `${env.SHOP}`;
   pathDefult[MODULE_NAME.FINANCE] = env.FINANCE;
-  const pathNoAuth = `${env.MEMBER}error`;
+  obj.error = `${env.MEMBER}error`;
   // 获取账户管理权限
   [obj.control] = newRoot.splice(
     newRoot.findIndex(item => item.module_name === MODULE_NAME.ACCOUNT),
@@ -59,7 +59,7 @@ export default (rule, env) => {
     if (hOwnProperty(pathDefult, moduleName)) {
       const isAuth = item.is_auth;
       // 如果有权限，如果没权限
-      baseList.path = isAuth ? pathDefult[moduleName] : pathNoAuth;
+      baseList.path = isAuth ? pathDefult[moduleName] : obj.error;
       baseList.noAuth = !!isAuth;
     } else {
       baseList.source = item;
