@@ -189,8 +189,11 @@
       },
     },
     watch: {
-      navs(val) {
-        this.updateNavs(val);
+      navs: {
+        handler(val) {
+          this.updateNavs(val);
+        },
+        deep: true,
       },
       title(val) {
         this.updateTitle(val);
