@@ -82,6 +82,7 @@ $collapseTime: $time - 0.2s;
     font-family: $family;
     position: relative;
     width: 88px;
+    box-sizing: content-box;
 
     &:hover {
       text-decoration: none !important;
