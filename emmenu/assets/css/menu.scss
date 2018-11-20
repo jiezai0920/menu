@@ -57,6 +57,7 @@
       height: 42px;
       padding-left: 15px;
       transition: background $time;
+      overflow: hidden;
 
       // 导航hover状态
       &:hover {
