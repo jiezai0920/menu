@@ -1,7 +1,7 @@
 <template>
   <div class="w-layout" :class="{'on': !mainStatus}">
     <w-menu :env="env" :active="activeValue" :rule="rule" :logoutAction="logoutAction" @analysised="analysised"></w-menu>
-    <w-bar :navs="navsValue" :disabled="disabledValue" :title="barNameValue" :show="showStatus" v-if="navsValue.length" :collapse="collapseValue" @collapsed="changeShowStatus"></w-bar>
+    <w-bar :navs="navsValue" :active="barActiveValue" :disabled="disabledValue" :title="barNameValue" :show="showStatus" v-if="navsValue.length" :collapse="collapseValue" @collapsed="changeShowStatus"></w-bar>
     <div class="w-layout-main" :class="{'w-layout-main-large': !navsValue.length}">
       <slot></slot>
     </div>
@@ -44,6 +44,7 @@ export default {
       type: String,
       default: '',
     },
+    barActive: String,
     show: Boolean, // 二级是否显示
     logoutAction: String,
     rule: Object,
@@ -54,6 +55,9 @@ export default {
     },
     navsValue() {
       return this.navs.slice();
+    },
+    barActiveValue() {
+      return this.barActive;
     },
     barNameValue() {
       return this.barName;

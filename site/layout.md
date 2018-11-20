@@ -15,12 +15,13 @@
 |navs|导航数据。目前 路由跳转只支持 path 方法。|Array|否|[]|
 |open|是否全部打开|Boolean|否|false|
 |disabled|禁用|Boolean|否|false|
-|env|根据环境变化的各项目链接|String|否|{}|
+|env|根据环境变化的各项目链接|Object|否|{}|
 |collapse|是否折叠按钮|Boolean|否|true|
 |active|选中字样，添加模块名一样|String|否|无|
 |show|是否展开|Boolean|否|true|
 |logoutAction|退出登录的接口地址|String|否|false|
-|rule|权限接口请求回来的数据|Array|否|false|
+|rule|权限接口请求回来的数据|Object|否|false|
+|barActive|二级导航高亮|String|否|无|
 
 ### 方法
 
