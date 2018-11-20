@@ -63,6 +63,7 @@ export default {
   position: relative;
   height: 657px;
   border: 1px solid #dcdcdc;
+  border-left: none;
 
   & .w-menu-warp {
     position: absolute;
