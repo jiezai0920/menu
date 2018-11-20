@@ -2,7 +2,7 @@
   <div class="w-menu-warp">
     <div class="w-menu" :class="{'w-menu-hover': hover}">
       <div class="w-menu-header">
-        <img class="w-menu-header-icon" :src="power.logo">
+        <img class="w-menu-header-icon" :src="power.logo" @error="errorFn">
         <span class="w-menu-header-title">{{power.title}}</span>
       </div>
       <ul class="w-menu-list">
@@ -107,6 +107,12 @@
       this.handleData();
     },
     methods: {
+      errorFn() {
+        // 如果报错就是默认图片
+        this.power = Object.assign({}, this.power, {
+          logo: 'https://static2.evente.cn/static/img/icon.jpg',
+        });
+      },
       // 处理权限接口数据
       handleData() {
         this.power = newRoot(this.rule, this.env);

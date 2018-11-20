@@ -1,6 +1,6 @@
 # 导航
 
-<w-bar class="demo" :navs="barTestRule" title="二级导航"></w-bar>
+<w-bar class="demo" active="menu" :navs="barTestRule" title="二级导航"></w-bar>
 
 ## API
 

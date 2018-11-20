@@ -7,8 +7,8 @@
     <ul class="w-bar-list">
       <li class="w-bar-item" v-for="(value, valueIndex) in goValue">
         <router-link class="w-bar-link" :class="{'disabled': disabledValue}" :to="value.to" active-class="on" exact-active-class="exact" :target="value.target || '_self'" v-if="value.to">{{value.title}}</router-link>
-        <a class="w-bar-link" :class="{'disabled': disabledValue}" :href="value.url" v-if="value.url" :target="value.target || '_self'">{{value.title}}</a>
-        <div class="w-bar-fold" :class="{'on': value.open, 'disabled': disabledValue}" v-if="value.child" @click="childLink(value, valueIndex)">{{value.title}}</div>
+        <a class="w-bar-link" :class="{'disabled': disabledValue, 'on': activeValue === value.title}" :href="value.url" v-if="value.url" :target="value.target || '_self'">{{value.title}}</a>
+        <div class="w-bar-fold" :class="{'on': value.open || value.child.some(children=>children.title === activeValue), 'disabled': disabledValue}" v-if="value.child" @click="childLink(value, valueIndex)">{{value.title}}</div>
         <transition
           v-on:before-enter="beforeEnter"
           v-on:enter="enter"
@@ -16,10 +16,10 @@
           v-on:before-leave="beforeLeave"
           v-on:leave="leave"
           v-on:after-leave="afterLeave">
-          <ul class="w-bar-child" v-if="value.child" v-show="value.open">
+          <ul class="w-bar-child" v-if="value.child" v-show="value.open || value.child.some(children=>children.title === activeValue)">
             <li class="w-bar-item" v-for="(childValue, childIndex) in value.child">
-              <router-link class="w-bar-link-child" :class="{'disabled': disabledValue}" :to="childValue.to" active-class="on" exact-active-class="exact" :target="childValue.target || '_self'" v-if="childValue.to" :ref="`link${valueIndex}${childIndex}`">{{childValue.title}}</router-link>
-              <a class="w-bar-link-child" :class="{'disabled': disabledValue}" :href="childValue.url" v-if="childValue.url" :target="childValue.target || '_self'">{{childValue.title}}</a>
+              <router-link class="w-bar-link-child" :class="{'disabled': disabledValue, 'on': activeValue === childValue.title}" :to="childValue.to" active-class="on" exact-active-class="exact" :target="childValue.target || '_self'" v-if="childValue.to" :ref="`link${valueIndex}${childIndex}`">{{childValue.title}}</router-link>
+              <a class="w-bar-link-child" :class="{'disabled': disabledValue, 'on': activeValue === childValue.title}" :href="childValue.url" v-if="childValue.url" :target="childValue.target || '_self'">{{childValue.title}}</a>
             </li>
           </ul>
         </transition>
@@ -42,6 +42,7 @@
         status: false,
         showValue: false,
         openValue: this.open,
+        activeValue: '',
         collapseValue: false,
       };
     },
@@ -55,6 +56,7 @@
         type: Array,
         default: () => [],
       },
+      active: String,
       open: {
         type: Boolean,
         default: false,
@@ -74,6 +76,7 @@
       this.updateDisabled(this.disabled);
       this.updateShow(this.show);
       this.updateOpen();
+      this.updateActive(this.active);
       this.updateCollapse(this.collapse);
     },
     methods: {
@@ -104,6 +107,9 @@
       },
       updateShow(val) {
         this.showValue = val;
+      },
+      updateActive(val) {
+        this.activeValue = val;
       },
       updateOpen() {
         const { href } = window.location;
@@ -206,6 +212,9 @@
       },
       collapse(val) {
         this.updateCollapse(val);
+      },
+      active(val) {
+        this.updateActive(val);
       },
     },
   };
