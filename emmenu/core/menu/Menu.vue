@@ -8,7 +8,7 @@
       <ul class="w-menu-list">
         <li class="w-menu-list-item" v-for="(rule, ruleIndex) in power.menuList" :key="ruleIndex">
           <!-- on -->
-          <a :href="rule.path" class="w-menu-list-link" :class="{on: activeValue === rule.icon}">
+          <a :href="rule.path" :target="!rule.noAuth || rule.icon === 'goods'? '_blank' : '_self'" class="w-menu-list-link" :class="{on: activeValue === rule.icon}">
             <img class="w-menu-list-img" :src="require(`assets/img/${rule.icon}_normal.png`)">
             <img class="w-menu-list-img" :src="require(`assets/img/${rule.icon}_selected.png`)">
             <span class="w-menu-list-title">{{rule.name}}</span>
@@ -31,12 +31,12 @@
         <span class="w-menu-mask-close" @click="isMask = false">+</span>
         <h4 class="w-menu-mask-title">选择发布的活动类型</h4>
         <div class="w-menu-mask-modal">
-          <a :href="`${env.MEET}light`" class="w-menu-mask-light">
+          <a target="_blank" :href="`${env.MEET}light`" class="w-menu-mask-light">
             <img class="w-menu-mask-img" :src="require(`assets/img/light.svg`)">
             <span class="w-menu-mask-name">报名</span>
             <span class="w-menu-mask-content">聚会、沙龙、排队、培训、会议、粉丝赠票、签到二维码、可审核、可付费、邀请函</span>
           </a>
-          <a :href="`${env.EVENT_OLD}event/pub`" class="w-menu-mask-light">
+          <a target="_blank" :href="`${env.EVENT_OLD}event/pub`" class="w-menu-mask-light">
             <img class="w-menu-mask-img" :src="require(`assets/img/event.svg`)">
             <span class="w-menu-mask-name">票务</span>
             <span class="w-menu-mask-content">剧场、音乐节、巡演、赛事、会议、展览、游园、多票种、多场次、选座、秒杀抢票、多种核销、代金券、年卡、外币支付</span>
