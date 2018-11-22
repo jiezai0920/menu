@@ -3,7 +3,7 @@
     <div class="w-menu" :class="{'w-menu-hover': hover}">
       <div class="w-menu-header">
         <img class="w-menu-header-icon" :src="power.logo" @error="errorFn">
-        <span class="w-menu-header-title">{{power.title}}</span>
+        <a :href="`${env.ACCOUNT}accountinformation`" target="_blank" class="w-menu-header-title">{{power.title}}</a>
       </div>
       <ul class="w-menu-list">
         <li class="w-menu-list-item" v-for="(rule, ruleIndex) in power.menuList" :key="ruleIndex">
