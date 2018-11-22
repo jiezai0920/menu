@@ -59,7 +59,7 @@
       active: String,
       open: {
         type: Boolean,
-        default: false,
+        default: true,
       },
       disabled: {
         type: Boolean,
