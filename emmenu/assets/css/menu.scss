@@ -4,7 +4,7 @@
 
 .w-menu {
   width: 46px;
-  background: #252A2E;
+  background: #252a2e;
   cursor: pointer;
   transition: width $time;
   height: 100%;
@@ -22,7 +22,7 @@
   &-header {
     height: 54px;
     overflow: hidden;
-    background: #151B1F;
+    background: #151b1f;
     margin-bottom: 12px;
     position: relative;
 
@@ -70,7 +70,7 @@
       // 导航hover状态
       &:hover {
         text-decoration: none !important;
-        background: #343A3E;
+        background: #343a3e;
 
         & .w-menu-list-title {
           color: #fff;
