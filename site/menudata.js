@@ -655,7 +655,7 @@ export default {
       ]
     }, {
       'id': 6,
-      'name': '客户管理',
+      'name': 'CRM',
       'aliases': 'member',
       'module_name': 'member',
       'route': 'member\/overview',
@@ -984,7 +984,7 @@ export default {
       ]
     }, {
       'id': 54,
-      'name': '财务系统',
+      'name': '财务',
       'aliases': 'financeThree',
       'module_name': 'finance',
       'route': 'finance',
