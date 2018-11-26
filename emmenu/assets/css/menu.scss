@@ -199,7 +199,7 @@
 
   &-quit {
     height: 14px;
-    width: 40px;
+    width: 42px;
     margin: 0 auto;
     display: flex;
     justify-content: center;
@@ -240,7 +240,7 @@
       font-family: $family;
       font-size: 12px;
       width: 0;
-      transition: width $time, adding $time;
+      transition: width $time, padding $time;
       overflow: hidden;
     }
   } // w-menu-quit
