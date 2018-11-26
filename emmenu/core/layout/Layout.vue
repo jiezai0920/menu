@@ -1,8 +1,11 @@
 <template>
   <div class="w-layout" :class="{'on': !mainStatus}">
     <w-menu :env="env" :active="activeValue" :rule="rule" :logoutAction="logoutAction" @analysised="analysised"></w-menu>
-    <w-bar :navs="navsValue" :active="barActiveValue" :disabled="disabledValue" :title="barNameValue" :show="showStatus" v-if="navsValue.length" :collapse="collapseValue" @collapsed="changeShowStatus"></w-bar>
+    <w-bar :navs="navsValue" :active="barActiveValue" :disabled="disabledValue" :title="barNameValue" :show="showStatus1" v-if="navsValue.length" :collapse="collapseValue" @collapsed="changeShowStatus"></w-bar>
     <div class="w-layout-main" :class="{'w-layout-main-large': !navsValue.length}">
+      <span class="w-layout-collapse w-layout-collapse-hide" v-show="!mainStatus" v-if="navsValue.length" @click="openBar">
+        <img class="w-bar-collapse-icon" :src="require('assets/img/corrw.png')">
+      </span>
       <slot></slot>
     </div>
   </div>
@@ -16,6 +19,7 @@ export default {
   data() {
     return {
       mainStatus: true,
+      showStatus1: true,
     };
   },
   props: {
@@ -76,7 +80,12 @@ export default {
     analysised(power) {
       this.$emit('analysised', power);
     },
+    openBar() {
+      this.showStatus1 = true;
+      this.mainStatus = true;
+    },
     changeShowStatus(val) {
+      this.showStatus1 = val;
       this.updateMain(val);
     },
     updateMain(val) {

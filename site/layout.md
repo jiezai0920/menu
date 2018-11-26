@@ -72,5 +72,9 @@ export default {
   & .w-bar {
     position: relative;
   }
+
+  & .w-layout-main {
+    height: 100%;
+  }
 }
 </style>
