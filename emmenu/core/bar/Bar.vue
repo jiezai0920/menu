@@ -1,6 +1,6 @@
 <template>
   <div class="w-bar" :class="{'w-bar-hide': !showValue}">
-    <h3 class="w-bar-title-box"><span class="w-bar-title">{{titleValue}}-{{showValue}}</span></h3>
+    <h3 class="w-bar-title-box"><span class="w-bar-title">{{titleValue}}</span></h3>
     <span class="w-bar-collapse" :class="{'w-bar-collapse-hide': collapseValue && !showValue}" v-if="collapseValue" @click="handleCollapse">
       <img class="w-bar-collapse-icon" :src="require('assets/img/corrw.png')">
     </span>
