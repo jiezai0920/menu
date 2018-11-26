@@ -1,5 +1,7 @@
 @import './config.scss';
 
+$collapseTime: $time - 0.2s;
+
 .w-layout {
   display: flex;
   position: relative;
@@ -26,6 +28,52 @@
     .w-layout-main {
       width: calc(100% - 46px);
       left: 46px;
+    }
+  }
+
+  &-collapse {
+    position: absolute;
+    left: -14px;
+    top: 50%;
+    width: 14px;
+    height: 52px;
+    align-items: center;
+    display: flex;
+    cursor: pointer;
+    transition: width $collapseTime, left $collapseTime, transform $collapseTime;
+    overflow: hidden;
+    transform-origin: right;
+    transform: rotateY(180deg);
+    transform-style: preserve-3d;
+
+    &-icon {
+      position: relative;
+      width: 14px;
+      transition: transform $collapseTime;
+      transform: translateX(2px);
+    }
+
+    &::before {
+      position: absolute;
+      top: 0;
+      right: 0;
+      width: 0;
+      height: 0;
+      border-top: 26px solid transparent;
+      border-bottom: 26px solid transparent;
+      border-right: 40px solid #f8f8f8;
+      content: ' ';
+      transition: border-width $collapseTime;
+    }
+
+    &:hover {
+      width: 18px;
+      left: -18px;
+      transform: rotateY(180deg);
+
+      & .w-bar-collapse-icon {
+        transform: translateX(3px);
+      }
     }
   }
 }
