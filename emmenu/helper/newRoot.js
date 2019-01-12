@@ -6,23 +6,16 @@ export default (rule) => {
     API_KEY,
     IS_MENU_TYPE,
   } = CONSTANT;
-  const { NAME, SUB, CODE, } = API_KEY;
+  const { NAME, SUB, CODE } = API_KEY;
   const showName = NAME.toLocaleLowerCase();
   const code = CODE.toLocaleLowerCase();
-  const constName = CONSTANT[NAME];
   const { org, menus } = rule;
   const obj = {
     menuList: [],
-    control: [],
     title: org.org_name,
     logo: org.org_logo,
   };
   const newRoot = menus.slice();
-  // 获取账户管理权限
-  [obj.control] = newRoot.splice(
-    newRoot.findIndex(item => item[showName] === constName.ACCOUNT),
-    1,
-  );
   // 递归累加所有权限输出
   const handleReduce = (item, kids) => {
     if (hOwnProperty(kids, SUB) && kids[SUB].length > 0) {
@@ -41,16 +34,16 @@ export default (rule) => {
   // pathDefult 中配置好，即可显示，成为导航
   newRoot.forEach((item) => {
     const moduleName = item[showName];
-    const baseList = {
-      name: item.name,
-      icon: moduleName,
-    };
     const {
       options, path, tags, type,
     } = item;
     obj[`${moduleName}source`] = item;
     // 如果是在事先准备好的路径中
     if (type === IS_MENU_TYPE) {
+      const baseList = {
+        name: item.name,
+        icon: moduleName,
+      };
       const isAuth = item.permission_code;
       const { domain, target } = options;
       baseList.target = target;
@@ -58,10 +51,8 @@ export default (rule) => {
       // 如果有权限，如果没权限
       baseList.path = isAuth ? `${domain}${path}` : obj.error;
       baseList.noAuth = !!isAuth;
-    } else {
-      baseList.source = item;
+      obj.menuList.push(baseList);
     }
-    obj.menuList.push(baseList);
     obj[moduleName] = item[SUB];
     // 如果有子级权限， 直接列岛 XXXauth 字段中，其中 XXX 代表某一权限
     handleReduce(item, item);
