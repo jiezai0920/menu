@@ -6,8 +6,9 @@ export default (rule) => {
     API_KEY,
     IS_MENU_TYPE,
   } = CONSTANT;
-  const { NAME, SUB, } = API_KEY;
+  const { NAME, SUB, CODE, } = API_KEY;
   const showName = NAME.toLocaleLowerCase();
+  const code = CODE.toLocaleLowerCase();
   const constName = CONSTANT[NAME];
   const { org, menus } = rule;
   const obj = {
@@ -29,7 +30,7 @@ export default (rule) => {
         obj[`${item[showName]}auth`] = {};
       }
       const newKidAliases = kids[SUB].reduce((kidKeys, kid) => {
-        kidKeys[kid.aliases] = kid;
+        kidKeys[kid[code]] = kid;
         handleReduce(item, kid);
         return kidKeys;
       }, {});

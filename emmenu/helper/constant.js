@@ -6,6 +6,7 @@ export default {
   API_KEY: {
     NAME: 'MODULE_CODE',
     SUB: 'sub_menus',
+    CODE: 'PERMISSION_CODE', // 权限的别名
   },
   IS_MENU_TYPE: 1, // type 为 1 才显示在黑色导航中
   MODULE_CODE: { // 模块名字
