@@ -6,7 +6,7 @@ export default (rule) => {
     API_KEY,
     IS_MENU_TYPE,
   } = CONSTANT;
-  const { NAME } = API_KEY;
+  const { NAME, SUB, } = API_KEY;
   const showName = NAME.toLocaleLowerCase();
   const constName = CONSTANT[NAME];
   const { org, menus } = rule;
@@ -24,11 +24,11 @@ export default (rule) => {
   );
   // 递归累加所有权限输出
   const handleReduce = (item, kids) => {
-    if (hOwnProperty(kids, 'children') && kids.children.length > 0) {
+    if (hOwnProperty(kids, SUB) && kids[SUB].length > 0) {
       if (!hOwnProperty(obj, `${item[showName]}auth`)) {
         obj[`${item[showName]}auth`] = {};
       }
-      const newKidAliases = kids.children.reduce((kidKeys, kid) => {
+      const newKidAliases = kids[SUB].reduce((kidKeys, kid) => {
         kidKeys[kid.aliases] = kid;
         handleReduce(item, kid);
         return kidKeys;
@@ -61,7 +61,7 @@ export default (rule) => {
       baseList.source = item;
     }
     obj.menuList.push(baseList);
-    obj[moduleName] = item.children;
+    obj[moduleName] = item[SUB];
     // 如果有子级权限， 直接列岛 XXXauth 字段中，其中 XXX 代表某一权限
     handleReduce(item, item);
   });

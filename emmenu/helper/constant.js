@@ -5,6 +5,7 @@ export default {
   SUCCESS: 10000,
   API_KEY: {
     NAME: 'MODULE_CODE',
+    SUB: 'sub_menus',
   },
   IS_MENU_TYPE: 1, // type 为 1 才显示在黑色导航中
   MODULE_CODE: { // 模块名字
