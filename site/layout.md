@@ -1,6 +1,6 @@
 # 真正的页面
 
-<w-layout :env="env" active="home" :rule="menuTestRule" class="demo" logoutAction="https://www.easy-mock.com/mock/5ab386ecca15e11ded65b593/chinese/getLoginOutCallBackUrl" :navs="barTestRule" barName="二级导航" :show="true">
+<w-layout :env="env" active="home" :rule="menuTestRule" class="demo" quitAction="https://www.easy-mock.com/mock/5ab386ecca15e11ded65b593/chinese/getLoginOutCallBackUrl" :navs="barTestRule" barName="二级导航" :show="true">
   <h1>这是真正的标题</h1>
   <p>这是真正内容</p>
 </w-layout>
@@ -19,7 +19,7 @@
 |collapse|是否折叠按钮|Boolean|否|true|
 |active|选中字样，添加模块名一样|String|否|无|
 |show|是否展开|Boolean|否|true|
-|logoutAction|退出登录的接口地址|String|否|false|
+|quitAction|退出登录的接口地址|String|否|false|
 |rule|权限接口请求回来的数据|Object|否|false|
 |barActive|二级导航高亮|String|否|无|
 

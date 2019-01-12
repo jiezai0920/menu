@@ -1,6 +1,6 @@
 <template>
   <div class="w-layout" :class="{'on': !mainStatus}">
-    <w-menu :env="env" :active="activeValue" :rule="rule" :logoutAction="logoutAction" @analysised="analysised"></w-menu>
+    <w-menu :env="env" :active="activeValue" :rule="rule" :quitAction="quitAction" @analysised="analysised"></w-menu>
     <w-bar :navs="navsValue" :active="barActiveValue" :disabled="disabledValue" :title="barNameValue" :show="showStatus1" v-if="navsValue.length" :collapse="collapseValue" @collapsed="changeShowStatus"></w-bar>
     <div class="w-layout-main" :class="{'w-layout-main-large': !navsValue.length}">
       <span class="w-layout-collapse w-layout-collapse-hide" v-show="!mainStatus" v-if="navsValue.length" @click="openBar">
@@ -50,7 +50,7 @@ export default {
     },
     barActive: String,
     show: Boolean, // 二级是否显示
-    logoutAction: String,
+    quitAction: String,
     rule: Object,
   },
   computed: {

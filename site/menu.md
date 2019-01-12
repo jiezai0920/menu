@@ -1,7 +1,7 @@
 # 主菜单
 > em 公共级左导航业务组件
 
-<w-menu :env="env" :rule="menuTestRule" class="demo" active="home" logoutAction="https://www.easy-mock.com/mock/5ab386ecca15e11ded65b593/chinese/getLoginOutCallBackUrl"></w-menu>
+<w-menu :env="env" :rule="menuTestRule" class="demo" active="home" quitAction="https://www.easy-mock.com/mock/5ab386ecca15e11ded65b593/chinese/getLoginOutCallBackUrl"></w-menu>
 
 ## API
 
@@ -10,7 +10,7 @@
 |参数|说明|类型|是否必填|默认值|
 |---|----|---|-------|-----|
 |env|根据环境变化的各项目链接|String|否|{}|
-|logoutAction|退出登录的接口地址|String|否|false|
+|quitAction|退出登录的接口地址|String|否|false|
 |rule|权限接口请求回来的数据|Array|否|false|
 |active|选中字样，添加模块名一样|String|否|无|
 

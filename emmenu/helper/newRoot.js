@@ -1,7 +1,7 @@
 import hOwnProperty from 'em-underline/hOwnProperty';
 import CONSTANT from './constant';
 
-export default (rule) => {
+export default (rule, env) => {
   const {
     API_KEY,
     IS_MENU_TYPE,
@@ -23,6 +23,15 @@ export default (rule) => {
         obj[`${item[showName]}auth`] = {};
       }
       const newKidAliases = kids[SUB].reduce((kidKeys, kid) => {
+        // 如果是无权限页
+        if (kid.options.denied_type === 'error_page') {
+          kid.isError = true;
+        }
+        // 如果是购买页
+        if (kid.options.denied_type === 'buy_page') {
+          kid.isBuy = true;
+          kid.authPath = `${env.ACCOUNT}service/intro`;
+        }
         kidKeys[kid[code]] = kid;
         handleReduce(item, kid);
         return kidKeys;

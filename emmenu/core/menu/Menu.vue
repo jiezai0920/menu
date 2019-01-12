@@ -98,7 +98,7 @@
         type: String,
         default: '',
       },
-      logoutAction: String,
+      quitAction: String,
       rule: Object,
     },
     computed: {
@@ -118,7 +118,7 @@
       },
       // 处理权限接口数据
       handleData() {
-        this.power = newRoot(this.rule);
+        this.power = newRoot(this.rule, this.env);
         this.$emit('analysised', this.power);
       },
       // 免费发活动和退出 start
@@ -129,7 +129,7 @@
       goOut() {
         ajax({
           type: 'GET',
-          action: this.logoutAction,
+          action: this.quitAction,
           onSuccess: (res) => {
             if (res.code === CONSTANT.SUCCESS) {
               this.callbackUrl = res.data.url_list.slice();
