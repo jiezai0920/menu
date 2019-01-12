@@ -9,7 +9,6 @@ export default (rule) => {
   const { NAME, SUB, CODE } = API_KEY;
   const showName = NAME.toLocaleLowerCase();
   const code = CODE.toLocaleLowerCase();
-  const constName = CONSTANT[NAME];
   const { org, menus } = rule;
   const obj = {
     menuList: [],
