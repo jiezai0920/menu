@@ -6,7 +6,10 @@ export default {
   EXPIRED: 3600 * 24,
   MARKETING_BAR: 'EVENT_MARKETING_BAR',
   DATA_BAR: 'EVENT_DATA_BAR',
-  MODULE_NAME: { // 模块名字
+  API_KEY: {
+    NAME: 'MODULE_CODE',
+  },
+  MODULE_CODE: { // 模块名字
     ACCOUNT: 'account',
     HOME: 'home',
     EVENT: 'event', // 演出赛事(票务)
