@@ -13,16 +13,10 @@ export default (rule) => {
   const { org, menus } = rule;
   const obj = {
     menuList: [],
-    control: [],
     title: org.org_name,
     logo: org.org_logo,
   };
   const newRoot = menus.slice();
-  // 获取账户管理权限
-  // [obj.control] = newRoot.splice(
-  //   newRoot.findIndex(item => item[showName] === constName.ACCOUNT),
-  //   1,
-  // );
   // 递归累加所有权限输出
   const handleReduce = (item, kids) => {
     if (hOwnProperty(kids, SUB) && kids[SUB].length > 0) {
