@@ -1,22 +1,22 @@
 import hOwnProperty from 'em-underline/hOwnProperty';
 import CONSTANT from './constant';
 
-
-export default (rule, env) => {
+export default (rule) => {
   const {
     API_KEY,
+    IS_MENU_TYPE,
   } = CONSTANT;
   const { NAME } = API_KEY;
   const showName = NAME.toLocaleLowerCase();
   const constName = CONSTANT[NAME];
-  const { org_logo, org_name }= rule.org;
+  const { org, menus } = rule;
   const obj = {
     menuList: [],
     control: [],
-    title: org_name,
-    logo: org_logo,
+    title: org.org_name,
+    logo: org.org_logo,
   };
-  const newRoot = rule.menus.slice();
+  const newRoot = menus.slice();
   // 获取账户管理权限
   [obj.control] = newRoot.splice(
     newRoot.findIndex(item => item[showName] === constName.ACCOUNT),
@@ -44,12 +44,14 @@ export default (rule, env) => {
       name: item.name,
       icon: moduleName,
     };
-    const { options, path, tags, type, } = item;
+    const {
+      options, path, tags, type,
+    } = item;
     obj[`${moduleName}source`] = item;
     // 如果是在事先准备好的路径中
-    if (type == 1) {
+    if (type === IS_MENU_TYPE) {
       const isAuth = item.permission_code;
-      const { domain, target, } = options
+      const { domain, target } = options;
       baseList.target = target;
       baseList.tags = tags;
       // 如果有权限，如果没权限

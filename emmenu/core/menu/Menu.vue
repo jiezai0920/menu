@@ -12,7 +12,7 @@
             <img class="w-menu-list-img" :src="require(`assets/img/${rule.icon}_normal.png`)">
             <img class="w-menu-list-img" :src="require(`assets/img/${rule.icon}_selected.png`)">
             <span class="w-menu-list-title">
-              {{rule.name}}
+              <span class="w-menu-list-title-inner">{{rule.name}}</span>
               <i class="w-menu-tag" v-if="rule.tags.length > 0">{{rule.tags[0]}}</i>
             </span>
           </a>
@@ -79,8 +79,8 @@
     data() {
       return {
         // 调试一级黑色导航样式的时候可以为 true 方便调试
-        // hover: false,
-        hover: true,
+        hover: false,
+        // hover: true,
 
         isMask: false,
         user: '',
@@ -118,7 +118,7 @@
       },
       // 处理权限接口数据
       handleData() {
-        this.power = newRoot(this.rule, this.env);
+        this.power = newRoot(this.rule);
         this.$emit('analysised', this.power);
       },
       // 免费发活动和退出 start
