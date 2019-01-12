@@ -8,10 +8,13 @@
       <ul class="w-menu-list">
         <li class="w-menu-list-item" v-for="(rule, ruleIndex) in power.menuList" :key="ruleIndex">
           <!-- on -->
-          <a :href="rule.path" :target="!rule.noAuth || rule.icon === 'goods'? '_blank' : '_self'" class="w-menu-list-link" :class="{on: activeValue === rule.icon}">
+          <a :href="rule.path" :target="rule.target" class="w-menu-list-link" :class="{on: activeValue === rule.icon}">
             <img class="w-menu-list-img" :src="require(`assets/img/${rule.icon}_normal.png`)">
             <img class="w-menu-list-img" :src="require(`assets/img/${rule.icon}_selected.png`)">
-            <span class="w-menu-list-title">{{rule.name}}</span>
+            <span class="w-menu-list-title">
+              <span class="w-menu-list-title-inner">{{rule.name}}</span>
+              <i class="w-menu-tag" v-if="rule.tags.length > 0">{{rule.tags[0]}}</i>
+            </span>
           </a>
         </li>
       </ul>
@@ -115,7 +118,7 @@
       },
       // 处理权限接口数据
       handleData() {
-        this.power = newRoot(this.rule, this.env);
+        this.power = newRoot(this.rule);
         this.$emit('analysised', this.power);
       },
       // 免费发活动和退出 start

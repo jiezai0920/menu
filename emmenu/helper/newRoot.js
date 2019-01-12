@@ -1,65 +1,61 @@
 import hOwnProperty from 'em-underline/hOwnProperty';
 import CONSTANT from './constant';
 
-
-export default (rule, env) => {
+export default (rule) => {
   const {
-    MODULE_NAME,
+    API_KEY,
+    IS_MENU_TYPE,
   } = CONSTANT;
-  const pathDefult = {};
+  const { NAME } = API_KEY;
+  const showName = NAME.toLocaleLowerCase();
+  const constName = CONSTANT[NAME];
+  const { org, menus } = rule;
   const obj = {
     menuList: [],
     control: [],
-    title: rule.title,
-    logo: rule.logo,
+    title: org.org_name,
+    logo: org.org_logo,
   };
-  const newRoot = rule.root.slice();
-  // 默认每个项目跳转地址
-  pathDefult[MODULE_NAME.EVENT] = env.EVENT;
-  pathDefult[MODULE_NAME.MEET] = `${env.MEET}activity?nav=light`;
-  pathDefult[MODULE_NAME.GOODS] = `${env.GOODS}Goods/list`;
-  pathDefult[MODULE_NAME.FORM] = env.FORM;
-  pathDefult[MODULE_NAME.ORDER] = env.ORDER;
-  pathDefult[MODULE_NAME.DATA] = `${env.DATA}mobileanalyze`;
-  pathDefult[MODULE_NAME.HOME] = `${env.ACCOUNT}console`;
-  pathDefult[MODULE_NAME.MARKET] = `${env.MARKET}`;
-  pathDefult[MODULE_NAME.MEMBER] = `${env.CRM}contacts`;
-  pathDefult[MODULE_NAME.SHOP] = `${env.SHOP}`;
-  pathDefult[MODULE_NAME.FINANCE] = env.FINANCE;
-  obj.error = `${env.MEMBER}error`;
+  const newRoot = menus.slice();
   // 获取账户管理权限
   [obj.control] = newRoot.splice(
-    newRoot.findIndex(item => item.module_name === MODULE_NAME.ACCOUNT),
+    newRoot.findIndex(item => item[showName] === constName.ACCOUNT),
     1,
   );
   // 递归累加所有权限输出
   const handleReduce = (item, kids) => {
     if (hOwnProperty(kids, 'children') && kids.children.length > 0) {
-      if (!hOwnProperty(obj, `${item.module_name}auth`)) {
-        obj[`${item.module_name}auth`] = {};
+      if (!hOwnProperty(obj, `${item[showName]}auth`)) {
+        obj[`${item[showName]}auth`] = {};
       }
       const newKidAliases = kids.children.reduce((kidKeys, kid) => {
         kidKeys[kid.aliases] = kid;
         handleReduce(item, kid);
         return kidKeys;
       }, {});
-      obj[`${item.module_name}auth`] = Object.assign(obj[`${item.module_name}auth`], newKidAliases);
+      obj[`${item[showName]}auth`] = Object.assign(obj[`${item[showName]}auth`], newKidAliases);
     }
   };
 
   // pathDefult 中配置好，即可显示，成为导航
   newRoot.forEach((item) => {
-    const moduleName = item.module_name;
+    const moduleName = item[showName];
     const baseList = {
       name: item.name,
       icon: moduleName,
     };
+    const {
+      options, path, tags, type,
+    } = item;
     obj[`${moduleName}source`] = item;
     // 如果是在事先准备好的路径中
-    if (hOwnProperty(pathDefult, moduleName)) {
-      const isAuth = item.is_auth;
+    if (type === IS_MENU_TYPE) {
+      const isAuth = item.permission_code;
+      const { domain, target } = options;
+      baseList.target = target;
+      baseList.tags = tags;
       // 如果有权限，如果没权限
-      baseList.path = isAuth ? pathDefult[moduleName] : obj.error;
+      baseList.path = isAuth ? `${domain}${path}` : obj.error;
       baseList.noAuth = !!isAuth;
     } else {
       baseList.source = item;

@@ -2,9 +2,12 @@
 @import './mixin.scss';
 @import './message.scss';
 
+$menuHover: #343a3e;
+$menu-bg: #252a2e;
+
 .w-menu {
   width: 46px;
-  background: #252a2e;
+  background: $menu-bg;
   cursor: pointer;
   transition: width $time;
   height: 100%;
@@ -39,7 +42,7 @@
       overflow: hidden;
       font-family: $family;
       font-size: 12px;
-      color: #fff;
+      color: $write;
       width: 0;
       height: 54px;
       padding-left: 46px;
@@ -70,10 +73,14 @@
       // 导航hover状态
       &:hover {
         text-decoration: none !important;
-        background: #343a3e;
+        background: $menuHover;
 
         & .w-menu-list-title {
-          color: #fff;
+          color: $write;
+        }
+
+        & .w-menu-tag {
+          color: $menuHover;
         }
       }
 
@@ -83,10 +90,10 @@
 
       // 导航选中状态
       &.on {
-        background: #fff;
+        background: $write;
 
         & .w-menu-list-title {
-          color: #333;
+          color: $text-color-default;
         }
 
         & .w-menu-list-img:nth-of-type(1) {
@@ -95,6 +102,10 @@
 
         & .w-menu-list-img:nth-of-type(2) {
           display: block;
+        }
+
+        & .w-menu-tag {
+          color: $write;
         }
       }
     }
@@ -126,6 +137,11 @@
       width: 0;
       padding-left: 16px;
       transition: color $time, width $time, padding $time;
+      // display: flex;
+
+      &-inner {
+        float: left;
+      }
     }
   } // end w-menu-list
 
@@ -166,7 +182,7 @@
     width: 22px;
     height: 22px;
     margin: 28px auto 16px;
-    background: #1996f9;
+    background: $brand-color-default;
     border-radius: 21px;
     transition: background $time, margin $time, width $time, height $time;
 
@@ -182,7 +198,7 @@
     &-title {
       font-family: $family;
       font-size: 14px;
-      color: #fff;
+      color: $write;
       line-height: 18px;
       height: 18px;
       width: 0;
@@ -204,11 +220,11 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    color: #999;
+    color: $icon-color;
 
     &:hover {
       text-decoration: none !important;
-      color: #fff;
+      color: $write;
 
       & .w-menu-quit-img:nth-of-type(1) {
         display: none;
@@ -258,7 +274,7 @@
     &-box {
       width: 636px;
       height: 418px;
-      background-color: #fff;
+      background-color: $write;
       box-shadow: 0 0 4px 0 rgba(0, 0, 0, 0.2);
       border-radius: 3px;
       position: absolute;
@@ -273,7 +289,7 @@
       position: absolute;
       right: 10px;
       top: 6px;
-      color: #999;
+      color: $icon-color;
       font-size: 28px;
       text-align: center;
       line-height: 20px;
@@ -284,7 +300,7 @@
     &-title {
       padding: 52px 0 40px;
       font-size: 18px;
-      color: #333;
+      color: $text-color-default;
       text-align: center;
       line-height: 18px;
       margin: 0;
@@ -303,7 +319,7 @@
       width: 240px;
       height: 240px;
       text-align: center;
-      background-color: #1996f9;
+      background-color: $brand-color-default;
       border-radius: 3px;
       font-size: 0;
       cursor: pointer;
@@ -346,7 +362,7 @@
 
     &-name {
       font-size: 16px;
-      color: #fff;
+      color: $write;
       text-align: center;
       margin-top: 12px;
       display: block;
@@ -354,7 +370,7 @@
 
     &-content {
       font-size: 12px;
-      color: #fff;
+      color: $write;
       padding: 0 17px;
       margin-top: 8px;
       line-height: 18px;
@@ -403,7 +419,7 @@
 
     &-inner {
       text-align: center;
-      color: #fff;
+      color: $write;
       line-height: 40px;
       font-size: 14px;
     }
@@ -414,7 +430,7 @@
       position: absolute;
       right: 10px;
       top: 6px;
-      color: #fff;
+      color: $write;
       font-size: 28px;
       text-align: center;
       line-height: 20px;
@@ -459,18 +475,47 @@
     }
 
     &-cancel {
-      background: #fff;
-      color: #333;
-      border-color: #dcdcdc;
+      background: $write;
+      color: $text-color-default;
       border: 1px solid #dbdbdb;
       margin-right: 16px;
     }
 
     &-ok {
-      border-color: #1996f9;
-      color: #fff;
-      background-color: #1996f9;
-      border: 1px solid #1996f9;
+      border-color: $brand-color-default;
+      color: $write;
+      background-color: $brand-color-default;
+      border: 1px solid $brand-color-default;
+    }
+  }
+
+  &-tag {
+    position: relative;
+    border-radius: 3px;
+    font-style: normal;
+    font-size: 14px;
+    font-family: $family;
+    font-weight: bold;
+    color: $menu-bg;
+    transform: scale(0.5);
+    transform-origin: left top;
+    line-height: 1;
+    padding: 3px 5px 4px 4px;
+    background: $tag-color;
+    margin-left: 4px;
+    float: left;
+
+    &::before {
+      content: '';
+      position: absolute;
+      left: -5px;
+      bottom: -2px;
+      width: 0;
+      height: 0;
+      border-top: 4px solid transparent;
+      border-right: 7px solid $tag-color;
+      border-bottom: 2px solid transparent;
+      transform: rotate(-30deg);
     }
   }
 }
