@@ -9,7 +9,6 @@ export default (rule, env) => {
   const { NAME } = API_KEY;
   const showName = NAME.toLocaleLowerCase();
   const constName = CONSTANT[NAME];
-  console.log(rule, 'rule');
   const { org_logo, org_name }= rule.org;
   const obj = {
     menuList: [],

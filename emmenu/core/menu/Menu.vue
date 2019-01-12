@@ -119,7 +119,6 @@
       // 处理权限接口数据
       handleData() {
         this.power = newRoot(this.rule, this.env);
-        console.log(this.power, 'this.power');
         this.$emit('analysised', this.power);
       },
       // 免费发活动和退出 start
