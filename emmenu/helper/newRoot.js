@@ -28,10 +28,15 @@ export default (rule, env) => {
         if (!kid.is_accessible && options.denied_type === 'error_page') {
           kid.isError = true;
         }
-        // 如果是购买页
-        if (!kid.is_accessible && options.denied_type === 'buy_page') {
-          kid.isBuy = true;
+        // 如果是引导升级版本
+        if (!kid.is_accessible && options.denied_type === 'buy_editions') {
+          kid.isBuyEditions = true;
           kid.authPath = `${env.ACCOUNT}service/intro`;
+        }
+        // 如果是引导升级版本
+        if (!kid.is_accessible && options.denied_type === 'buy_functions') {
+          kid.isBuyFunctions = true;
+          kid.authPath = `${env.ACCOUNT}service/hepler/${kid[code]}`;
         }
         kidKeys[kid[code]] = kid;
         handleReduce(item, kid);

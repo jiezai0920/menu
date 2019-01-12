@@ -42,7 +42,7 @@ export default {
             "version": "3.0",
             "domain": "https://home.evente.cn",
             "target": "none",
-            "denied_type": "error_page",
+            "denied_type": "buy_editions",
             "denied_tips": "当前功能无权限访问"
           },
           "is_accessible": false,
@@ -60,7 +60,7 @@ export default {
             "version": "3.0",
             "domain": "https://home.evente.cn",
             "target": "none",
-            "denied_type": "error_page",
+            "denied_type": "buy_functions",
             "denied_tips": "当前功能无权限访问"
           },
           "is_accessible": false,
@@ -97,7 +97,7 @@ export default {
             "version": "3.0",
             "domain": "https://home.evente.cn",
             "target": "none",
-            "denied_type": "error_page",
+            "denied_type": "buy_editions",
             "denied_tips": "当前功能无权限访问"
           },
           "is_accessible": false,
@@ -113,7 +113,7 @@ export default {
                 "version": "3.0",
                 "domain": "https://home.evente.cn",
                 "target": "_self",
-                "denied_type": "error_page",
+                "denied_type": "buy_functions",
                 "denied_tips": "当前功能无权限访问"
               },
               "is_accessible": false,
