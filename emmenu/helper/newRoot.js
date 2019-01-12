@@ -24,11 +24,12 @@ export default (rule, env) => {
       }
       const newKidAliases = kids[SUB].reduce((kidKeys, kid) => {
         // 如果是无权限页
-        if (kid.options.denied_type === 'error_page') {
+        const { options } = kid;
+        if (!kid.is_accessible && options.denied_type === 'error_page') {
           kid.isError = true;
         }
         // 如果是购买页
-        if (kid.options.denied_type === 'buy_page') {
+        if (!kid.is_accessible && options.denied_type === 'buy_page') {
           kid.isBuy = true;
           kid.authPath = `${env.ACCOUNT}service/intro`;
         }
