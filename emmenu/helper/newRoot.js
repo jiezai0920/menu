@@ -6,7 +6,7 @@ export default (rule) => {
     API_KEY,
     IS_MENU_TYPE,
   } = CONSTANT;
-  const { NAME, SUB, CODE, } = API_KEY;
+  const { NAME, SUB, CODE } = API_KEY;
   const showName = NAME.toLocaleLowerCase();
   const code = CODE.toLocaleLowerCase();
   const constName = CONSTANT[NAME];
