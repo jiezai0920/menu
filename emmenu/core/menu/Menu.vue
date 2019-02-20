@@ -127,12 +127,10 @@
           message.error({
             content: rule.denied_tips,
           });
+        } else if (rule.target === '_blank') {
+          window.open(rule.path);
         } else {
-          if (rule.target === '_blank') {
-            window.open(rule.path);
-          } else {
-            window.location.href = rule.path;
-          }
+          window.location.href = rule.path;
         }
       },
       // 免费发活动和退出 start
