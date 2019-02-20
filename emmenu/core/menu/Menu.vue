@@ -8,7 +8,7 @@
       <ul class="w-menu-list">
         <li class="w-menu-list-item" v-for="(rule, ruleIndex) in power.menuList" :key="ruleIndex">
           <!-- on -->
-          <a :href="rule.path" :target="rule.target" class="w-menu-list-link" :class="{on: activeValue === rule.icon}">
+          <a href="javascript:;" class="w-menu-list-link" :class="{on: activeValue === rule.icon}" @click="goPath(rule)">
             <img class="w-menu-list-img" :src="require(`assets/img/${rule.icon}_normal.png`)">
             <img class="w-menu-list-img" :src="require(`assets/img/${rule.icon}_selected.png`)">
             <span class="w-menu-list-title">
@@ -120,6 +120,20 @@
       handleData() {
         this.power = newRoot(this.rule, this.env);
         this.$emit('analysised', this.power);
+      },
+      goPath(rule) {
+        // staff
+        if (rule.denied_tips) {
+          message.error({
+            content: rule.denied_tips,
+          });
+        } else {
+          if (rule.target === '_blank') {
+            window.open(rule.path);
+          } else {
+            window.location.href = rule.path;
+          }
+        }
       },
       // 免费发活动和退出 start
       modalOk() {

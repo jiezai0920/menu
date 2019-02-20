@@ -59,14 +59,21 @@ export default (rule, env) => {
         name: item.name,
         icon: moduleName,
       };
-      const isAuth = item.permission_code;
       const { domain, target } = options;
       baseList.target = target;
       baseList.tags = tags;
-      // 如果有权限，如果没权限
-      baseList.path = isAuth ? `${domain}${path}` : obj.error;
-      baseList.noAuth = !!isAuth;
-      obj.menuList.push(baseList);
+      // 如果有权限
+      baseList.path = `${domain}${path}`;
+      // 如果是子账号没有权限的 2.0
+      // 如果是主账号
+      if (org.account_type === 'org' && item.options.version === '2.0' && !item.is_accessible) {
+        baseList.denied_tips = item.options.denied_tips;
+      }
+      // 如果 2.0 有权限才显示菜单
+      // 如果 3.0 全显示
+      if (org.account_type === 'org' || (org.account_type === 'staff' && item.is_accessible)) {
+        obj.menuList.push(baseList);
+      }
     }
     obj[moduleName] = item[SUB];
     // 如果有子级权限， 直接列岛 XXXauth 字段中，其中 XXX 代表某一权限
