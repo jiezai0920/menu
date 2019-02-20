@@ -3,6 +3,7 @@ export default {
     "org_id": 100015,
     "org_name": "****",
     "org_service_tel": "4000630260",
+    "account_type": "staff", // staff(子账号) || org(主账号)
     "org_logo": "http://moshtest.qiniudn.com/6b/5e/7b/2c6a8c4fad4e0dadbc97b69f3a.jpg"
   },
   "version": {
@@ -657,7 +658,7 @@ export default {
       "tags": [],
       "icon": "",
       "options": {
-        "version": "2.0",
+        "version": "3.0",
         "domain": "https://home.evente.cn",
         "target": "_self",
         "denied_type": "error_page",
@@ -856,7 +857,7 @@ export default {
       "tags": ['good'],
       "icon": "",
       "options": {
-        "version": "2.0",
+        "version": "3.0",
         "domain": "https://home.evente.cn",
         "target": "_self",
         "denied_type": "error_page",
@@ -1163,7 +1164,7 @@ export default {
       "tags": ['热'],
       "icon": "",
       "options": {
-        "version": "2.0",
+        "version": "3.0",
         "domain": "https://home.evente.cn",
         "target": "_self",
         "denied_type": "error_page",
@@ -1344,7 +1345,7 @@ export default {
       "tags": [],
       "icon": "",
       "options": {
-        "version": "2.0",
+        "version": "3.0",
         "domain": "https://home.evente.cn",
         "target": "_self",
         "denied_type": "error_page",
@@ -1453,7 +1454,7 @@ export default {
       "tags": [],
       "icon": "",
       "options": {
-        "version": "2.0",
+        "version": "3.0",
         "domain": "https://home.evente.cn",
         "target": "_self",
         "denied_type": "error_page",
@@ -1472,7 +1473,7 @@ export default {
       "tags": ['HOT'],
       "icon": "",
       "options": {
-        "version": "2.0",
+        "version": "3.0",
         "domain": "https://home.evente.cn",
         "target": "_self",
         "denied_type": "error_page",
