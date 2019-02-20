@@ -36,7 +36,7 @@ export default (rule, env) => {
         // 如果是引导升级版本
         if (!kid.is_accessible && options.denied_type === 'buy_functions') {
           kid.isBuyFunctions = true;
-          kid.authPath = `${env.ACCOUNT}service/hepler/${kid[code]}`;
+          kid.authPath = `${env.ACCOUNT}service/helper/${kid[code]}`;
         }
         kidKeys[kid[code]] = kid;
         handleReduce(item, kid);

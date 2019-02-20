@@ -23,6 +23,7 @@ export default [
       {
         title: '二级腾讯',
         url: 'http://qq.com',
+        denied_tips: '当前功能无权限访问',
       },
     ],
   },
