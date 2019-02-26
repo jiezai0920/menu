@@ -122,16 +122,15 @@
         this.$emit('analysised', this.power);
       },
       goPath(rule) {
-        const rulePath = `${rule.options.domain}${rule.path}`;
         // staff
         if (rule.denied_tips) {
           message.error({
             content: rule.denied_tips,
           });
         } else if (rule.target === '_blank') {
-          window.open(rulePath);
+          window.open(rule.path);
         } else {
-          window.location.href = rulePath;
+          window.location.href = rule.path;
         }
       },
       // 免费发活动和退出 start
