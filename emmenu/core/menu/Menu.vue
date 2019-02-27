@@ -189,7 +189,7 @@
         // 不加定时器，登录cookie还在
         setTimeout(() => {
           window.location.href = `${this.env.ACCOUNT}login`;
-        }, 100);
+        }, 0);
       },
       // 免费发活动和退出 end
     },
