@@ -50,7 +50,7 @@ export default {
   production: {
     ACCOUNT: 'https://home.evente.cn/account/',
     DATA: 'https://home.evente.cn/data/',
-    EVENT: 'https://home.evente.cn/event',
+    EVENT: 'https://home.evente.cn/event/',
     FINANCE: 'https://home.evente.cn/finance/',
     FORM: 'https://home.evente.cn/form/',
     GOODS: 'https://goods.evente.cn/',
