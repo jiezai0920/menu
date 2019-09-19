@@ -18,7 +18,9 @@
           </a>
         </li>
       </ul>
-      <a href="javascript:;" class="w-menu-release" @click="isMask = true">
+      <!-- <a href="javascript:;" class="w-menu-release" @click="isMask = true"> -->
+        <a class="w-menu-release"
+         target="_blank" :href="`${env.EVENT||env.VUE_APP_EVENT}checktmodal`">
         <img class="w-menu-release-img" :src="require(`assets/img/release.png`)">
         <span class="w-menu-release-title">免费发活动</span>
       </a>
