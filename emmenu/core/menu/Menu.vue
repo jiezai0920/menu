@@ -3,7 +3,7 @@
     <div class="w-menu" :class="{'w-menu-hover': hover}">
       <div class="w-menu-header">
         <img class="w-menu-header-icon" :src="power.logo" @error="errorFn">
-        <a :href="`${env.ACCOUNT}accountinformation`" target="_blank" class="w-menu-header-title">{{power.title}}</a>
+        <a :href="`${env.ACCOUNT||env.VUE_APP_ACCOUNT}accountinformation`" target="_blank" class="w-menu-header-title">{{power.title}}</a>
       </div>
       <ul class="w-menu-list">
         <li class="w-menu-list-item" v-for="(rule, ruleIndex) in power.menuList" :key="ruleIndex">
@@ -18,7 +18,9 @@
           </a>
         </li>
       </ul>
-      <a href="javascript:;" class="w-menu-release" @click="isMask = true">
+      <!-- <a href="javascript:;" class="w-menu-release" @click="isMask = true"> -->
+        <a class="w-menu-release"
+         target="_blank" :href="`${env.EVENT||env.VUE_APP_EVENT}checktmodal`">
         <img class="w-menu-release-img" :src="require(`assets/img/release.png`)">
         <span class="w-menu-release-title">免费发活动</span>
       </a>
@@ -34,12 +36,12 @@
         <span class="w-menu-mask-close" @click="isMask = false">+</span>
         <h4 class="w-menu-mask-title">选择发布的活动类型</h4>
         <div class="w-menu-mask-modal">
-          <a target="_blank" :href="`${env.MEET}light`" class="w-menu-mask-light">
+          <a target="_blank" :href="`${env.MEET||env.VUE_APP_MEET}light`" class="w-menu-mask-light">
             <img class="w-menu-mask-img" :src="require(`assets/img/light.svg`)">
             <span class="w-menu-mask-name">报名</span>
             <span class="w-menu-mask-content">聚会、沙龙、排队、培训、会议、粉丝赠票、签到二维码、可审核、可付费、邀请函</span>
           </a>
-          <a target="_blank" :href="`${env.EVENT_OLD}event/pub`" class="w-menu-mask-light">
+          <a target="_blank" :href="`${env.EVENT||env.VUE_APP_EVENT}eventpublish`" class="w-menu-mask-light">
             <img class="w-menu-mask-img" :src="require(`assets/img/event.svg`)">
             <span class="w-menu-mask-name">票务</span>
             <span class="w-menu-mask-content">剧场、音乐节、巡演、赛事、会议、展览、游园、多票种、多场次、选座、秒杀抢票、多种核销、代金券、年卡、外币支付</span>
@@ -188,7 +190,7 @@
         window.$cookie.remove(CONSTANT.EVENT_USER);
         // 不加定时器，登录cookie还在
         setTimeout(() => {
-          window.location.href = `${this.env.ACCOUNT}login`;
+          window.location.href = `${this.env.ACCOUNT||this.env.VUE_APP_ACCOUNT}login`;
         }, 0);
       },
       // 免费发活动和退出 end

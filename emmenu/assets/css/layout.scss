@@ -5,6 +5,7 @@ $collapseTime: $time - 0.2s;
 .w-layout {
   display: flex;
   z-index: 2;
+  position: relative;
   background: #fff;
 
   &-main {
@@ -14,7 +15,6 @@ $collapseTime: $time - 0.2s;
     left: 180px;
     background: #fff;
     top: 0;
-    z-index: 81;
     height: 100vh;
 
     &-large {
