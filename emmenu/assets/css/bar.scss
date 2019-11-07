@@ -13,6 +13,7 @@ $collapseTime: $time - 0.2s;
   bottom: 0;
   background: #fff;
   transition: width $time;
+  overflow: hidden;
 
   // 小时的状态
   &-hide {
@@ -44,6 +45,16 @@ $collapseTime: $time - 0.2s;
       width: 134px;
       word-break: keep-all;
       margin: 0;
+    }
+  }
+
+  &-box {
+    max-height: calc(100% - 53px);
+    overflow-y: auto;
+
+    &::-webkit-scrollbar {
+      width: 0;
+      height: 0;
     }
   }
 
