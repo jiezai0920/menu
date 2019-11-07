@@ -4,27 +4,29 @@
     <span class="w-bar-collapse" :class="{'w-bar-collapse-hide': collapseValue && !showValue}" v-if="collapseValue" @click="handleCollapse">
       <img class="w-bar-collapse-icon" :src="require('assets/img/corrw.png')">
     </span>
-    <ul class="w-bar-list">
-      <li class="w-bar-item" v-for="(value, valueIndex) in goValue">
-        <router-link class="w-bar-link" :class="{'disabled': disabledValue}" :to="value.to" active-class="on" exact-active-class="exact" :target="value.target || '_self'" v-if="value.to">{{value.title}}</router-link>
-        <a class="w-bar-link" :class="{'disabled': disabledValue, 'on': activeValue === value.title}" href="javascript:;"  @click="goPath(value)" v-if="value.url">{{value.title}}</a>
-        <div class="w-bar-fold" :class="{'on': value.open || value.child.some(children=>children.title === activeValue), 'disabled': disabledValue}" v-if="value.child" @click="childLink(value, valueIndex)">{{value.title}}</div>
-        <transition
-          v-on:before-enter="beforeEnter"
-          v-on:enter="enter"
-          v-on:after-enter="afterEnter"
-          v-on:before-leave="beforeLeave"
-          v-on:leave="leave"
-          v-on:after-leave="afterLeave">
-          <ul class="w-bar-child" v-if="value.child" v-show="value.open || value.child.some(children=>children.title === activeValue)">
-            <li class="w-bar-item" v-for="(childValue, childIndex) in value.child">
-              <router-link class="w-bar-link-child" :class="{'disabled': disabledValue, 'on': activeValue === childValue.title}" :to="childValue.to" active-class="on" exact-active-class="exact" :target="childValue.target || '_self'" v-if="childValue.to" :ref="`link${valueIndex}${childIndex}`">{{childValue.title}}</router-link>
-              <a class="w-bar-link-child" :class="{'disabled': disabledValue, 'on': activeValue === childValue.title}" href="javascript:;" @click="goPath(childValue)" v-if="childValue.url">{{childValue.title}}</a>
-            </li>
-          </ul>
-        </transition>
-      </li>
-    </ul>
+    <div class="w-bar-box">
+      <ul class="w-bar-list">
+        <li class="w-bar-item" v-for="(value, valueIndex) in goValue">
+          <router-link class="w-bar-link" :class="{'disabled': disabledValue}" :to="value.to" active-class="on" exact-active-class="exact" :target="value.target || '_self'" v-if="value.to">{{value.title}}</router-link>
+          <a class="w-bar-link" :class="{'disabled': disabledValue, 'on': activeValue === value.title}" href="javascript:;"  @click="goPath(value)" v-if="value.url">{{value.title}}</a>
+          <div class="w-bar-fold" :class="{'on': value.open || value.child.some(children=>children.title === activeValue), 'disabled': disabledValue}" v-if="value.child" @click="childLink(value, valueIndex)">{{value.title}}</div>
+          <transition
+            v-on:before-enter="beforeEnter"
+            v-on:enter="enter"
+            v-on:after-enter="afterEnter"
+            v-on:before-leave="beforeLeave"
+            v-on:leave="leave"
+            v-on:after-leave="afterLeave">
+            <ul class="w-bar-child" v-if="value.child" v-show="value.open || value.child.some(children=>children.title === activeValue)">
+              <li class="w-bar-item" v-for="(childValue, childIndex) in value.child">
+                <router-link class="w-bar-link-child" :class="{'disabled': disabledValue, 'on': activeValue === childValue.title}" :to="childValue.to" active-class="on" exact-active-class="exact" :target="childValue.target || '_self'" v-if="childValue.to" :ref="`link${valueIndex}${childIndex}`">{{childValue.title}}</router-link>
+                <a class="w-bar-link-child" :class="{'disabled': disabledValue, 'on': activeValue === childValue.title}" href="javascript:;" @click="goPath(childValue)" v-if="childValue.url">{{childValue.title}}</a>
+              </li>
+            </ul>
+          </transition>
+        </li>
+      </ul>
+    </div>
   </div>
 </template>
 <script>
