@@ -60,6 +60,7 @@ $menu-bg: #252a2e;
 
   &-cont {
     max-height: calc(100vh - 84px - 66px);
+    flex: 1;
     overflow: auto;
   }
 
