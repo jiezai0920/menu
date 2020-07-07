@@ -181,7 +181,8 @@
       // 免费发活动和退出 start
       modalOk() {
         this.modalShow = false;
-        this.goOut();
+        // this.goOut();
+        this.logoutSuc();
       },
       goOut() {
         ajax({
