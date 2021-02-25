@@ -6,7 +6,7 @@ $menuHover: #343a3e;
 $menu-bg: #252a2e;
 
 .w-menu {
-  width: 46px;
+  width: 84px;
   background: $menu-bg;
   cursor: pointer;
   transition: width $time;
@@ -14,10 +14,9 @@ $menu-bg: #252a2e;
   position: relative;
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
 
   &-warp {
-    width: 46px;
+    width: 84px;
     position: fixed;
     left: 0;
     top: 0;
@@ -30,33 +29,16 @@ $menu-bg: #252a2e;
     background: #151b1f;
     margin-bottom: 12px;
     position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 
     &-icon {
       width: 26px;
       height: 26px;
       border-radius: 13px;
-      position: absolute;
-      left: 10px;
-      top: 14px;
     }
-
-    &-title {
-      overflow: hidden;
-      font-family: $family;
-      font-size: 12px;
-      color: $write;
-      width: 0;
-      height: 54px;
-      padding-left: 46px;
-      line-height: 54px;
-      display: block;
-      transition: width $time, padding $time;
-
-      &:hover {
-        text-decoration: none !important;
-      }
-    }
-  } // end w-menu-header
+  }
 
   &-cont {
     max-height: calc(100vh - 84px - 66px);
@@ -67,22 +49,40 @@ $menu-bg: #252a2e;
 
   &-footer {
     background-color: #151b1f;
+    display: flex;
+    height: 44px;
+    align-items: center;
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
   }
 
   &-list {
     margin: 0;
     padding: 0;
-    margin-bottom: 20px;
+    margin-bottom: 12px;
 
     &.margin0 {
       margin-bottom: 0;
+      margin-top: 24px;
+    }
+
+    &-more {
+      opacity: 0.7;
+      font-family: 'PingFangSC-Medium';
+      padding-left: 18px;
+      margin-bottom: 6px;
+      cursor: default;
+      font-size: 12px;
+      color: #fff;
     }
 
     &-link {
       display: flex;
       align-items: center;
       height: 42px;
-      padding-left: 15px;
+      padding-left: 18px;
       transition: background $time;
       overflow: hidden;
 
@@ -146,49 +146,14 @@ $menu-bg: #252a2e;
     &-title {
       overflow: hidden;
       font-family: $family;
-      font-size: 14px;
+      font-size: 12px;
       color: rgba(255, 255, 255, 0.7);
       line-height: 18px;
       height: 18px;
-      width: 0;
-      padding-left: 16px;
+      padding-left: 10px;
       transition: color $time, width $time, padding $time;
-      // display: flex;
-
-      &-inner {
-        float: left;
-      }
     }
-  } // end w-menu-list
-
-  &:hover,
-  &-hover {
-    width: 180px;
-
-    & .w-menu-header-title {
-      width: 180px;
-    }
-
-    & .w-menu-list-title {
-      width: 126px;
-    }
-
-    & .w-menu-release {
-      width: 140px;
-      height: 32px;
-      margin: 16px auto 12px;
-
-      &-title {
-        padding-left: 10px;
-        width: auto;
-      }
-    }
-
-    & .w-menu-quit-title {
-      width: auto;
-      padding-left: 3px;
-    }
-  } // w-menu-hover
+  }
 
   &-release {
     text-decoration: none;
@@ -230,14 +195,12 @@ $menu-bg: #252a2e;
   } // w-menu-release
 
   &-quit {
-    height: 14px;
-    width: 43px;
-    margin: 0 auto;
+    height: 44px;
+    width: 50%;
     display: flex;
     justify-content: center;
     align-items: center;
     color: $icon-color;
-    margin-bottom: 16px;
 
     &:hover {
       text-decoration: none !important;
@@ -257,8 +220,8 @@ $menu-bg: #252a2e;
     }
 
     &-img {
-      width: 12px;
-      height: 12px;
+      width: 16px;
+      height: 16px;
 
       &:nth-of-type(1) {
         display: block;
@@ -286,7 +249,7 @@ $menu-bg: #252a2e;
     right: 0;
     bottom: 0;
     z-index: 999;
-    background-color: rgba(0, 0, 0, 0.3);
+    background-color: rgba(0, 0, 0, 0.5);
 
     &-box {
       width: 636px;
@@ -503,6 +466,96 @@ $menu-bg: #252a2e;
       color: $write;
       background-color: $brand-color-default;
       border: 1px solid $brand-color-default;
+    }
+
+    &-authent {
+      position: relative;
+      width: 550px;
+      height: auto;
+      text-align: initial;
+      border-radius: 4px;
+      box-sizing: border-box;
+      white-space: normal;
+      transform-origin: -235px -209px 0;
+      background: $write;
+      z-index: 1000;
+      box-shadow: 0 4px 8px $shadow-color;
+
+      &-head {
+        padding: 0 16px;
+        height: 42px;
+        line-height: 42px;
+        font-size: 14px;
+        color: #323233;
+        border-bottom: 1px solid #dcdee0;
+        font-weight: 500;
+      }
+
+      &-body {
+        padding: 16px;
+        font-size: 14px;
+        color: #323233;
+
+        &-box {
+          margin-top: 24px;
+          display: flex;
+          align-items: center;
+          justify-content: space-around;
+
+          &-list {
+            text-align: center;
+
+            &-image {
+              width: 50px;
+              height: 50px;
+            }
+
+            &-text {
+              margin: 0;
+              font-size: 14px;
+              color: #323233;
+              font-family: 'PingFangSC-Regular';
+              margin-top: 8px;
+              line-height: 1;
+            }
+          }
+
+          &-line {
+            width: 70px;
+            height: 2px;
+            background-color: #f2f3f5;
+            top: -12px;
+            position: relative;
+          }
+        }
+      }
+
+      &-footer {
+        padding: 0 16px;
+        height: 54px;
+        display: flex;
+        align-items: center;
+        justify-content: flex-end;
+
+        &-btn {
+          background: #0297fe;
+          color: #fff;
+          box-sizing: border-box;
+          padding: 0 16px;
+          display: inline-block;
+          cursor: pointer;
+          border-radius: 4px;
+          border: 1px solid #fff;
+          transition: all 0.3s ease;
+          outline: none;
+          user-select: none;
+          touch-action: manipulation;
+          white-space: nowrap;
+          font-size: 12px;
+          line-height: 26px;
+          height: 28px;
+        }
+      }
     }
   }
 

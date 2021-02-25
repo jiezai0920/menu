@@ -1,9 +1,8 @@
 <template>
   <div class="w-menu-warp">
-    <div class="w-menu" :class="{'w-menu-hover': hover}">
+    <div class="w-menu">
       <div class="w-menu-header">
         <img class="w-menu-header-icon" :src="power.logo" @error="errorFn">
-        <a :href="`${env.ACCOUNT||env.VUE_APP_ACCOUNT}accountinformation`" target="_blank" class="w-menu-header-title">{{power.title}}</a>
       </div>
       <div class="w-menu-cont">
         <ul class="w-menu-list" v-if="listHome.length">
@@ -13,8 +12,7 @@
               <img class="w-menu-list-img" :src="require(`assets/img/${rule.icon}_normal.png`)">
               <img class="w-menu-list-img" :src="require(`assets/img/${rule.icon}_selected.png`)">
               <span class="w-menu-list-title">
-                <span class="w-menu-list-title-inner">{{rule.name}}</span>
-                <i class="w-menu-tag" v-if="rule.tags.length > 0">{{rule.tags[0]}}</i>
+                {{rule.name}}
               </span>
             </a>
           </li>
@@ -25,58 +23,36 @@
               <img class="w-menu-list-img" :src="require(`assets/img/${rule.icon}_normal.png`)">
               <img class="w-menu-list-img" :src="require(`assets/img/${rule.icon}_selected.png`)">
               <span class="w-menu-list-title">
-                <span class="w-menu-list-title-inner">{{rule.name}}</span>
-                <i class="w-menu-tag" v-if="rule.tags.length > 0">{{rule.tags[0]}}</i>
+                {{rule.name}}
               </span>
             </a>
           </li>
         </ul>
         <ul class="w-menu-list margin0" v-if="listOrder.length">
+          <li class="w-menu-list-more">更多服务</li>
           <li class="w-menu-list-item" v-for="(rule, ruleIndex) in listOrder" :key="ruleIndex">
             <a href="javascript:;" class="w-menu-list-link" :class="{on: activeValue === rule.icon}" @click="goPath(rule)">
               <img class="w-menu-list-img" :src="require(`assets/img/${rule.icon}_normal.png`)">
               <img class="w-menu-list-img" :src="require(`assets/img/${rule.icon}_selected.png`)">
               <span class="w-menu-list-title">
-                <span class="w-menu-list-title-inner">{{rule.name}}</span>
-                <i class="w-menu-tag" v-if="rule.tags.length > 0">{{rule.tags[0]}}</i>
+                {{rule.name}}
               </span>
             </a>
           </li>
         </ul>
       </div>
       <div class="w-menu-footer">
-        <!-- <a href="javascript:;" class="w-menu-release" @click="isMask = true"> -->
-        <a class="w-menu-release" target="_blank" :href="`${env.EVENT||env.VUE_APP_EVENT}checktmodal`">
-          <img class="w-menu-release-img" :src="require(`assets/img/release.png`)">
-          <span class="w-menu-release-title">免费发活动</span>
-        </a>
         <a class="w-menu-quit" @click="modalShow = true">
-          <img class="w-menu-quit-img" :src="require(`assets/img/quit.png`)">
-          <img class="w-menu-quit-img" :src="require(`assets/img/quit_hover.png`)">
-          <span class="w-menu-quit-title">退出</span>
+          <img class="w-menu-quit-img" title="退出" :src="require(`assets/img/quit.png`)">
+          <img class="w-menu-quit-img" title="退出" :src="require(`assets/img/quit_hover.png`)">
+        </a>
+
+        <a class="w-menu-quit" :href="`${env.ACCOUNT||env.VUE_APP_ACCOUNT}accountinformation`" target="_blank">
+          <img class="w-menu-quit-img" title="账户" :src="require(`assets/img/setting.png`)">
+          <img class="w-menu-quit-img" title="账户" :src="require(`assets/img/setting_hover.png`)">
         </a>
       </div>
     </div>
-    <!-- 免费发活动 start -->
-    <div v-if="isMask" class="w-menu-mask">
-      <div class="w-menu-mask-box">
-        <span class="w-menu-mask-close" @click="isMask = false">+</span>
-        <h4 class="w-menu-mask-title">选择发布的活动类型</h4>
-        <div class="w-menu-mask-modal">
-          <a target="_blank" :href="`${env.MEET||env.VUE_APP_MEET}light`" class="w-menu-mask-light">
-            <img class="w-menu-mask-img" :src="require(`assets/img/light.svg`)">
-            <span class="w-menu-mask-name">报名</span>
-            <span class="w-menu-mask-content">聚会、沙龙、排队、培训、会议、粉丝赠票、签到二维码、可审核、可付费、邀请函</span>
-          </a>
-          <a target="_blank" :href="`${env.EVENT||env.VUE_APP_EVENT}eventpublish`" class="w-menu-mask-light">
-            <img class="w-menu-mask-img" :src="require(`assets/img/event.svg`)">
-            <span class="w-menu-mask-name">票务</span>
-            <span class="w-menu-mask-content">剧场、音乐节、巡演、赛事、会议、展览、游园、多票种、多场次、选座、秒杀抢票、多种核销、代金券、年卡、外币支付</span>
-          </a>
-        </div>
-      </div>
-    </div>
-    <!-- 免费发活动 end -->
     <!-- 退出弹框 start -->
     <div class="w-menu-modal" v-if="modalShow">
       <div class="w-menu-modal-mask"></div>
@@ -93,6 +69,63 @@
       </div>
     </div>
     <!-- 退出弹框 end -->
+    <!-- 实名认证 start -->
+    <div v-if="needGuideAuth" class="w-menu-modal">
+      <div class="w-menu-modal-mask"></div>
+      <div class="w-menu-modal-authent">
+        <div class="w-menu-modal-authent-head">
+          实名认证提示
+        </div>
+        <div class="w-menu-modal-authent-body">
+          <div>
+            为了进一步规范平台内容管理，更好地保障商家和用户的合法权益，通过实名认证的商户才能正常使用平台功能。
+          </div>
+          <div v-if="needGuideType === 'auth'" class="w-menu-modal-authent-body-box">
+            <div class="w-menu-modal-authent-body-box-list">
+              <img  class="w-menu-modal-authent-body-box-list-image" :src="require(`assets/img/renzheng/jibenxinxi.png`)">
+              <p class="w-menu-modal-authent-body-box-list-text">基本信息</p>
+            </div>
+            <div  class="w-menu-modal-authent-body-box-line"></div>
+            <div class="w-menu-modal-authent-body-box-list">
+              <img  class="w-menu-modal-authent-body-box-list-image" :src="require(`assets/img/renzheng/zhutixinxi.png`)">
+              <p class="w-menu-modal-authent-body-box-list-text">主体信息</p>
+            </div>
+            <div  class="w-menu-modal-authent-body-box-line"></div>
+            <div class="w-menu-modal-authent-body-box-list">
+              <img  class="w-menu-modal-authent-body-box-list-image" :src="require(`assets/img/renzheng/tijiaoxinxi.png`)">
+              <p class="w-menu-modal-authent-body-box-list-text">提交信息</p>
+            </div>
+            <div  class="w-menu-modal-authent-body-box-line"></div>
+            <div class="w-menu-modal-authent-body-box-list">
+              <img  class="w-menu-modal-authent-body-box-list-image" :src="require(`assets/img/renzheng/dengdaishenhe.png`)">
+              <p class="w-menu-modal-authent-body-box-list-text">等待审核</p>
+            </div>
+          </div>
+          <div v-if="needGuideType === 'info'" class="w-menu-modal-authent-body-box">
+            <div class="w-menu-modal-authent-body-box-list">
+              <img  class="w-menu-modal-authent-body-box-list-image" :src="require(`assets/img/renzheng/pinpai.png`)">
+              <p class="w-menu-modal-authent-body-box-list-text">专属品牌露出</p>
+            </div>
+            <div  class="w-menu-modal-authent-body-box-line"></div>
+            <div class="w-menu-modal-authent-body-box-list">
+              <img  class="w-menu-modal-authent-body-box-list-image" :src="require(`assets/img/renzheng/touxiang.png`)">
+              <p class="w-menu-modal-authent-body-box-list-text">专属头像标识</p>
+            </div>
+            <div  class="w-menu-modal-authent-body-box-line"></div>
+            <div class="w-menu-modal-authent-body-box-list">
+              <img  class="w-menu-modal-authent-body-box-list-image" :src="require(`assets/img/renzheng/kefu.png`)">
+              <p class="w-menu-modal-authent-body-box-list-text">专属客服电话</p>
+            </div>
+          </div>
+        </div>
+        <div class="w-menu-modal-authent-footer">
+          <div @click="goToAuth" class="w-menu-modal-authent-footer-btn">
+            去实名认证
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- 实名认证 end -->
   </div>
 </template>
 <script>
@@ -107,11 +140,6 @@
     name: 'WMenu',
     data() {
       return {
-        // 调试一级黑色导航样式的时候可以为 true 方便调试
-        hover: false,
-        // hover: true,
-
-        isMask: false,
         user: '',
         modalShow: false,
         callbackUrl: [],
@@ -119,6 +147,9 @@
         listHome: [],
         listShop: [],
         listOrder: [],
+        needGuideType: '',
+        needGuidePath: '',
+        needGuideAuth: false,
       };
     },
     props: {
@@ -138,6 +169,13 @@
         return this.active;
       },
     },
+    watch: {
+      $route() {
+        const url = window.location.href;
+        const flag = url.indexOf('accountinformation') >= 0 || url.indexOf('authinformation') >= 0;
+        this.needGuideAuth = !flag && this.rule.org.need_guide_auth;
+      },
+    },
     mounted() {
       this.handleData();
     },
@@ -151,10 +189,17 @@
       // 处理权限接口数据
       handleData() {
         this.power = newRoot(this.rule, this.env);
+        const menuFirstBlock = ['home', 'shop', 'event', 'member', 'order', 'finance'];
+        const menuTwoBlock = ['distribution', 'marketing', 'data'];
+        const menuThreeBlock = ['goods', 'form', 'meetup'];
 
-        const menuFirstBlock = ['home', 'event', 'meetup', 'form', 'goods'];
-        const menuTwoBlock = ['shop', 'marketing', 'distribution', 'member'];
-        const menuThreeBlock = ['data', 'order', 'finance'];
+        this.needGuidePath = this.rule.org.need_guide_path;
+        this.needGuideType = this.rule.org.need_guide_type;
+
+        const url = window.location.href;
+        const flag = url.indexOf('accountinformation') >= 0 || url.indexOf('authinformation') >= 0;
+        this.needGuideAuth = !flag && this.rule.org.need_guide_auth;
+
         this.power.menuList.forEach((item) => {
           if (menuFirstBlock.includes(item.icon)) {
             this.listHome.push(item);
@@ -178,7 +223,6 @@
           window.location.href = rule.path;
         }
       },
-      // 免费发活动和退出 start
       modalOk() {
         this.modalShow = false;
         // this.goOut();
@@ -237,7 +281,10 @@
           window.location.href = `${this.env.ACCOUNT || this.env.VUE_APP_ACCOUNT}login`;
         }, 0);
       },
-      // 免费发活动和退出 end
+      //去认证
+      goToAuth() {
+        window.location.href = this.needGuidePath;
+      },
     },
   };
 </script>
